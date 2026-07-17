@@ -4,14 +4,22 @@
  * CRITICAL business logic: each branch routes to exactly one cluster admin
  * number. Cluster A (MERR/South) -> +62 851-0087-0957, Cluster B
  * (Manyar/Central) -> +62 812-3253-1989. Wrong routing is a real business bug.
+ *
+ * The prefilled message interpolates the prospect's chosen transmission
+ * (manual / matic / mixed) and the branch area (branch name + cluster region)
+ * so the cluster admin immediately sees what and where the prospect is asking
+ * about.
  */
 
 import { getBranchById, getClusterById, getPackageById } from "../catalog-data";
+import type { TransmissionType } from "../catalog-data";
 
 export interface WhatsAppLinkOptions {
   branchId: string;
   /** Optional: include a package inquiry in the prefilled message. */
   packageId?: string;
+  /** Transmission the prospect is interested in; interpolated into the message. */
+  transmission?: TransmissionType;
 }
 
 /**
@@ -28,23 +36,47 @@ function toInternationalDigits(phone: string): string {
 function buildMessage(
   branchName: string,
   clusterRegion: string,
-  packageName?: string,
+  phrase: string,
 ): string {
-  const subject = packageName
-    ? `tentang ${packageName}`
-    : "tentang kursus mengemudi";
-  return `Halo admin Pulung, saya ingin bertanya ${subject} di cabang ${branchName} (${clusterRegion}).`;
+  return `Halo admin Pulung, saya mau tanya paket kursus mobil ${phrase} di area ${branchName} (${clusterRegion}). Bisa info jadwal & harga?`;
+}
+
+/**
+ * Indonesian phrase describing the chosen transmission, interpolated into the
+ * prefilled WhatsApp message. `undefined` falls back to "manual atau matic".
+ */
+function transmissionPhrase(t?: TransmissionType): string {
+  switch (t) {
+    case "manual":
+      return "manual";
+    case "matic":
+      return "matic";
+    case "mixed":
+      return "manual & matic";
+    default:
+      return "manual atau matic";
+  }
 }
 
 /** Build a wa.me deep link to the branch's cluster admin with a prefilled Indonesian message. */
 export function buildWhatsAppLink({
   branchId,
   packageId,
+  transmission,
 }: WhatsAppLinkOptions): string {
   const branch = getBranchById(branchId);
   const cluster = getClusterById(branch.clusterId);
-  const packageName = packageId ? getPackageById(packageId).name : undefined;
+  // Call getPackageById even when transmission is explicit so an unknown
+  // packageId still throws TypeError.
+  const pkgTransmission = packageId
+    ? getPackageById(packageId).transmission
+    : undefined;
+  const resolved = transmission ?? pkgTransmission;
   const digits = toInternationalDigits(cluster.whatsapp);
-  const message = buildMessage(branch.name, cluster.region, packageName);
+  const message = buildMessage(
+    branch.name,
+    cluster.region,
+    transmissionPhrase(resolved),
+  );
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
 }

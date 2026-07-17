@@ -1,13 +1,29 @@
+"use client";
+
+import { useState } from "react";
 import { getBranchesByCluster, getClusters } from "@/lib/catalog-data";
+import type { TransmissionType } from "@/lib/catalog-data";
 import { buildWhatsAppLink } from "@/lib/wa-router";
+import { getCta } from "@/lib/copy";
+
+const TRANSMISSION_OPTIONS: ReadonlyArray<{
+  value: TransmissionType;
+  label: string;
+}> = [
+  { value: "matic", label: "Matic" },
+  { value: "manual", label: "Manual" },
+  { value: "mixed", label: "Campuran" },
+];
 
 /*
  * Pilih Lokasi (#lokasi) — cabang dikelompokkan per cluster.
  * Cluster A (MERR/Selatan) -> admin +62 851-0087-0957.
  * Cluster B (Manyar/Pusat) -> admin +62 812-3253-1989.
  *
- * Setiap kartu cabang menampilkan: nama, alamat, dan tombol "Hubungi via
- * WhatsApp" yang merujuk ke buildWhatsAppLink({ branchId }) dari wa-router.
+ * Setiap kartu cabang menampilkan: nama, alamat, dan tombol CTA WhatsApp yang
+ * merujuk ke buildWhatsAppLink({ branchId, transmission }). Toggle transmisi
+ * di atas daftar cluster menentukan transmisi yang di-interpolasi ke pesan
+ * WhatsApp admin cluster (manual / matic / campuran).
  * Tidak pernah membangun URL wa.me secara manual di JSX — routing cluster
  * adalah logika bisnis kritis yang diuji di wa-router.
  */
@@ -47,6 +63,10 @@ function PinIcon() {
 
 export function LocationPicker() {
   const clusters = getClusters();
+  const [transmission, setTransmission] = useState<TransmissionType | undefined>(
+    undefined,
+  );
+  const cta = getCta();
 
   return (
     <section
@@ -65,6 +85,35 @@ export function LocationPicker() {
           Lima cabang di dua kluster area Surabaya. Hubungi admin sesuai area
           Anda.
         </p>
+
+        <div
+          role="group"
+          aria-label="Pilih jenis transmisi"
+          className="mt-4 flex gap-2"
+        >
+          {TRANSMISSION_OPTIONS.map(({ value, label }) => {
+            const selected = transmission === value;
+            return (
+              <button
+                key={value}
+                type="button"
+                aria-pressed={selected}
+                onClick={() =>
+                  setTransmission((prev) =>
+                    prev === value ? undefined : value,
+                  )
+                }
+                className={
+                  selected
+                    ? "flex-1 rounded-lg bg-primary py-2 text-sm font-semibold text-white transition"
+                    : "flex-1 rounded-lg border border-neutral-300 bg-white py-2 text-sm font-semibold text-neutral-700 transition"
+                }
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
 
         <div className="mt-6 flex flex-col gap-6">
           {clusters.map((cluster) => {
@@ -113,13 +162,16 @@ export function LocationPicker() {
                           <span>{branch.address}</span>
                         </p>
                         <a
-                          href={buildWhatsAppLink({ branchId: branch.id })}
+                          href={buildWhatsAppLink({
+                            branchId: branch.id,
+                            transmission,
+                          })}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1ebe5d] active:scale-[0.98]"
                         >
                           <WhatsappIcon />
-                          Hubungi via WhatsApp
+                          {cta.primary}
                         </a>
                       </article>
                     </li>
