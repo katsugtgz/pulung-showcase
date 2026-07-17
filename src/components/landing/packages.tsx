@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { getPackages } from "@/lib/catalog-data";
 import type { TransmissionType } from "@/lib/catalog-data";
+import { getSectionBody, getSectionHeader } from "@/lib/copy";
 import { formatIDR } from "@/lib/format";
 
 /*
  * Paket (#packages) — tiga kartu dari getPackages(): Manual, Matic, Kombinasi.
  * Setiap kartu: nama, badge transmisi, fitur utama, kendaraan "Mobil Full AC",
  * harga contoh (formatIDR) dengan disclaimer "*harga contoh", tombol
- * "Pelajari" -> /catalog/[id]. Harga bersumber dari catalog-data, format dari
- * modul format — tidak ada hardcode.
+ * "Pelajari" -> /catalog/[id]. Header + body section dari @/lib/copy; harga
+ * bersumber dari catalog-data, format dari modul format — tidak ada hardcode
+ * untuk string yang dimiliki modul copy.
  */
 
 const TRANSMISSION_LABEL: Record<TransmissionType, string> = {
@@ -48,10 +50,10 @@ export function Packages() {
           id="packages-heading"
           className="text-center text-2xl font-bold tracking-tight text-neutral-900"
         >
-          Pilih Paket Anda
+          {getSectionHeader("paket")}
         </h2>
         <p className="mt-2 text-center text-sm text-neutral-600">
-          Manual, Matic, atau Kombinasi — semua dengan mobil Full AC.
+          {getSectionBody("paket")}
         </p>
 
         <ul className="mt-6 flex flex-col gap-4">
