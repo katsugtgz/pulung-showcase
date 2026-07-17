@@ -10,6 +10,7 @@ import {
 import { formatIDR } from "@/lib/format";
 import { getPackageById } from "@/lib/catalog-data";
 import PembayaranActionButtons from "./PembayaranActionButtons";
+import { OnboardingChecklist } from "./onboarding-checklist";
 
 /*
  * Dasbor Admin — shell bermerek untuk epik E3/E5. Menampilkan ringkasan
@@ -80,6 +81,9 @@ export default function AdminDashboardPage() {
         </header>
         <UserButton />
       </div>
+
+      {/* Kartu onboarding pertama login */}
+      <OnboardingChecklist />
 
       {/* Notifikasi pembayaran menunggu konfirmasi */}
       {pendingPayments.length > 0 && (
@@ -258,6 +262,54 @@ export default function AdminDashboardPage() {
             );
           })}
         </ul>
+      </section>
+
+      {/* Navigasi cepat ke halaman kelola */}
+      <section aria-labelledby="kelola-heading" className="mb-8">
+        <h2
+          id="kelola-heading"
+          className="mb-3 text-base font-bold text-neutral-900"
+        >
+          Kelola
+        </h2>
+        <div className="grid grid-cols-2 gap-3">
+          <Link
+            href="/admin/siswa"
+            className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm font-semibold text-neutral-900 transition hover:border-primary/30 hover:bg-primary/5"
+          >
+            <svg className="h-4 w-4 flex-shrink-0 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Data Siswa
+          </Link>
+          <Link
+            href="/admin/jadwal-instruktur"
+            className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm font-semibold text-neutral-900 transition hover:border-primary/30 hover:bg-primary/5"
+          >
+            <svg className="h-4 w-4 flex-shrink-0 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Jadwal Instruktur
+          </Link>
+          <Link
+            href="/admin/jadwal-siswa"
+            className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm font-semibold text-neutral-900 transition hover:border-primary/30 hover:bg-primary/5"
+          >
+            <svg className="h-4 w-4 flex-shrink-0 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            Jadwal Siswa
+          </Link>
+          <Link
+            href="/admin/ekspor"
+            className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm font-semibold text-neutral-900 transition hover:border-primary/30 hover:bg-primary/5"
+          >
+            <svg className="h-4 w-4 flex-shrink-0 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Ekspor Excel
+          </Link>
+        </div>
       </section>
 
       <footer className="mt-10 border-t border-neutral-200 pt-6">
