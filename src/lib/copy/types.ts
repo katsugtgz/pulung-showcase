@@ -74,3 +74,13 @@ export interface TestimonialEntry {
   /** Optional context line. */
   context?: string;
 }
+
+/** One FAQ question/answer pair for the landing accordion. */
+export interface FaqEntry {
+  /** Stable id for React keys + accordion ARIA control ids. */
+  id: string;
+  /** Indonesian question shown on the accordion trigger. */
+  question: string;
+  /** Indonesian answer shown in the expanded panel. */
+  answer: string;
+}

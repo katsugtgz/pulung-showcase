@@ -13,6 +13,7 @@
 import type {
   BodySectionKey,
   CtaCopy,
+  FaqEntry,
   HeroCopy,
   HeroPasDirection,
   HeroVariant,
@@ -111,3 +112,68 @@ export const heroCopy: HeroCopy = {
   subheadline: heroSubheadline,
   trustBar: heroTrustBar,
 };
+
+/**
+ * Landing FAQ — sourced from `research/copy-research.md` §2. Every answer is
+ * phrased so no unverified specific (exact session count, jemput fee, age
+ * policy, SIM mechanics, hours, price) is asserted as fact; those are deferred
+ * to the admin via WhatsApp and flagged below with `// TODO: verify owner`.
+ */
+export const faq: readonly FaqEntry[] = [
+  {
+    id: "transmisi",
+    question: "Pilih matic, manual, atau campuran?",
+    // Verified: MT/AT/Campuran packages exist (Hotfrog; contact.md).
+    answer:
+      "Pulung punya paket Manual (MT), Matic (AT), dan Campuran (MT+AT). Pilih Matic kalau ingin belajar cepat tanpa repot kopling, Manual kalau butuh fleksibilitas di segala jenis mobil, atau Campuran untuk menguasai keduanya. Masih bingung? Tanya admin via WhatsApp — kami bantu pilihkan yang pas buat kamu.",
+  },
+  {
+    id: "pertemuan",
+    // TODO: verify owner — exact session count/duration per package.
+    question: "Berapa kali pertemuan sampai bisa nyetir?",
+    answer:
+      "Paket disusun mengikuti kemampuan kamu, dan jadwalnya saling menyesuaikan. Instruktur sabar menemani dari nol sampai kamu percaya diri — kami tidak menjanjikan 'pasti bisa dalam sekian hari' karena tiap orang berbeda. Jumlah pertemuan tiap paket bisa kamu tanyakan langsung ke admin.",
+  },
+  {
+    id: "antar-jemput",
+    // TODO: verify owner — jemput included vs. extra fee, radius per cabang.
+    question: "Bisa dijemput di rumah?",
+    answer:
+      "Bisa — Pulung menyediakan layanan antar-jemput kursus. Untuk cakupan area jemput dan apakah ada biaya tambahan, konfirmasikan dulu ke admin cabang sesuai lokasimu.",
+  },
+  {
+    id: "area",
+    // Verified: two clusters + branches (contact.md; research brief §2 Q4).
+    question: "Area mana saja yang dilayani?",
+    answer:
+      "Pulung punya dua klaster di Surabaya: Klaster A (MERR, Rungkut, Gunung Anyar, Pandugo, Juanda) dan Klaster B (Manyar, Bratang, Ngagel, Pucang). Pilih cabang terdekat di bagian Lokasi, lalu chat admin klaster yang sesuai.",
+  },
+  {
+    id: "usia",
+    // TODO: verify owner — Pulung's own participant age policy. 17 = SIM A regulation only.
+    question: "Berapa usia minimum untuk ikut?",
+    answer:
+      "Belajar mengemudi bisa kamu mulai kapan saja. Untuk membuat SIM A sendiri, syarat usia minimum di Indonesia adalah 17 tahun. Ketentuan usia peserta kursus bisa kamu tanyakan ke admin.",
+  },
+  {
+    id: "sim",
+    // TODO: verify owner — nature of SIM assistance + whether cost is separate. Never claim "dijamin lulus".
+    question: "Pulung bantu urus SIM A?",
+    answer:
+      "Ya, Pulung melayani pendampingan pengurusan SIM A & SIM C. Untuk bentuk bantuannya dan apakah biayanya terpisah dari paket kursus, tanyakan ke admin via WhatsApp.",
+  },
+  {
+    id: "jadwal",
+    // TODO: verify owner — operating hours + weekend slots per cabang.
+    question: "Jadwalnya fleksibel?",
+    answer:
+      "Fleksibel — jadwal Pulung saling menyesuaikan dengan waktumu. Untuk jam operasional cabang dan ketersediaan slot akhir pekan, konfirmasi ke admin cabang.",
+  },
+  {
+    id: "harga",
+    // Consistent with existing "harga contoh" disclaimers; price is dynamic (contact.md).
+    question: "Berapa harga paketnya?",
+    answer:
+      "Harga bersifat dinamis dan sering ada paket promo, jadi harga final dikonfirmasi langsung oleh admin. Harga yang tampil di katalog hanya contoh ilustrasi. Tanya penawaran terbaru via WhatsApp sesuai area kamu.",
+  },
+] as const;

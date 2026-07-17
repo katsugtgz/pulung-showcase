@@ -6,4 +6,5 @@ export { Packages } from "./packages";
 export { LocationPicker } from "./location-picker";
 export { Testimonials } from "./testimonials";
 export { SocialCards } from "./social-cards";
+export { Faq } from "./faq";
 export { Footer } from "./footer";
