@@ -12,14 +12,12 @@ import {
   clusters,
   packages,
   socialPosts,
-  testimonials,
 } from "./data";
 import type {
   Branch,
   Cluster,
   Package,
   SocialPost,
-  Testimonial,
 } from "./types";
 
 export type {
@@ -28,8 +26,6 @@ export type {
   Package,
   SocialPost,
   SocialPlatform,
-  StarRating,
-  Testimonial,
   TransmissionType,
 } from "./types";
 
@@ -75,9 +71,6 @@ export function getBranchesByCluster(clusterId: string): Branch[] {
 export function getBranchCluster(branchId: string): Cluster {
   const branch = getBranchById(branchId);
   return getClusterById(branch.clusterId);
-}
-export function getTestimonials(): Testimonial[] {
-  return [...testimonials];
 }
 
 export function getSocialPosts(): SocialPost[] {

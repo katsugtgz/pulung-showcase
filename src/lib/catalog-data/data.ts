@@ -9,7 +9,6 @@ import type {
   Cluster,
   Package,
   SocialPost,
-  Testimonial,
 } from "./types";
 
 export const packages: readonly Package[] = [
@@ -110,49 +109,6 @@ export const branches: readonly Branch[] = [
     name: "Pucang",
     clusterId: "cluster_b_manyar_pusat",
     address: "Jl. Pucang Sewu No. 45, Surabaya",
-  },
-] as const;
-
-export const testimonials: readonly Testimonial[] = [
-  {
-    id: "testimonial-rizki",
-    name: "Rizki Pratama",
-    rating: 5,
-    quote:
-      "Instruktornya sabar banget. Saya yang awalnya belum bisa berkendara sekarang sudah berani bawa mobil ke kantor.",
-    context: "Lulusan Paket Manual, cabang Gunung Anyar",
-  },
-  {
-    id: "testimonial-dewi",
-    name: "Dewi Lestari",
-    rating: 5,
-    quote:
-      "Jadwalnya fleksibel dan mobilnya full AC. Pengajar profesional dan sabar membimbing pemula seperti saya.",
-    context: "Lulusan Paket Matic, cabang Manyar",
-  },
-  {
-    id: "testimonial-bayu",
-    name: "Bayu Nugroho",
-    rating: 5,
-    quote:
-      "Pelayanan ramah, kendaraan terawat. Pulung sudah berpengalaman sejak lama dan terbukti amanah.",
-    context: "Lulusan Paket Kombinasi, cabang Pandugo",
-  },
-  {
-    id: "testimonial-siti",
-    name: "Siti Rahmawati",
-    rating: 5,
-    quote:
-      "Harga terjangkau dan materinya lengkap. Direkomendasikan untuk yang ingin ikut tes SIM A.",
-    context: "Lulusan Paket Manual, cabang Pucang",
-  },
-  {
-    id: "testimonial-andi",
-    name: "Andi Wijaya",
-    rating: 5,
-    quote:
-      "Cocok untuk pemula — materinya dari nol sampai parkir. Terima kasih Pulung!",
-    context: "Lulusan Paket Kombinasi, cabang Juanda",
   },
 ] as const;
 

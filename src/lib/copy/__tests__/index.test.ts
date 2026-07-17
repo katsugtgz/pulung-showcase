@@ -119,15 +119,28 @@ describe("cta", () => {
 });
 
 describe("testimonials", () => {
-  it("is empty — research found ZERO verifiable reviews (no fabrication)", () => {
-    expect(getTestimonials()).toEqual([]);
+  it("returns six real Google-review entries, attributed and non-empty", () => {
+    const ts = getTestimonials();
+    expect(ts).toHaveLength(6);
+    for (const t of ts) {
+      expect(t.name.length).toBeGreaterThan(0);
+      expect(t.quote.length).toBeGreaterThan(0);
+      expect(t.context).toMatch(/^Ulasan Google — cabang /);
+    }
   });
 
-  it("returns a fresh empty array each call", () => {
+  it("uses unique stable ids", () => {
+    const ids = getTestimonials().map((t) => t.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const id of ids) {
+      expect(id).toMatch(/^maps-/);
+    }
+  });
+
+  it("returns a fresh array each call so source cannot be mutated", () => {
     const a = getTestimonials();
-    // Prove it is a distinct array without claiming a testimonial exists.
     expect(a).not.toBe(getTestimonials());
-    expect(a).toEqual([]);
+    expect(a).toEqual(getTestimonials());
   });
 });
 

@@ -10,6 +10,7 @@
  * concrete numbers over adjectives, end every CTA routed to WhatsApp.
  */
 
+import { getMapsTestimonials } from "@/lib/maps-reviews";
 import type {
   BodySectionKey,
   CtaCopy,
@@ -122,12 +123,13 @@ export const seo: SeoCopy = {
 } as const;
 
 /**
- * EMPTY by design. `research/copy-research.md` §1 found ZERO verbatim,
- * verifiable customer reviews across Google Maps, Hotfrog ("0 Customer
- * Review"), directories, and editorial media. Do NOT fabricate entries —
- * fill only with real, attributed quotes once the owner supplies them.
+ * Real, verbatim Google Maps reviews — curated from the committed SerpAPI
+ * snapshot in `@/lib/maps-reviews` (refresh via
+ * `scripts/fetch-maps-reviews.mjs`). This replaced the deliberately-empty
+ * array once verifiable reviews were collected (issue #12); the
+ * no-fabrication rule still holds: quotes pass through untouched.
  */
-export const testimonials: readonly TestimonialEntry[] = [];
+export const testimonials: readonly TestimonialEntry[] = getMapsTestimonials();
 
 /** Convenience aggregate for `getHeroCopy()`. */
 export const heroCopy: HeroCopy = {

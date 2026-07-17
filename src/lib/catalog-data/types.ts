@@ -56,19 +56,6 @@ export interface Branch {
   isMain?: boolean;
 }
 
-export type StarRating = 1 | 2 | 3 | 4 | 5;
-
-export interface Testimonial {
-  id: string;
-  /** Indonesian name. */
-  name: string;
-  rating: StarRating;
-  /** Indonesian quote. */
-  quote: string;
-  /** Optional context line, e.g. "Lulusan paket Manual, cabang Manyar". */
-  context?: string;
-}
-
 export type SocialPlatform = "instagram" | "tiktok";
 
 export interface SocialPost {
