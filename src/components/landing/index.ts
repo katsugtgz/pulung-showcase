@@ -1,4 +1,5 @@
 // Landing-page section components. Composed in src/app/(public)/page.tsx.
+export { Header } from "./header";
 export { Hero } from "./hero";
 export { CredibilityStrip } from "./credibility-strip";
 export { Packages } from "./packages";
