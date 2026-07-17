@@ -45,6 +45,13 @@ export default function SiswaDashboardPage() {
   const payments = getPembayaranBySiswa(DEMO_SISWA_ID);
   const latestPayment = payments[payments.length - 1];
 
+  // Tampilkan tautan bayar jika belum ada pembayaran atau pembayaran terakhir
+  // ditolak — siswa perlu mencoba kembali dari halaman pembayaran.
+  const showPaymentLink =
+    !latestPayment || latestPayment.status === "ditolak";
+  const paymentLinkLabel =
+    latestPayment?.status === "ditolak" ? "Coba Lagi Bayar" : "Bayar Sekarang";
+
   return (
     <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
       <div className="mb-6 flex items-start justify-between gap-3">
@@ -75,6 +82,28 @@ export default function SiswaDashboardPage() {
         <p className="mt-1 text-lg font-bold text-neutral-900">
           {ENROLLMENT_LABEL[siswa.enrollmentStatus] ?? siswa.enrollmentStatus}
         </p>
+        {showPaymentLink && (
+          <Link
+            href={`/catalog/${siswa.packageId}/payment`}
+            className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white transition hover:bg-accent-dark"
+          >
+            {paymentLinkLabel}
+            <svg
+              className="h-3.5 w-3.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </Link>
+        )}
       </section>
 
       <section aria-labelledby="schedule-heading" className="mb-8">
@@ -130,9 +159,23 @@ export default function SiswaDashboardPage() {
                 {formatIDR(latestPayment.amountIdr)}
               </span>
             </div>
-            <p className="mt-3 text-xs font-medium text-primary">
+            <p
+              className={`mt-3 text-xs font-medium ${
+                latestPayment.status === "ditolak"
+                  ? "text-accent"
+                  : "text-primary"
+              }`}
+            >
               {PAYMENT_LABEL[latestPayment.status] ?? latestPayment.status}
             </p>
+            {latestPayment.status === "ditolak" && (
+              <Link
+                href={`/catalog/${siswa.packageId}/payment`}
+                className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-accent underline underline-offset-2 hover:text-accent-dark"
+              >
+                Coba lagi bayar →
+              </Link>
+            )}
           </div>
         </section>
       ) : null}
