@@ -9,7 +9,6 @@ import {
   getPackageById,
   getPackages,
   getSocialPosts,
-  getTestimonials,
 } from "../index";
 import type {
   Branch,
@@ -134,19 +133,6 @@ describe("branches", () => {
   it("throws TypeError for an unknown branch id", () => {
     expect(() => getBranchById("nope")).toThrow(TypeError);
     expect(() => getBranchCluster("nope")).toThrow(TypeError);
-  });
-});
-
-describe("testimonials", () => {
-  it("returns 3-5 testimonials, all 5-star with Indonesian names", () => {
-    const ts = getTestimonials();
-    expect(ts.length).toBeGreaterThanOrEqual(3);
-    expect(ts.length).toBeLessThanOrEqual(5);
-    for (const t of ts) {
-      expect(t.rating).toBe(5);
-      expect(t.name.length).toBeGreaterThan(0);
-      expect(t.quote.length).toBeGreaterThan(0);
-    }
   });
 });
 

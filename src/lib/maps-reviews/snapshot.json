@@ -1,0 +1,177 @@
+{
+  "fetchedAt": "2026-07-18",
+  "source": "SerpAPI engine=google_maps_reviews (sort_by=qualityScore, hl=id)",
+  "branches": [
+    {
+      "slug": "manyar",
+      "label": "Manyar",
+      "dataId": "0x2dd7fb5d5261efef:0x506946a569eb742a",
+      "rating": 4.8,
+      "reviewCount": 85,
+      "reviews": [
+        {
+          "author": "Fatima Zahro",
+          "rating": 5.0,
+          "date": "2 bulan lalu",
+          "snippet": "Hi, aku Fatimaaa salah satu siswa mengemudi di pulung, latihan mengemudi ini rasanya sangat terkesan loh temen temen apalagi di temenin sama instruktur yang sangat sangaaaat sangat hamble dan buuuuuaik bangetttttt, by the way, latihan terakhir, ku ambil di tnggal 9 may, xiixixi so berkesan banget karena ternyata instruktur nya tau loh tanggal itu, di ucapin dong sama dikasih doa waktu sesi latihan itu,,, last dianterin beli kueeeee,,,, xiixixi terimakasih untuk pengalaman mengemudi nya,,, saya Sangatt Sangatt terkesan 💙💙💙 TERIMAKASIH PULUNG, SUKSES SELALU KEDEPANNYA dan TERIMAKASIH UNTUK PAK IWAN sukses selalu makasih bimbingannya :\")\n#SalamsiswaPulung"
+        },
+        {
+          "author": "Novanda Virdiany Prameswary",
+          "rating": 5.0,
+          "date": "11 bulan lalu",
+          "snippet": "Kursus belajar mobil harga terjangkau. Belajar dari 0. Instrukturnya mengajar teori dan praktek, orangnya baik, ramah, sabar, asik ada Pak Iwan, Pak Dimas, dan pak Sany. Dilatih lancar dijalan raya juga. Jadwal kursus fleksibel bisa menyesuaikan dengan jadwal bekerja"
+        },
+        {
+          "author": "Renofany Okta Dwianto",
+          "rating": 5.0,
+          "date": "4 bulan lalu",
+          "snippet": "Saya belajar dari belum bisa sampai sudah bisa. makasih untuk instrukturnya pak Iwan, pak dimas, dan pak indra baik, asik, dan terutama untuk pak indra makasih untuk penjelasan pembelajaran nya sangat detail dan gampang dimengerti 👍👍👍"
+        },
+        {
+          "author": "Moch. Thoha",
+          "rating": 5.0,
+          "date": "4 bulan lalu",
+          "snippet": "Kursus belajar mobil dengan harga yang terjangkau. Belajar dari 0. Instrukturnya mengajar teori dan praktek, orangnya baik, ramah, sabar, asik ada Pak Iwan dan pak indra. Jadwal kursus fleksibel bisa menyesuaikan dengan jadwal bekerja. Pokoknya terbaik dah. Alhamdulillah sudah lancar. Terimakasih kursus mengemudi pulung"
+        },
+        {
+          "author": "rani putranto",
+          "rating": 5.0,
+          "date": "setahun lalu",
+          "snippet": "Jadi lebih berani bawa mobil di jalan raya karena kursus diPulung.Pelatihnya juga sabar makasih ya mas Sany dan mas indra sudah sabar bantu tau teori dan prakteknya.belajar 6x pas lah untuk memupuk ketrampilan dan keberanian 😀👍"
+        },
+        {
+          "author": "M Alvan Ardiansah",
+          "rating": 5.0,
+          "date": "7 bulan lalu",
+          "snippet": "Allhamdulilah Terima Kasih Kursus Mengemudi Pulung  , Sangat puas dg pelayanannya mulai dari pendaftaran sampai dg selesai kursus, pengajar juga sangat sabar dan profesional, tepat waktu.. Dari yg mulai nol tdk bs mengemudi sampai  jd mahir .. top banget pokoknya 👍👍😍😍\n\nTerima Kasih Juga Buat Pak Hendra , Pak Iwan Dan Pak Dimas sudah memberi teori dengan jelas dan mudah di pahami 😍"
+        },
+        {
+          "author": "cuekin aja",
+          "rating": 5.0,
+          "date": "setahun lalu",
+          "snippet": "Belajar mulai dari nol, yang tadinya gk bisa mengemudi jadi bisa. instrukturnya baik asik jadi cepat menyerap ilmunya. buat pemula yg ingin belajar mengemudi, jangan lupa datang ke pulung 😎"
+        },
+        {
+          "author": "kholilur rohman",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "Allhamdulilah Terima Kasih Kursus Mengemudi Pulung  , Sangat puas dg pelayanannya, jadwal juga fleksibel, pengajar juga sangat sabar dan profesional, tepat waktu.. Dari yg mulai nol tdk bs mengemudi sampai  jd mahir .. Mantap pokok best rekomendasi kursus mobil area surabaya👍🏻"
+        }
+      ]
+    },
+    {
+      "slug": "gunung-anyar",
+      "label": "Gunung Anyar",
+      "dataId": "0x2dd7fba1c3f3acaf:0x1f2f50473c20f761",
+      "rating": 4.7,
+      "reviewCount": 22,
+      "reviews": [
+        {
+          "author": "Hafiyyan Daffa Muhammad",
+          "rating": 5.0,
+          "date": "7 bulan lalu",
+          "snippet": "sekolah mengemudi terbaik di surabaya, pelayanan oke, mengajar juga profesional, semoga lancar terus🤩"
+        },
+        {
+          "author": "Candra Bimantara19",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "Salah satu kursus mobil terbaik di surabaya, pelatih nya ramah dan baik,  terimakasih"
+        },
+        {
+          "author": "AchmadFH",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "Kursus mengemudi bagus sekali.. jadwal flexible dan tutornya sangat sabar"
+        },
+        {
+          "author": "Amalia Efayanti",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "Trm ksh sdh diajari."
+        },
+        {
+          "author": "Navilla Fifi",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "👍🏻👍🏻"
+        },
+        {
+          "author": "Cholis Hidayati",
+          "rating": 1.0,
+          "date": "3 tahun lalu",
+          "snippet": "Pelatihnya jahat. Orang belajar....kan mau ya dia. Meskipun pelan2 gak cepet bisa, nanti kursus lg, kursus lg kan semaunya asal bayar"
+        },
+        {
+          "author": "Stevanny Autrilia",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "pelayanan sangat baik"
+        },
+        {
+          "author": "Ari Rizka",
+          "rating": 5.0,
+          "date": "setahun lalu",
+          "snippet": "kursus pulung ini mantab, instrukturnya sopan dan sabar"
+        }
+      ]
+    },
+    {
+      "slug": "merr",
+      "label": "MERR",
+      "dataId": "0x2dd7fb23383b5d1f:0x48c76c2060ec15d3",
+      "rating": 4.4,
+      "reviewCount": 25,
+      "reviews": [
+        {
+          "author": "Monika Levita",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "Instrukturnya detail dan sabar. Pengurusan SIMnya juga nggak ribet. Mantap👍"
+        },
+        {
+          "author": "Purwanto Rizki",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "Sangat puas dgn pelayan,\nSemuanya ramah-ramah👍👍\nRekomendasi utk yg lainya"
+        },
+        {
+          "author": "Dessy Meiniati",
+          "rating": 5.0,
+          "date": "6 bulan lalu",
+          "snippet": "Mengemudi di pulung cepat dan praktis ,waktu bisa menyesuaikan bagi yg bekerja full time.aman dijamin cepet paham dan langsung bisa setir di jalan raya"
+        },
+        {
+          "author": "frita febiariyanti",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "Kursus mengemudi yg pelatihnya baik2 sabar2 harga juga OK"
+        },
+        {
+          "author": "Armass sang Perantau",
+          "rating": 5.0,
+          "date": "5 bulan lalu",
+          "snippet": "Kursus di pulung enak banget, yang mengajari ramah\" & sopan, sangat puas kursus di pulung"
+        },
+        {
+          "author": "deby gwenn",
+          "rating": 1.0,
+          "date": "setahun lalu",
+          "snippet": "Instruktur suka bentak2.\nAnak saya di katain, \"masak gitu aja ga bisa\"\nYa kl bisa ga perlu khusus ya guys...\nWes parah poll\nBaru 3x pertemuan sdh di bentak2.\nSaya ini bayar ya bukan gratisan, gaji instruktur jg dr uang2 customer."
+        },
+        {
+          "author": "Erica Aurelia",
+          "rating": 2.0,
+          "date": "setahun lalu",
+          "snippet": "belajar disini enak, saya ambil 6 kali kursus, tapi pada saat hari terakhir pelayanan sangat buruk, jahat sekali, tidak ramah, lalu petugas yang mengajari pada saat didalam mobil malah main hp terus, main game. tidak mengajari, selama saya belajar menanjak petugasnya main ig, main game, padahal kita ini belajar, dan membayar, tapi malah diperlakukan seperti itu. kedepannya mohon untuk tanggung jawabnya pada saat mengajari mobil, awasi dengan benar, jangan main hp."
+        },
+        {
+          "author": "Anastasia Sintha Dewanti Yuniarti",
+          "rating": 5.0,
+          "date": "6 bulan lalu",
+          "snippet": "Baik, ramah, sabar dalam mengajari."
+        }
+      ]
+    }
+  ]
+}

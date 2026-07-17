@@ -101,9 +101,9 @@ export function getCta(): CtaCopy {
 }
 
 /**
- * Empty today — research found ZERO verifiable customer reviews (see
- * `data.ts`). Returns a fresh empty array so callers can never mutate source.
- * Fill only with real, attributed quotes once the owner supplies them.
+ * Real Google Maps reviews, verbatim, curated from the committed SerpAPI
+ * snapshot (`@/lib/maps-reviews`). Returns a fresh array so callers can
+ * never mutate source. No-fabrication rule holds: only attributed quotes.
  */
 export function getTestimonials(): readonly TestimonialEntry[] {
   return [...testimonials];

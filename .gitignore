@@ -9,3 +9,4 @@ node_modules/
 
 # Lighthouse CI local reports
 .lighthouseci/
+.vercel

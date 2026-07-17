@@ -3,20 +3,39 @@ import {
   getSectionHeader,
   getTestimonials,
 } from "@/lib/copy";
+import { getMapsRating } from "@/lib/maps-reviews";
 
 /*
- * Testimoni — header + body + array testimoni semuanya dari @/lib/copy.
- * Hari ini array-nya KOSONG oleh desain: riset (research/copy-research.md §1)
- * menemukan NOL kutipan pelanggan yang verbatim dan terverifikasi. Jangan
- * mengarang entri — isi hanya setelah ulasan asli terverifikasi terkumpul.
+ * Testimoni — header + body + array testimoni semuanya dari @/lib/copy;
+ * entri adalah ulasan Google Maps ASLI (verbatim) dari snapshot SerpAPI di
+ * @/lib/maps-reviews. Badge rating dihitung dari snapshot (rata-rata
+ * tertimbang tiga listing cabang) — tidak ada angka hardcode, tidak ada
+ * panggilan pihak ketiga saat build/runtime.
  *
- * Saat kosong, body copy modul ("Cerita alumni Pulung akan tampil di sini
- * begitu ulasan terverifikasi terkumpul.") ditampilkan sebagai placeholder
- * yang sopan. Struktur kartu tetap disiapkan untuk entri mendatang.
+ * Cabang kosong dipertahankan defensif: bila snapshot dikosongkan, body
+ * copy modul tampil sebagai placeholder yang sopan.
  */
+
+function StarIcon() {
+  return (
+    <svg
+      className="h-4 w-4 text-accent"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+      aria-hidden="true"
+    >
+      <path d="M10 1.5l2.47 5.29 5.78.73-4.25 4.02 1.1 5.73L10 14.47l-5.1 2.8 1.1-5.73-4.25-4.02 5.78-.73L10 1.5z" />
+    </svg>
+  );
+}
 
 export function Testimonials() {
   const testimonials = getTestimonials();
+  const { rating, reviewCount } = getMapsRating();
+  const ratingLabel = rating.toLocaleString("id-ID", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  });
 
   return (
     <section
@@ -30,6 +49,12 @@ export function Testimonials() {
         >
           {getSectionHeader("testimonials")}
         </h2>
+
+        <p className="mt-3 flex items-center justify-center gap-1.5 text-sm text-neutral-700">
+          <StarIcon />
+          <span className="font-semibold text-neutral-900">{ratingLabel}</span>
+          <span>dari {reviewCount} ulasan Google</span>
+        </p>
 
         {testimonials.length > 0 ? (
           <ul className="mt-6 flex flex-col gap-4">
