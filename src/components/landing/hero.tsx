@@ -1,13 +1,16 @@
-import Link from "next/link";
 import { getActiveHeroVariant, getCta, getHeroCopy } from "@/lib/copy";
 
 /*
  * Hero — identitas banner Pulung yang diangkat ke digital.
  * Wordmark "PULUNG" merah di atas latar biru (mereplika banner jalan
  * 25 tahun mereka). Headline + subheadline + trust-bar chips + label CTA
- * semuanya dari modul @/lib/copy (sumber tunggal string Indonesia). Dua CTA:
- * primary (-> /sign-in) dan secondary (smooth-scroll ke #packages). Murni
- * CSS — tanpa gambar berat agar Lighthouse performance tetap >= 0.9.
+ * semuanya dari modul @/lib/copy (sumber tunggal string Indonesia). Kedua CTA
+ * berlabel WhatsApp (WhatsApp-first per riset copy) dan menuju #lokasi — di
+ * sana tiap kartu cabang punya tautan WhatsApp yang dirutekan ke admin kluster
+ * yang BENAR (wa-router). Hero sengaja TIDAK menautkan langsung ke satu nomor:
+ * ada dua cabang utama (satu per kluster), jadi inkuiri generik teratas harus
+ * lewat pemilih area agar tidak salah kluster (bug bisnis). Murni CSS — tanpa
+ * gambar berat agar Lighthouse performance tetap >= 0.9.
  */
 export function Hero() {
   const { subheadline, trustBar } = getHeroCopy();
@@ -56,16 +59,17 @@ export function Hero() {
           ))}
         </ul>
 
-        {/* CTA — label dari @/lib/copy, tujuan tetap /sign-in & #packages */}
+        {/* CTA — label WhatsApp dari @/lib/copy; keduanya menuju #lokasi
+            (pemilih area) agar routing kluster WhatsApp selalu benar. */}
         <div className="mt-8 flex w-full flex-col gap-3">
-          <Link
-            href="/sign-in"
+          <a
+            href="#lokasi"
             className="w-full rounded-xl bg-accent px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-accent/30 transition hover:bg-accent-dark active:scale-[0.99]"
           >
             {cta.primary}
-          </Link>
+          </a>
           <a
-            href="#packages"
+            href="#lokasi"
             className="w-full rounded-xl border-2 border-white/40 bg-white/5 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition hover:border-white/70 hover:bg-white/10 active:scale-[0.99]"
           >
             {cta.secondary}
