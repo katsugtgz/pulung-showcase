@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getPackages } from "@/lib/catalog-data";
 import type { TransmissionType } from "@/lib/catalog-data";
 import { formatIDR } from "@/lib/format";
+import { Reveal } from "@/components/landing";
 
 /*
  * Katalog Paket (terlindungi). Halaman ini menampilkan ketiga paket kursus
@@ -34,6 +35,7 @@ export default function CatalogPage() {
         <ul className="flex flex-col gap-4">
           {packages.map((pkg) => (
             <li key={pkg.id}>
+              <Reveal>
               <article className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
                 <div className="p-5">
                   {/* Title row */}
@@ -114,6 +116,7 @@ export default function CatalogPage() {
                   </div>
                 </div>
               </article>
+              </Reveal>
             </li>
           ))}
         </ul>

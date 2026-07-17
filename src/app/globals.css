@@ -34,10 +34,54 @@
 
 :root {
   color-scheme: light;
+
+  /*
+   * Motion tokens (kosakata transitions-dev). Dipakai oleh .t-reveal untuk
+   * transisi section naik-memudar saat masuk viewport.
+   */
+  --reveal-dur: 500ms;
+  --reveal-distance: 12px;
+  --reveal-blur: 3px;
+  --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html,
 body {
   background-color: var(--color-neutral-50);
   color: var(--color-neutral-900);
+}
+
+/*
+ * Scroll-reveal per section (dipakai <Reveal/>). Konten mulai turun + buram +
+ * transparan, lalu .is-shown (dari IntersectionObserver) mengembalikannya ke
+ * posisi diam. Hanya section di bawah lipatan yang dibungkus — Hero (elemen
+ * LCP) tidak, agar skor performa tetap tinggi. Teks tetap ada di DOM untuk SEO.
+ */
+.t-reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  filter: blur(var(--reveal-blur));
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    transform var(--reveal-dur) var(--reveal-ease),
+    filter var(--reveal-dur) var(--reveal-ease);
+  will-change: transform, opacity;
+}
+.t-reveal.is-shown {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/*
+ * Wajib dipertahankan: menonaktifkan gerak untuk pengguna yang meminta lebih
+ * sedikit animasi di tingkat OS. Konten langsung tampil penuh.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .t-reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
 }
