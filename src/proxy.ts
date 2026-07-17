@@ -26,5 +26,8 @@ export const config = {
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
     // Always run for API and tRPC routes.
     "/(api|trpc)(.*)",
+    // Clerk auto-proxy path (Clerk 7 helper routes). Must come after the
+    // API/TRPC matcher — see https://clerk.com/docs/nextjs/middleware.
+    "/__clerk/:path*",
   ],
 };
