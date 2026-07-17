@@ -35,9 +35,12 @@ export function BookableSlotList({ groups }: BookableSlotListProps) {
 
   if (groups.length === 0) {
     return (
-      <p className="rounded-xl border border-neutral-200 bg-white p-4 text-sm text-neutral-500">
-        Belum ada slot jadwal yang tersedia saat ini.
-      </p>
+      <div className="rounded-xl border border-neutral-200 bg-white p-4">
+        <p className="text-sm text-neutral-500">
+          Belum ada slot tersedia. Cek lagi nanti ya, atau hubungi admin lewat
+          WhatsApp kalau kamu perlu jadwal segera.
+        </p>
+      </div>
     );
   }
 
@@ -122,7 +125,7 @@ export function MyBookingList({ bookings }: MyBookingListProps) {
   if (bookings.length === 0) {
     return (
       <p className="rounded-xl border border-neutral-200 bg-white p-4 text-sm text-neutral-500">
-        Anda belum memiliki jadwal yang dipesan.
+        Belum ada jadwal yang dipesan. Pilih slot di bawah untuk mulai.
       </p>
     );
   }

@@ -180,6 +180,46 @@ export default function SiswaDashboardPage() {
         </section>
       ) : null}
 
+      {/* Quick-nav: halaman siswa */}
+      <nav aria-label="Menu siswa" className="mb-8">
+        <h2 className="mb-3 text-base font-bold text-neutral-900">
+          Menu Kursus
+        </h2>
+        <ul className="flex flex-col gap-2">
+          {(
+            [
+              { href: "/app/jadwal", label: "Pilih Jadwal" },
+              { href: "/app/invoice", label: "Invoice Pembayaran" },
+              { href: "/app/kartu", label: "Kartu Siswa" },
+              { href: "/app/cara-pakai", label: "Cara Pakai" },
+            ] as const
+          ).map(({ href, label }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className="flex items-center justify-between rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium text-neutral-800 shadow-sm transition hover:bg-neutral-50"
+              >
+                {label}
+                <svg
+                  className="h-4 w-4 text-neutral-400"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
       <footer className="mt-10 border-t border-neutral-200 pt-6">
         <Link
           href="/"
