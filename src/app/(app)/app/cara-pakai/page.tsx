@@ -1,12 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getClusters } from "@/lib/catalog-data";
 
 /*
  * Halaman Cara Pakai (/app/cara-pakai). Panduan singkat perjalanan siswa
  * dari daftar hingga unduh kartu — versi ringkas dengan tautan langsung ke
  * tiap halaman dalam aplikasi.
  *
- * Server Component — tidak butuh data domain, murni konten statis.
+ * Server Component — konten statis kecuali kontak admin, yang diambil dari
+ * catalog-data (nomor WA tidak boleh di-hardcode di UI).
  */
 
 export const metadata: Metadata = {
@@ -138,12 +140,14 @@ export default function CaraPakaiPage() {
       {/* WA help */}
       <section className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-4">
         <p className="text-xs font-semibold text-primary">Butuh bantuan?</p>
-        <p className="mt-1 text-xs text-neutral-600">
-          Hubungi admin Pulung lewat WhatsApp — Cluster A (MERR/Selatan):{" "}
-          <span className="font-semibold">+62 811-0000-0001</span>, Cluster B
-          (Manyar/Pusat):{" "}
-          <span className="font-semibold">+62 811-0000-0002</span>.
-        </p>
+        <ul className="mt-1 flex flex-col gap-1">
+          {getClusters().map((cluster) => (
+            <li key={cluster.id} className="text-xs text-neutral-600">
+              {cluster.region}:{" "}
+              <span className="font-semibold">{cluster.whatsapp}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <footer className="mt-10 border-t border-neutral-200 pt-6">
