@@ -59,6 +59,20 @@ export interface CtaCopy {
   secondary: string;
 }
 
+/** SEO / social-share meta copy, consumed by Next.js metadata in the root layout. */
+export interface SeoCopy {
+  /** `<title>` — keyword-aware, trust-angle. */
+  title: string;
+  /** Meta description (~160 chars). */
+  description: string;
+  /** Open Graph / social-card title. */
+  ogTitle: string;
+  /** Open Graph / social-card description. */
+  ogDescription: string;
+  /** Keyword hints for the Surabaya driving-school market. */
+  keywords: readonly string[];
+}
+
 /**
  * Testimonial entry. Forward-compatible: the array is EMPTY today because
  * `research/copy-research.md` §1 found ZERO verbatim, verifiable customer
