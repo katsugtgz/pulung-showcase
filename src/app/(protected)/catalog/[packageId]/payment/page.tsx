@@ -178,8 +178,11 @@ export default async function PaymentPage({ params }: Params) {
                 Menunggu Konfirmasi Admin
               </p>
               <p className="text-sm text-neutral-600">
-                Pembayaran QRIS Anda sedang diproses. Admin akan memverifikasi
-                dan mengkonfirmasi segera.
+                Pembayaran QRIS kamu sedang dicek admin. Biasanya dikonfirmasi
+                cepat di jam kerja — tunggu sebentar ya.
+              </p>
+              <p className="mt-1 text-xs text-neutral-500">
+                Belum dikonfirmasi lama? Hubungi admin lewat WhatsApp.
               </p>
             </div>
           </section>
