@@ -1,5 +1,6 @@
 import {
   CredibilityStrip,
+  Faq,
   Footer,
   Header,
   Hero,
@@ -23,7 +24,8 @@ import {
  *   4. Pilih Lokasi (#lokasi)
  *   5. Testimoni
  *   6. Kartu media sosial
- *   7. Footer
+ *   7. FAQ (#faq)
+ *   8. Footer
  *
  * <Header/> dirender sebagai anak pertama <main> sebelum <Hero/>: keduanya
  * memakai bg-primary sehingga menyatu jadi satu banner biru kontinu, dan
@@ -39,6 +41,7 @@ export default function HomePage() {
       <LocationPicker />
       <Testimonials />
       <SocialCards />
+      <Faq />
       <Footer />
     </main>
   );

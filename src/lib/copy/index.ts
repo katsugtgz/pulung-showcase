@@ -14,6 +14,7 @@
 import {
   activeHeroVariant,
   cta,
+  faq,
   heroCopy,
   heroVariants,
   sectionBody,
@@ -23,6 +24,7 @@ import {
 import type {
   BodySectionKey,
   CtaCopy,
+  FaqEntry,
   HeroCopy,
   HeroPasDirection,
   HeroVariant,
@@ -33,6 +35,7 @@ import type {
 export type {
   BodySectionKey,
   CtaCopy,
+  FaqEntry,
   HeroCopy,
   HeroPasDirection,
   HeroVariant,
@@ -101,4 +104,9 @@ export function getCta(): CtaCopy {
  */
 export function getTestimonials(): readonly TestimonialEntry[] {
   return [...testimonials];
+}
+
+/** Landing FAQ Q&A entries. Returns a fresh array so callers can't mutate source. */
+export function getFaq(): readonly FaqEntry[] {
+  return faq.map((entry) => ({ ...entry }));
 }
