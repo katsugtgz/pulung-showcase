@@ -11,7 +11,7 @@ Instead, run the quality gates **locally** — these are the real gates:
 ```bash
 pnpm build                          # must succeed
 npx react-doctor@latest --json      # score must be 100, below = reject the change
-npx lhci collect && npx lhci assert # no Lighthouse category below 0.9 (headless Chrome via CDP)
+npx @lhci/cli@latest collect && npx @lhci/cli@latest assert  # no Lighthouse category below 0.9 (headless Chrome via CDP). NOTE: use @lhci/cli — bare `npx lhci` resolves to an unrelated typosquat. Not a local dep (blocked by the pnpm trust policy), so run via npx.
 pnpm test                           # Vitest unit tests must pass
 ```
 
