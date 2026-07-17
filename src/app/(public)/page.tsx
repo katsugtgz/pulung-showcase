@@ -1,6 +1,7 @@
 import {
   CredibilityStrip,
   Footer,
+  Header,
   Hero,
   LocationPicker,
   Packages,
@@ -15,6 +16,7 @@ import {
  * WhatsApp dari wa-router, mata uang dari format.
  *
  * Urutan section (per T5 / PRD issue #1):
+ *   0. Header (sticky, bg-primary menyatu dengan Hero)
  *   1. Hero
  *   2. Strip kredibilitas
  *   3. Paket (#packages)
@@ -22,10 +24,15 @@ import {
  *   5. Testimoni
  *   6. Kartu media sosial
  *   7. Footer
+ *
+ * <Header/> dirender sebagai anak pertama <main> sebelum <Hero/>: keduanya
+ * memakai bg-primary sehingga menyatu jadi satu banner biru kontinu, dan
+ * sticky top-0 membuat bar tetap terjangkau saat scroll di dalam main.
  */
 export default function HomePage() {
   return (
     <main className="mx-auto min-h-dvh max-w-md bg-neutral-50">
+      <Header />
       <Hero />
       <CredibilityStrip />
       <Packages />
