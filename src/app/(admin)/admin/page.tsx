@@ -3,21 +3,21 @@ import type { Metadata } from "next";
 import { UserButton } from "@clerk/nextjs";
 import {
   getDomainSummary,
+  getPembayaran,
   getPembayaranByStatus,
   getSiswa,
 } from "@/lib/domain";
 import { formatIDR } from "@/lib/format";
 import { getPackageById } from "@/lib/catalog-data";
+import PembayaranActionButtons from "./PembayaranActionButtons";
 
 /*
- * Dasbor Admin — shell kosong bermerek untuk epik E3. Menampilkan ringkasan
- * operasional dari modul domain (siswa, instruktur, sesi, pembayaran) + antrean
- * pembayaran yang menunggu konfirmasi admin (PRD F5). Dijaga oleh layout
- * (role 'admin') dan proxy.ts.
+ * Dasbor Admin — shell bermerek untuk epik E3/E5. Menampilkan ringkasan
+ * operasional dari modul domain (siswa, instruktur, sesi, pembayaran) +
+ * notifikasi dan antrean pembayaran yang menunggu konfirmasi (PRD F5) dengan
+ * tombol Konfirmasi / Tolak fungsional.
  *
- * Catatan: tidak ada tombol "konfirmasi" fungsional di slice ini — server
- * actions setRole/removeRole ada di ./actions.ts; konfirmasi pembayaran adalah
- * epik E5/E8.
+ * Dijaga oleh layout (role 'admin') dan proxy.ts.
  */
 
 export const metadata: Metadata = {
@@ -30,6 +30,12 @@ const ENROLLMENT_LABEL: Record<string, string> = {
   terkonfirmasi: "Terkonfirmasi",
   jadwal_dipilih: "Jadwal Dipilih",
   selesai: "Selesai",
+};
+
+const PAYMENT_STATUS_LABEL: Record<string, string> = {
+  pending: "Menunggu",
+  terverifikasi: "Terverifikasi",
+  ditolak: "Ditolak",
 };
 
 interface StatCardProps {
@@ -53,6 +59,8 @@ function StatCard({ label, value, hint }: StatCardProps) {
 export default function AdminDashboardPage() {
   const summary = getDomainSummary();
   const pendingPayments = getPembayaranByStatus("pending");
+  const allPayments = getPembayaran();
+  const nonPendingPayments = allPayments.filter((p) => p.status !== "pending");
   const recentSiswa = getSiswa().slice(0, 5);
 
   return (
@@ -72,6 +80,34 @@ export default function AdminDashboardPage() {
         </header>
         <UserButton />
       </div>
+
+      {/* Notifikasi pembayaran menunggu konfirmasi */}
+      {pendingPayments.length > 0 && (
+        <a
+          href="#pending-heading"
+          className="mb-6 flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/5 px-4 py-3 text-sm font-semibold text-primary transition hover:bg-primary/10"
+          aria-label={`${pendingPayments.length} pembayaran menunggu konfirmasi — klik untuk lihat antrean`}
+        >
+          <span aria-hidden="true">🔔</span>
+          <span>
+            {pendingPayments.length} pembayaran menunggu konfirmasi
+          </span>
+          <svg
+            className="ml-auto h-4 w-4 flex-shrink-0"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </a>
+      )}
 
       <section aria-labelledby="stats-heading" className="mb-8">
         <h2 id="stats-heading" className="sr-only">
@@ -97,6 +133,7 @@ export default function AdminDashboardPage() {
         </div>
       </section>
 
+      {/* Antrean pembayaran pending dengan tombol aksi */}
       <section aria-labelledby="pending-heading" className="mb-8">
         <h2
           id="pending-heading"
@@ -132,12 +169,63 @@ export default function AdminDashboardPage() {
                       {formatIDR(payment.amountIdr)}
                     </span>
                   </div>
+                  {/* Tombol aksi — client component */}
+                  <PembayaranActionButtons pembayaranId={payment.id} />
                 </li>
               );
             })}
           </ul>
         )}
       </section>
+
+      {/* Riwayat pembayaran (terverifikasi & ditolak) */}
+      {nonPendingPayments.length > 0 && (
+        <section aria-labelledby="history-heading" className="mb-8">
+          <h2
+            id="history-heading"
+            className="mb-3 text-base font-bold text-neutral-900"
+          >
+            Riwayat Pembayaran
+          </h2>
+          <ul className="flex flex-col gap-2">
+            {nonPendingPayments.map((payment) => {
+              const siswa = getSiswa().find((s) => s.id === payment.siswaId);
+              const pkg = getPackageById(payment.packageId);
+              const isVerified = payment.status === "terverifikasi";
+              return (
+                <li
+                  key={payment.id}
+                  className="flex items-center justify-between gap-3 rounded-xl border border-neutral-200 bg-white p-4"
+                >
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-neutral-900">
+                      {siswa?.fullName ?? "Siswa tidak dikenal"}
+                    </p>
+                    <p className="mt-0.5 truncate text-xs text-neutral-500">
+                      {pkg.name} · {payment.method.toUpperCase()} ·{" "}
+                      {payment.createdAt}
+                    </p>
+                  </div>
+                  <div className="flex flex-shrink-0 flex-col items-end gap-1">
+                    <span className="text-sm font-bold text-neutral-900">
+                      {formatIDR(payment.amountIdr)}
+                    </span>
+                    <span
+                      className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${
+                        isVerified
+                          ? "bg-green-100 text-green-700"
+                          : "bg-accent/10 text-accent"
+                      }`}
+                    >
+                      {PAYMENT_STATUS_LABEL[payment.status] ?? payment.status}
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
 
       <section aria-labelledby="siswa-heading">
         <h2
