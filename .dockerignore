@@ -1,0 +1,32 @@
+# Keep the build context small and reproducible.
+# Local deps/build outputs are regenerated inside the image.
+**/node_modules
+**/.next
+.git
+.gitignore
+
+# Secrets never enter the image.
+.env
+.env.*
+!.env.example
+
+# Local-only working directories.
+.codegraph
+.omo
+.claude
+.tokensave
+research
+.DS_Store
+
+# Source-of-truth assets not needed at runtime.
+stitch
+assets
+
+# CI / docs / Docker metadata (not part of the runtime image).
+.github
+*.md
+Dockerfile
+.dockerignore
+docker-compose.yml
+lighthouserc.json
+vitest.config.ts
