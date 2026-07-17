@@ -116,6 +116,3 @@ export async function advanceEnrollmentStatusAction(
     };
   }
 }
-
-// Re-export for use in client-side type checking
-export { canTransitionEnrollment };
