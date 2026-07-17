@@ -2,14 +2,24 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { idID } from "@clerk/localizations";
+import { getSeoCopy } from "@/lib/copy";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
+const seo = getSeoCopy();
+
 export const metadata: Metadata = {
-  title: "Kursus Mengemudi Pulung",
-  description:
-    "Kursus Mengemudi Pulung — Safe Drive Training sejak tahun 2000. Les mengemudi mobil manual & matic bersertifikat di Surabaya.",
+  title: seo.title,
+  description: seo.description,
+  keywords: [...seo.keywords],
+  openGraph: {
+    title: seo.ogTitle,
+    description: seo.ogDescription,
+    type: "website",
+    locale: "id_ID",
+    siteName: "Kursus Mengemudi Pulung",
+  },
 };
 
 const clerkPubKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;

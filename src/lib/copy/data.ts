@@ -18,6 +18,7 @@ import type {
   HeroPasDirection,
   HeroVariant,
   SectionKey,
+  SeoCopy,
   TestimonialEntry,
   TrustBarItem,
 } from "./types";
@@ -95,6 +96,29 @@ export const sectionBody: Readonly<Record<BodySectionKey, string>> = {
 export const cta: CtaCopy = {
   primary: "Tanya Jadwal via WhatsApp",
   secondary: "Chat Sekarang",
+} as const;
+
+/**
+ * SEO / social meta copy. Keyword-aware for the Surabaya driving-school market
+ * ("kursus mengemudi Surabaya", "kursus setir mobil", matic/manual), leaning on
+ * the authentic trust angle. Legal-status facts (KORLANTAS POLRI, Dishub
+ * Surabaya) are verified in contact.md (source of truth) — assertable as fact.
+ */
+export const seo: SeoCopy = {
+  title: "Kursus Mengemudi Pulung Surabaya — Matic & Manual, Sejak 2000",
+  description:
+    "Kursus setir mobil matic & manual di Surabaya bersama instruktur sabar dan berpengalaman. Safe Drive Training sejak 2000, terdaftar resmi KORLANTAS POLRI & Dishub Surabaya. Tanya jadwal via WhatsApp.",
+  ogTitle: "Kursus Mengemudi Pulung — Belajar Nyetir di Surabaya Sejak 2000",
+  ogDescription:
+    "Belajar mobil matic & manual bersama instruktur sabar dan berpengalaman. Lima cabang di Surabaya, jadwal saling menyesuaikan. Tanya jadwal via WhatsApp.",
+  keywords: [
+    "kursus mengemudi Surabaya",
+    "kursus setir mobil Surabaya",
+    "kursus mobil matic",
+    "kursus mobil manual",
+    "les mengemudi Surabaya",
+    "Safe Drive Training",
+  ],
 } as const;
 
 /**

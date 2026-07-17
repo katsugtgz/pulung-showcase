@@ -6,6 +6,7 @@ import {
   getHeroVariant,
   getSectionBody,
   getSectionHeader,
+  getSeoCopy,
   getTestimonials,
 } from "../index";
 import type {
@@ -127,5 +128,32 @@ describe("testimonials", () => {
     // Prove it is a distinct array without claiming a testimonial exists.
     expect(a).not.toBe(getTestimonials());
     expect(a).toEqual([]);
+  });
+});
+
+describe("getSeoCopy", () => {
+  it("exposes non-empty title, description, and OG text", () => {
+    const seo = getSeoCopy();
+    for (const field of [
+      seo.title,
+      seo.description,
+      seo.ogTitle,
+      seo.ogDescription,
+    ]) {
+      expect(typeof field).toBe("string");
+      expect(field.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("carries Surabaya driving-school keywords", () => {
+    const { keywords } = getSeoCopy();
+    expect(keywords.length).toBeGreaterThan(0);
+    expect(keywords).toContain("kursus mengemudi Surabaya");
+  });
+
+  it("returns a fresh keywords array so source cannot be mutated", () => {
+    const a = getSeoCopy();
+    a.keywords.push("mutated");
+    expect(getSeoCopy().keywords).not.toContain("mutated");
   });
 });

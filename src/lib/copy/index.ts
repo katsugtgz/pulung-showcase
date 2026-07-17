@@ -19,6 +19,7 @@ import {
   heroVariants,
   sectionBody,
   sectionHeaders,
+  seo,
   testimonials,
 } from "./data";
 import type {
@@ -29,6 +30,7 @@ import type {
   HeroPasDirection,
   HeroVariant,
   SectionKey,
+  SeoCopy,
   TestimonialEntry,
 } from "./types";
 
@@ -40,6 +42,7 @@ export type {
   HeroPasDirection,
   HeroVariant,
   SectionKey,
+  SeoCopy,
   TestimonialEntry,
   TrustBarItem,
 } from "./types";
@@ -109,4 +112,12 @@ export function getTestimonials(): readonly TestimonialEntry[] {
 /** Landing FAQ Q&A entries. Returns a fresh array so callers can't mutate source. */
 export function getFaq(): readonly FaqEntry[] {
   return faq.map((entry) => ({ ...entry }));
+}
+
+/**
+ * SEO / social-share meta copy for the root layout's Next.js metadata. Returns a
+ * fresh keywords array so callers can never mutate source.
+ */
+export function getSeoCopy(): SeoCopy {
+  return { ...seo, keywords: [...seo.keywords] };
 }
