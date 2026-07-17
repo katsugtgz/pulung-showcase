@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { UserButton } from "@clerk/nextjs";
+import { AuthProvider } from "@/components/auth-provider";
 import {
   getDomainSummary,
   getPembayaranByStatus,
@@ -55,19 +57,23 @@ export default function AdminDashboardPage() {
   const recentSiswa = getSiswa().slice(0, 5);
 
   return (
+    <AuthProvider>
     <main className="mx-auto min-h-dvh max-w-2xl bg-neutral-50 px-4 py-8">
-      <header className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-          Panel Admin
-        </p>
-        <h1 className="mt-1 text-2xl font-bold text-neutral-900">
-          Dasbor Admin
-        </h1>
-        <p className="mt-1 text-sm text-neutral-600">
-          Kelola data siswa, jadwal instruktur, dan konfirmasi pembayaran Kursus
-          Mengemudi Pulung.
-        </p>
-      </header>
+      <div className="mb-6 flex items-start justify-between gap-3">
+        <header>
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+            Panel Admin
+          </p>
+          <h1 className="mt-1 text-2xl font-bold text-neutral-900">
+            Dasbor Admin
+          </h1>
+          <p className="mt-1 text-sm text-neutral-600">
+            Kelola data siswa, jadwal instruktur, dan konfirmasi pembayaran
+            Kursus Mengemudi Pulung.
+          </p>
+        </header>
+        <UserButton />
+      </div>
 
       <section aria-labelledby="stats-heading" className="mb-8">
         <h2 id="stats-heading" className="sr-only">
@@ -177,5 +183,6 @@ export default function AdminDashboardPage() {
         </Link>
       </footer>
     </main>
+    </AuthProvider>
   );
 }

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
-import { idID } from "@clerk/localizations";
 import { getSeoCopy } from "@/lib/copy";
 import "./globals.css";
 
@@ -22,30 +20,11 @@ export const metadata: Metadata = {
   },
 };
 
-const clerkPubKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-
 /*
- * Clerk appearance: brand the hosted <SignIn/>/<SignUp/> components with
- * Pulung's primary blue (#1E6FB8). Accent red (#D22B3A) is reserved for app
- * CTAs per AGENTS.md, so Clerk keeps a single primary. Locale is Indonesian.
- */
-const clerkAppearance = {
-  variables: {
-    colorPrimary: "#1e6fb8",
-    colorTextOnPrimary: "#ffffff",
-    colorBackground: "#ffffff",
-    colorInputBackground: "#ffffff",
-    colorInputText: "#0f172a",
-    fontFamily: "var(--font-inter), ui-sans-serif, system-ui, sans-serif",
-    borderRadius: "0.5rem",
-  },
-};
-
-/*
- * Env-gated ClerkProvider: rendered only when a publishable key is configured.
- * This keeps the scaffold building & running without real keys; auth activates
- * once NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is set. ClerkProvider sits inside
- * <body> per Clerk's Next.js 16 guidance.
+ * ClerkProvider is deliberately NOT at the root anymore. The public landing (/)
+ * must ship zero Clerk JS and trigger no dev-instance handshake, so Clerk is
+ * scoped to just the routes that use it via <AuthProvider> (auth pages +
+ * dashboards) and to the proxy matcher. See DECISIONS.md ADR-002.
  */
 export default function RootLayout({
   children,
@@ -55,17 +34,14 @@ export default function RootLayout({
   return (
     <html lang="id" className={inter.variable}>
       <body className="font-sans antialiased">
-        {clerkPubKey ? (
-          <ClerkProvider
-            publishableKey={clerkPubKey}
-            localization={idID}
-            appearance={clerkAppearance}
-          >
-            {children}
-          </ClerkProvider>
-        ) : (
-          children
-        )}
+        {/*
+         * Fallback tanpa JS: paksa section yang dibungkus <Reveal/> tetap
+         * terlihat penuh bila IntersectionObserver tak pernah jalan.
+         */}
+        <noscript>
+          <style>{`.t-reveal{opacity:1!important;transform:none!important;filter:none!important}`}</style>
+        </noscript>
+        {children}
       </body>
     </html>
   );

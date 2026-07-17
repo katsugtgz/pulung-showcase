@@ -6,6 +6,7 @@ import {
   Hero,
   LocationPicker,
   Packages,
+  Reveal,
   SocialCards,
   Testimonials,
 } from "@/components/landing";
@@ -37,11 +38,21 @@ export default function HomePage() {
       <Header />
       <Hero />
       <CredibilityStrip />
-      <Packages />
-      <LocationPicker />
-      <Testimonials />
-      <SocialCards />
-      <Faq />
+      <Reveal>
+        <Packages />
+      </Reveal>
+      <Reveal>
+        <LocationPicker />
+      </Reveal>
+      <Reveal>
+        <Testimonials />
+      </Reveal>
+      <Reveal>
+        <SocialCards />
+      </Reveal>
+      <Reveal>
+        <Faq />
+      </Reveal>
       <Footer />
     </main>
   );

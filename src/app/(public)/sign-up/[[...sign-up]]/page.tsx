@@ -1,14 +1,17 @@
 import { SignUp } from "@clerk/nextjs";
+import { AuthProvider } from "@/components/auth-provider";
 
 /*
- * Halaman Daftar. Menggunakan komponen <SignUp/> bawaan Clerk yang sudah
- * diberi tema biru (#1E6FB8) dan lokal Indonesia di RootLayout ClerkProvider.
- * Catch-all route [[...sign-up]] menangani semua sub-rute step Clerk.
+ * Halaman Daftar. Komponen <SignUp/> Clerk (tema biru #1E6FB8 + lokal
+ * Indonesia) dibungkus <AuthProvider> lokal — ClerkProvider tak lagi di root
+ * agar landing bebas Clerk. Catch-all [[...sign-up]] menangani sub-rute step.
  */
 export default function SignUpPage() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center px-4 py-10">
-      <SignUp />
-    </main>
+    <AuthProvider>
+      <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center px-4 py-10">
+        <SignUp />
+      </main>
+    </AuthProvider>
   );
 }

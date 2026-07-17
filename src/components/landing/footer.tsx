@@ -26,7 +26,7 @@ export function Footer() {
       <div className="mx-auto max-w-md">
         {/* Identitas */}
         <div className="mb-6 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400">
             Kursus Mengemudi
           </p>
           <p className="mt-1 text-3xl font-black tracking-tight text-accent">
@@ -52,7 +52,7 @@ export function Footer() {
                   href={`https://wa.me/${cluster.whatsapp.replace(/\D+/g, "")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-neutral-300 transition hover:text-white"
+                  className="flex w-fit items-center gap-2 py-1.5 text-neutral-300 transition hover:text-white"
                 >
                   <WhatsappIcon />
                   <span>{cluster.whatsapp}</span>
@@ -64,7 +64,7 @@ export function Footer() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-300 transition hover:text-white"
+                  className="flex w-fit items-center py-1.5 text-neutral-300 transition hover:text-white"
                 >
                   {cluster.instagram}
                 </a>
@@ -74,16 +74,16 @@ export function Footer() {
         </div>
 
         {/* Akreditasi */}
-        <div className="mb-6 border-t border-neutral-800 pt-4 text-center text-xs text-neutral-500">
+        <div className="mb-6 border-t border-neutral-800 pt-4 text-center text-xs text-neutral-400">
           <p>
             Terdaftar KORLANTAS POLRI &amp; Dishub Surabaya
           </p>
         </div>
 
         {/* Kredit */}
-        <p className="text-center text-xs text-neutral-600">
+        <p className="text-center text-xs text-neutral-400">
           Demo oleh{" "}
-          <span className="font-semibold text-neutral-400">RW Dev</span>
+          <span className="font-semibold text-neutral-300">RW Dev</span>
         </p>
       </div>
     </footer>
