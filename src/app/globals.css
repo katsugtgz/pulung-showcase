@@ -34,10 +34,75 @@
 
 :root {
   color-scheme: light;
+
+  /*
+   * Motion tokens (kosakata transitions-dev). Dipakai oleh .t-reveal untuk
+   * transisi section naik-memudar saat masuk viewport.
+   */
+  --reveal-dur: 500ms;
+  --reveal-distance: 12px;
+  --reveal-blur: 3px;
+  --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html,
 body {
   background-color: var(--color-neutral-50);
   color: var(--color-neutral-900);
+}
+
+/*
+ * Scroll-reveal per section (dipakai <Reveal/>). Konten mulai turun + buram +
+ * transparan, lalu .is-shown (dari IntersectionObserver) mengembalikannya ke
+ * posisi diam. Hanya section di bawah lipatan yang dibungkus — Hero (elemen
+ * LCP) tidak, agar skor performa tetap tinggi. Teks tetap ada di DOM untuk SEO.
+ */
+.t-reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  filter: blur(var(--reveal-blur));
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    transform var(--reveal-dur) var(--reveal-ease),
+    filter var(--reveal-dur) var(--reveal-ease);
+  will-change: transform, opacity;
+
+  /*
+   * Failsafe: jika bundel JS gagal dimuat/dieksekusi, .is-shown tidak akan
+   * pernah ditambahkan dan section di bawah lipatan tetap tak terlihat selamanya
+   * (<noscript> hanya menutup kasus JS dinonaktifkan, bukan JS gagal). Animasi
+   * durasi 0s dengan delay 2.5s + fill forwards memaksa keadaan akhir (terlihat
+   * penuh) setelah ~2.5s. Karena hanya fill 'forwards' (tanpa 'backwards'),
+   * animasi tidak memengaruhi apa pun selama delay. <Reveal/> melucuti animasi
+   * ini (style.animation = "none") begitu JS hidup — failsafe hanya berlaku
+   * saat bundel benar-benar gagal, dan reveal saat scroll tetap utuh.
+   */
+  animation: t-reveal-failsafe 0s 2.5s forwards;
+}
+.t-reveal.is-shown {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@keyframes t-reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/*
+ * Wajib dipertahankan: menonaktifkan gerak untuk pengguna yang meminta lebih
+ * sedikit animasi di tingkat OS. Konten langsung tampil penuh.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .t-reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+    animation: none;
+  }
 }

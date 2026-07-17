@@ -30,7 +30,7 @@ export function Hero() {
       />
 
       <div className="relative mx-auto flex max-w-md flex-col items-center">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
           Kursus Mengemudi
         </p>
 
@@ -43,7 +43,7 @@ export function Hero() {
         <p className="mt-4 text-balance text-lg font-medium leading-snug text-white">
           {headline}
         </p>
-        <p className="mt-2 text-balance text-sm leading-relaxed text-white/80">
+        <p className="mt-2 text-balance text-sm leading-relaxed text-white/90">
           {subheadline}
         </p>
 
@@ -52,7 +52,7 @@ export function Hero() {
           {trustBar.map((chip) => (
             <li
               key={chip.id}
-              className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-medium text-white/90 backdrop-blur-sm"
+              className="rounded-full border border-white/40 px-3 py-1 text-xs font-medium text-white"
             >
               {chip.label}
             </li>

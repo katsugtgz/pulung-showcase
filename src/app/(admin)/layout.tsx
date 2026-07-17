@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { AuthProvider } from "@/components/auth-provider";
 
 /*
  * Pelindung rute untuk grup (admin): /admin/*. Memeriksa role 'admin' dari
@@ -10,6 +11,9 @@ import { redirect } from "next/navigation";
  *
  * Guard ini berlapis dengan proxy.ts: proxy menangkal lebih dulu di edge,
  * layout memeriksa ulang di server component (defense in depth).
+ *
+ * <AuthProvider> dipasang di sini (bukan per-halaman) agar setiap halaman baru
+ * di grup (admin) otomatis terbungkus ClerkProvider tanpa perlu diingat ulang.
  */
 const clerkEnabled = Boolean(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
@@ -26,5 +30,5 @@ export default async function AdminLayout({
       redirect("/");
     }
   }
-  return <>{children}</>;
+  return <AuthProvider>{children}</AuthProvider>;
 }
