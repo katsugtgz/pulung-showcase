@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login &amp; Register</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style data-purpose="custom-styles">
+    /* Custom styles for specific design elements not easily achieved with Tailwind classes alone */
+    .bg-primary-purple { background-color: #5D3B98; }
+    .text-primary-purple { color: #5D3B98; }
+    .border-primary-purple { border-color: #5D3B98; }
+    
+    .bg-light-purple { background-color: #F8F5FF; }
+    .text-gray-dark { color: #333333; }
+    .text-gray-medium { color: #666666; }
+    .text-gray-light { color: #999999; }
+    
+    /* Input field styling */
+    .input-field {
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 12px 16px;
+      width: 100%;
+      font-size: 14px;
+      color: #333333;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #5D3B98;
+      box-shadow: 0 0 0 1px #5D3B98;
+    }
+    
+    /* Toggle switch styling */
+    .toggle-container {
+      background-color: #F3F4F6;
+      border-radius: 20px;
+      padding: 4px;
+      display: flex;
+      position: relative;
+    }
+    .toggle-button {
+      flex: 1;
+      text-align: center;
+      padding: 8px 0;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666666;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.3s ease;
+    }
+    .toggle-button.active {
+      color: #5D3B98;
+    }
+    .toggle-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: calc(100% - 8px);
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      z-index: 0;
+    }
+    .toggle-container.register-active .toggle-slider {
+      transform: translateX(100%);
+    }
+
+    /* SVG Icon styles */
+    .icon {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body class="bg-light-purple font-sans antialiased text-gray-dark flex justify-center min-h-screen">
+<!-- BEGIN: MainContainer -->
+<main class="w-full max-w-md p-6 bg-white shadow-xl flex flex-col justify-center relative overflow-hidden" data-purpose="main-login-container">
+<!-- Background Decoration -->
+<div class="absolute top-0 right-0 -mt-16 -mr-16 w-48 h-48 bg-purple-100 rounded-full opacity-50 z-0"></div>
+<div class="absolute bottom-0 left-0 -mb-16 -ml-16 w-64 h-64 bg-purple-50 rounded-full opacity-50 z-0"></div>
+<div class="relative z-10 flex flex-col items-center">
+<!-- BEGIN: HeaderSection -->
+<!-- Logo Icon -->
+<div class="w-16 h-16 bg-primary-purple rounded-full flex items-center justify-center text-white mb-6 shadow-md" data-purpose="logo-icon">
+<svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.375 3C2.339 3 1.5 3.84 1.5 4.875v.75c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875v-.75C22.5 3.839 21.66 3 20.625 3H3.375Z"></path>
+<path clip-rule="evenodd" d="M3.087 9l.54 9.176A3 3 0 006.62 21h10.757a3 3 0 002.995-2.824L20.913 9H3.087zm6.163 3.75A.75.75 0 0110 12h4a.75.75 0 010 1.5h-4a.75.75 0 01-.75-.75z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<!-- Welcome Text -->
+<h1 class="text-2xl font-bold text-gray-dark mb-2 text-center" data-purpose="welcome-title">Selamat Datang</h1>
+<p class="text-sm text-gray-medium text-center mb-8 px-4" data-purpose="welcome-description">
+        Kelola jadwal kursus mengemudi Anda dengan mudah.
+      </p>
+<!-- END: HeaderSection -->
+<!-- BEGIN: ToggleSection -->
+<div class="w-full mb-6" data-purpose="login-register-toggle">
+<div class="toggle-container" id="auth-toggle">
+<div class="toggle-slider"></div>
+<div class="toggle-button active" onclick="setToggle('masuk')">Masuk</div>
+<div class="toggle-button" onclick="setToggle('daftar')">Daftar</div>
+</div>
+</div>
+<!-- END: ToggleSection -->
+<!-- BEGIN: FormSection -->
+<form class="w-full" data-purpose="login-form">
+<!-- Email Input -->
+<div class="mb-4">
+<label class="block text-xs font-medium text-gray-medium mb-1" for="email">Email atau Nomor Telepon</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+<svg class="icon" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 4a2 2 0 00-2 2v8a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2H3zm0 1.059V5h14v.059l-7 3.5-7-3.5zM2 6.765l7 3.5a1 1 0 001 0l7-3.5V14H2V6.765z"></path>
+</svg>
+</div>
+<input class="input-field pl-10" id="email" placeholder="nama@email.com" required="" type="text"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="mb-6">
+<div class="flex justify-between items-center mb-1">
+<label class="block text-xs font-medium text-gray-medium" for="password">Kata Sandi</label>
+<a class="text-xs text-primary-purple hover:underline font-medium" href="#">Lupa Sandi?</a>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+<svg class="icon" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H9V7a3 3 0 015.12-2.12 1 1 0 101.41-1.41A4.975 4.975 0 0010 2zm-1 9a1 1 0 112 0v2a1 1 0 11-2 0v-2z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<input class="input-field pl-10 pr-10" id="password" placeholder="••••••••" required="" type="password"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-400 hover:text-gray-600" onclick="togglePasswordVisibility()">
+<svg class="icon" fill="currentColor" id="eye-icon" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+<path clip-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" fill-rule="evenodd"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary-purple text-white py-3 rounded-lg font-semibold flex justify-center items-center shadow-md hover:bg-purple-800 transition duration-200" data-purpose="submit-button" type="submit">
+          Masuk
+          <svg class="w-5 h-5 ml-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</form>
+<!-- END: FormSection -->
+<!-- BEGIN: SocialLoginSection -->
+<div class="w-full mt-8" data-purpose="social-login">
+<div class="relative flex items-center justify-center mb-6">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-gray-300"></div>
+</div>
+<div class="relative bg-white px-4 text-xs text-gray-400">
+            Atau lanjutkan dengan
+          </div>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Google Button -->
+<button class="w-full border border-gray-300 bg-white text-gray-dark py-2.5 rounded-lg flex items-center justify-center hover:bg-gray-50 transition duration-200 shadow-sm" type="button">
+<svg class="w-5 h-5 mr-2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+<span class="text-sm font-medium">Google</span>
+</button>
+<!-- Apple Button -->
+<button class="w-full border border-gray-300 bg-white text-gray-dark py-2.5 rounded-lg flex items-center justify-center hover:bg-gray-50 transition duration-200 shadow-sm" type="button">
+<svg class="w-5 h-5 mr-2 text-black" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M16.365 7.124c1.161-1.39 1.947-3.298 1.734-5.124-1.603.064-3.606 1.068-4.814 2.502-.977 1.144-1.92 3.109-1.666 4.89 1.787.138 3.585-.884 4.746-2.268zm-5.26 2.68c-2.316-.145-4.551 1.258-5.748 1.258-1.22 0-3.08-1.228-4.996-1.19-2.48.037-4.78 1.442-6.052 3.662-2.585 4.475-.66 11.088 1.865 14.733 1.233 1.777 2.695 3.766 4.623 3.69 1.866-.075 2.57-1.205 4.842-1.205 2.247 0 2.915 1.205 4.866 1.168 1.998-.038 3.254-1.815 4.463-3.58 1.396-2.036 1.972-4.009 1.996-4.11-.044-.018-3.856-1.48-3.896-5.882-.034-3.67 3.018-5.438 3.16-5.52-1.72-2.512-4.385-2.853-5.323-2.916z"></path>
+</svg>
+<span class="text-sm font-medium">Apple</span>
+</button>
+</div>
+</div>
+<!-- END: SocialLoginSection -->
+</div>
+</main>
+<!-- END: MainContainer -->
+<script data-purpose="ui-interactions">
+    // Toggle between Login and Register
+    function setToggle(mode) {
+      const toggleContainer = document.getElementById('auth-toggle');
+      const buttons = toggleContainer.querySelectorAll('.toggle-button');
+      
+      if (mode === 'daftar') {
+        toggleContainer.classList.add('register-active');
+        buttons[0].classList.remove('active');
+        buttons[0].classList.remove('text-primary-purple');
+        buttons[1].classList.add('active');
+        buttons[1].classList.add('text-primary-purple');
+      } else {
+        toggleContainer.classList.remove('register-active');
+        buttons[1].classList.remove('active');
+        buttons[1].classList.remove('text-primary-purple');
+        buttons[0].classList.add('active');
+        buttons[0].classList.add('text-primary-purple');
+      }
+    }
+
+    // Toggle Password Visibility
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    }
+  </script>
+</body></html>
