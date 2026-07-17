@@ -52,7 +52,7 @@ export function Hero() {
           {trustBar.map((chip) => (
             <li
               key={chip.id}
-              className="rounded-full border border-white/40 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm"
+              className="rounded-full border border-white/40 px-3 py-1 text-xs font-medium text-white"
             >
               {chip.label}
             </li>
