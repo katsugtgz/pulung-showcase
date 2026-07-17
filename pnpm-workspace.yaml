@@ -1,3 +1,5 @@
+minimumReleaseAge: 10080
+trustPolicy: no-downgrade
 allowBuilds:
   sharp: true
 minimumReleaseAgeExclude:
@@ -22,3 +24,13 @@ minimumReleaseAgeExclude:
   - '@tailwindcss/postcss@4.3.3'
   - tailwindcss@4.3.3
   - '@clerk/localizations@4.13.5'
+  # Transitive deps (build toolchain) yang dirilis <7 hari — dipercaya,
+  # dikecualikan agar minimumReleaseAge tidak memblokir lockfile yang ada.
+  - baseline-browser-mapping@2.10.43
+  - caniuse-lite@1.0.30001806
+  - es-module-lexer@2.3.1
+  - nanoid@3.3.16
+  - postcss@8.5.19
+  - tldts-core@7.4.9
+  - tldts@7.4.9
+  - vite@8.1.5
