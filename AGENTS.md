@@ -17,7 +17,7 @@ pnpm test                           # Vitest unit tests must pass
 
 ## Hard rules
 
-- All deps pinned to latest stable/LTS (verified 2026-07-17): Node 24 LTS, Next 16.2.10, React 19.2.7, Tailwind 4.3.3 (CSS-first `@theme` — no tailwind.config.js), @clerk/nextjs 7.5.20, pnpm 11, TS 7.0.2. Do not downgrade silently; if TS 7 breaks the toolchain, stop and report.
+- All deps pinned to latest stable/LTS (verified 2026-07-17): Node 24 LTS, Next 16.2.10, React 19.2.7, Tailwind 4.3.3 (CSS-first `@theme` — no tailwind.config.js), @clerk/nextjs 7.5.20, pnpm 11, TS 5.9.3. Note: TS is intentionally pinned to the latest *classic* (5.9.3), NOT 7.x — TS 7.x is the native Go rewrite and is incompatible with Next 16's classic-API build type-checker (see DECISIONS.md ADR-001). Do not bump TS past 5.x without checking Next's type-check path.
 - QA/browser automation: `agent-browser` CLI only. **Playwright is forbidden.**
 - Placeholder images: generate with the `agy` CLI.
 - Brand palette: primary blue ~#1E6FB8, accent red #D22B3A (from Pulung's real street-banner identity), neutrals white/gray. Never reintroduce the old stitch purple #5e4399.

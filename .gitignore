@@ -1,5 +1,6 @@
 .DS_Store
 .tokensave/
+.omo/
 .claude/settings.local.json
 node_modules/
 .next/

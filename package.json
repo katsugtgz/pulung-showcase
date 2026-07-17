@@ -1,0 +1,32 @@
+{
+  "name": "pulung",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "//": "typescript pinned to 5.9.3 (latest classic-stable). TS 7.x is the native Go rewrite whose `exports` ships only `version` (no createProgram/readConfigFile/ModuleKind), making it incompatible with Next 16.x's classic-API build type checker (verified 2026-07-17). See DECISIONS.md ADR-001.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "7.5.20",
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.1.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.3",
+    "jsdom": "29.1.1",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "vitest": "4.1.10"
+  }
+}
