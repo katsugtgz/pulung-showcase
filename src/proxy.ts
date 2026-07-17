@@ -77,6 +77,11 @@ export default clerkEnabled ? clerk : passthrough;
  *     the matcher makes the public page fast & cookie-free while every route
  *     that calls auth()/auth.protect() below stays fully covered.
  * See DECISIONS.md ADR-002.
+ *
+ * ⚠️ WAJIB: cakupan matcher ini bersifat opt-in (allowlist). SETIAP grup rute
+ * BARU yang menyentuh auth (memanggil auth()/auth.protect()) HARUS ditambahkan
+ * ke daftar matcher di bawah. Grup yang memanggil auth() tanpa cakupan matcher
+ * akan 500 saat runtime.
  */
 export const config = {
   matcher: [

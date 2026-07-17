@@ -12,6 +12,11 @@ import type { ReactNode } from "react";
  * supaya scaffold tetap build & jalan tanpa kunci asli. Appearance (biru
  * #1E6FB8) & lokal Indonesia dulu di RootLayout ClerkProvider; dipindah ke sini
  * saat provider dilepas dari root agar landing tidak lagi memuat Clerk.
+ *
+ * ⚠️ Catatan jujur: mode pass-through tanpa kunci hanya menjaga halaman tetap
+ * BUILD. Halaman yang benar-benar merender komponen Clerk (mis. <UserButton/>)
+ * tetap AKAN error saat runtime tanpa kunci, karena komponen Clerk butuh
+ * ClerkProvider yang benar-benar ter-mount — bukan sekadar fragment kosong.
  */
 const clerkPubKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 

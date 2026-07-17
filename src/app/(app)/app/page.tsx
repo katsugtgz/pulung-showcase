@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { UserButton } from "@clerk/nextjs";
-import { AuthProvider } from "@/components/auth-provider";
 import {
   getPembayaranBySiswa,
   getSesiBySiswa,
@@ -47,7 +46,6 @@ export default function SiswaDashboardPage() {
   const latestPayment = payments[payments.length - 1];
 
   return (
-    <AuthProvider>
     <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
       <div className="mb-6 flex items-start justify-between gap-3">
         <header>
@@ -148,6 +146,5 @@ export default function SiswaDashboardPage() {
         </Link>
       </footer>
     </main>
-    </AuthProvider>
   );
 }

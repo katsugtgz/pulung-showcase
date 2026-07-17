@@ -21,6 +21,12 @@ export function Reveal({ children }: { children: ReactNode }) {
       setShown(true);
       return;
     }
+    /*
+     * JS hidup — lucuti failsafe CSS (animation 2.5s di .t-reveal). Tanpa ini,
+     * fill 'forwards' memaksa semua section tampil pada t≈2.5s meski JS sehat,
+     * sehingga reveal saat scroll tak pernah terjadi setelah itu.
+     */
+    el.style.animation = "none";
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
