@@ -62,10 +62,35 @@ const passthrough: NextMiddleware = () => NextResponse.next();
 
 export default clerkEnabled ? clerk : passthrough;
 
+/*
+ * Matcher is scoped so the PUBLIC LANDING (/) never runs clerkMiddleware. Every
+ * other Clerk-touching route is listed: the auth pages (/sign-in, /sign-up,
+ * whose <AuthProvider> SSRs auth()), the RBAC groups (/app, /admin), and the
+ * plain-auth group (/dashboard, /catalog). The landing is intentionally absent:
+ *   - It is a pure marketing page that ships zero Clerk JS (its header uses
+ *     static links to the auth pages), so no server middleware is needed.
+ *   - On a Clerk *development* instance, running the middleware on / forces a
+ *     blocking dev-browser handshake redirect (…/v1/client/handshake?
+ *     __clerk_hs_reason=dev-browser-missing) on every fresh load. That ~1.8s
+ *     redirect chain tanks Lighthouse performance/best-practices on the landing
+ *     (and never happens in production with a pk_live key). Keeping / out of
+ *     the matcher makes the public page fast & cookie-free while every route
+ *     that calls auth()/auth.protect() below stays fully covered.
+ * See DECISIONS.md ADR-002.
+ *
+ * ⚠️ WAJIB: cakupan matcher ini bersifat opt-in (allowlist). SETIAP grup rute
+ * BARU yang menyentuh auth (memanggil auth()/auth.protect()) HARUS ditambahkan
+ * ke daftar matcher di bawah. Grup yang memanggil auth() tanpa cakupan matcher
+ * akan 500 saat runtime.
+ */
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files (paths with an extension).
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/dashboard/:path*",
+    "/catalog/:path*",
+    "/app/:path*",
+    "/admin/:path*",
+    "/sign-in/:path*",
+    "/sign-up/:path*",
     // Always run for API and tRPC routes.
     "/(api|trpc)(.*)",
     // Clerk auto-proxy path (Clerk 7 helper routes). Must come after the

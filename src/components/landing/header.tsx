@@ -1,14 +1,18 @@
 import Link from "next/link";
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
 /*
  * Header — bilah navigasi tipis di puncak landing. Memakai bg-primary yang
  * sama dengan Hero sehingga membaca sebagai "pinggiran atas" banner biru
- * Pulung yang kontinu, tanpa seam. Sticky agar kontrol auth (Masuk/Daftar
- * untuk tamu; avatar + Dasbor untuk pengguna) selalu terjangkau saat scroll.
+ * Pulung yang kontinu, tanpa seam. Sticky agar tautan auth selalu terjangkau
+ * saat scroll.
+ *
+ * Kontrol auth sengaja berupa <Link> statis ke /sign-in dan /sign-up (BUKAN
+ * komponen Clerk sisi-klien). Landing publik harus bebas JS & handshake Clerk
+ * demi skor Lighthouse; kontrol akun terautentikasi (UserButton/keluar) pindah
+ * ke dasbor. Lihat DECISIONS.md ADR-002.
  *
  * Keputusan desain (pilihan a — top bar di atas Hero):
- *   Hero sudah full-bleed bg-primary dari puncak halaman. Bar putah/transparan
+ *   Hero sudah full-bleed bg-primary dari puncak halaman. Bar putih/transparan
  *   di atasnya akan memotong permukaan biru. Dengan bg-primary yang cocok,
  *   Header menyatu mulus ke tepi atas Hero — satu banner biru kontinu yang
  *   mereplika identitas banner jalan 25 tahun Pulung. Pill mengambang (b)
@@ -27,36 +31,20 @@ export function Header() {
           PULUNG
         </Link>
 
-        {/* Kontrol auth — kondisional via <Show> Clerk */}
+        {/* Tautan auth statis — menuju halaman Clerk yang di-render terpisah */}
         <div className="flex items-center gap-2">
-          <Show when="signed-in">
-            <Link
-              href="/dashboard"
-              className="rounded-lg border border-white/40 bg-white/5 px-3 py-1.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/70 hover:bg-white/10 active:scale-[0.98]"
-            >
-              Dasbor
-            </Link>
-            <UserButton />
-          </Show>
-
-          <Show when="signed-out">
-            <SignInButton>
-              <button
-                type="button"
-                className="rounded-lg border border-white/50 px-3 py-1.5 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10 active:scale-[0.98]"
-              >
-                Masuk
-              </button>
-            </SignInButton>
-            <SignUpButton>
-              <button
-                type="button"
-                className="rounded-lg bg-accent px-3 py-1.5 text-sm font-bold text-white shadow-sm shadow-accent/30 transition hover:bg-accent-dark active:scale-[0.98]"
-              >
-                Daftar
-              </button>
-            </SignUpButton>
-          </Show>
+          <Link
+            href="/sign-in"
+            className="rounded-lg border border-white/50 px-3 py-1.5 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10 active:scale-[0.98]"
+          >
+            Masuk
+          </Link>
+          <Link
+            href="/sign-up"
+            className="rounded-lg bg-accent px-3 py-1.5 text-sm font-bold text-white shadow-sm shadow-accent/30 transition hover:bg-accent-dark active:scale-[0.98]"
+          >
+            Daftar
+          </Link>
         </div>
       </div>
     </header>

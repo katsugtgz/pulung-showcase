@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { UserButton } from "@clerk/nextjs";
 import {
   getPembayaranBySiswa,
   getSesiBySiswa,
@@ -46,17 +47,20 @@ export default function SiswaDashboardPage() {
 
   return (
     <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
-      <header className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-          Area Siswa
-        </p>
-        <h1 className="mt-1 text-2xl font-bold text-neutral-900">
-          Halo, {siswa.fullName.split(" ")[0]}!
-        </h1>
-        <p className="mt-1 text-sm text-neutral-600">
-          {pkg.name} — pantau jadwal dan status pembayaran kursus Anda.
-        </p>
-      </header>
+      <div className="mb-6 flex items-start justify-between gap-3">
+        <header>
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+            Area Siswa
+          </p>
+          <h1 className="mt-1 text-2xl font-bold text-neutral-900">
+            Halo, {siswa.fullName.split(" ")[0]}!
+          </h1>
+          <p className="mt-1 text-sm text-neutral-600">
+            {pkg.name} — pantau jadwal dan status pembayaran kursus Anda.
+          </p>
+        </header>
+        <UserButton />
+      </div>
 
       <section
         aria-labelledby="status-heading"
