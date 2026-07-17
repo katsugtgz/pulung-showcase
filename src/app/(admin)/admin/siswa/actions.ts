@@ -2,11 +2,7 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import {
-  updateSiswa,
-  setEnrollmentStatus,
-  canTransitionEnrollment,
-} from "@/lib/domain";
+import { updateSiswa, setEnrollmentStatus } from "@/lib/domain";
 import type { EnrollmentStatus } from "@/lib/domain";
 
 /*
