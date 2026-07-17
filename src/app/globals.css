@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/*
+ * Brand theme tokens (CSS-first @theme, Tailwind v4).
+ * Source: AGENTS.md — primary blue #1E6FB8, accent red #D22B3A (CTAs only),
+ * neutral white/gray scale. Old stitch purple #5e4399 is forbidden.
+ * These tokens generate utilities: bg-primary, text-accent, border-neutral-200, etc.
+ */
+@theme {
+  /* Brand */
+  --color-primary: #1e6fb8;
+  --color-primary-dark: #185a99;
+  --color-primary-light: #4a8fce;
+
+  /* Accent — use sparingly, CTAs only */
+  --color-accent: #d22b3a;
+  --color-accent-dark: #a8222e;
+
+  /* Neutral scale */
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+}
