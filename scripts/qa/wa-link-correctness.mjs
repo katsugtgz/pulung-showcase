@@ -11,15 +11,18 @@
 //   3. `agent-browser` CLI installed.
 //
 // What it checks, for each of the 5 branch cards in #lokasi:
-//   - The "Hubungi via WhatsApp" <a> href points at the correct cluster admin:
+//   - The WhatsApp <a> href points at the correct cluster admin:
 //       Cluster A (Gunung Anyar, Pandugo, Juanda) -> wa.me/6281100000001
 //       Cluster B (Manyar, Pucang)                 -> wa.me/6281100000002
 //   - The URL-encoded `text` param, when decoded, names the branch.
+//   - The prefilled message interpolates the selected transmission: with no
+//     toggle it reads "manual atau matic"; after tapping "Matic" it reads
+//     "kursus mobil matic" (issue #16 — transmission + area in the deep link).
 //
 // The expected digits below are the authoritative oracle (sourced from
 // contact.md, the business data source of truth). The exact message wording is
 // unit-tested in src/lib/wa-router; this E2E test validates only the DOM
-// wiring (right button -> right number, branch name present in the message).
+// wiring (right button -> right number, branch name + transmission in message).
 //
 // Run: node scripts/qa/wa-link-correctness.mjs
 
@@ -37,20 +40,21 @@ const EXPECTED = {
   Pucang: CLUSTER_B,
 };
 
+// Read every branch WhatsApp link in #lokasi. Selected by wa.me href prefix
+// (not button label) so it stays correct as CTA microcopy changes (#16).
+const READ_BUTTONS = `
+  Array.from(document.querySelectorAll('#lokasi a[href^="https://wa.me/"]'))
+    .map((a) => {
+      const article = a.closest("article");
+      const name = (article && article.querySelector("h4")?.innerText || "").trim();
+      return { href: a.getAttribute("href"), branchName: name };
+    });
+`;
+
 await runQa("wa-link-correctness", async () => {
   openPage("/");
 
-  // Each branch card is <article> with an <h4>{branch name}</h4> and a green
-  // WhatsApp <a> built from buildWhatsAppLink({ branchId }).
-  const buttons = evalInPage(`
-    Array.from(document.querySelectorAll("#lokasi a"))
-      .filter((a) => /Hubungi via WhatsApp/i.test(a.innerText || ""))
-      .map((a) => {
-        const article = a.closest("article");
-        const name = (article && article.querySelector("h4")?.innerText || "").trim();
-        return { href: a.getAttribute("href"), branchName: name };
-      });
-  `);
+  const buttons = evalInPage(READ_BUTTONS);
 
   assert(
     Array.isArray(buttons),
@@ -76,16 +80,52 @@ await runQa("wa-link-correctness", async () => {
       `branch "${b.branchName}" -> expected wa.me/${expectedDigits}, got ${b.href}`,
     );
 
-    const url = new URL(b.href);
-    const text = url.searchParams.get("text") ?? "";
-    const decoded = decodeURIComponent(text);
+    const decoded = decodeURIComponent(new URL(b.href).searchParams.get("text") ?? "");
     assert(
       decoded.includes(b.branchName),
       `branch "${b.branchName}" prefilled message does not mention the branch name: "${decoded}"`,
+    );
+    // With no transmission selected the message defaults to "manual atau matic".
+    assert(
+      decoded.includes("manual atau matic"),
+      `branch "${b.branchName}" default message should say "manual atau matic": "${decoded}"`,
+    );
+  }
+
+  // Tap the "Matic" transmission toggle, then confirm the deep link now
+  // interpolates that transmission into the prefilled text.
+  const clicked = evalInPage(`
+    (() => {
+      const group = document.querySelector('[role="group"][aria-label="Pilih jenis transmisi"]');
+      if (!group) return false;
+      const btn = Array.from(group.querySelectorAll("button"))
+        .find((el) => (el.textContent || "").trim() === "Matic");
+      if (!btn) return false;
+      btn.click();
+      return true;
+    })();
+  `);
+  assert(clicked, 'could not find/click the "Matic" transmission toggle');
+
+  const afterMatic = evalInPage(READ_BUTTONS);
+  assert(
+    Array.isArray(afterMatic) && afterMatic.length === 5,
+    "re-read after selecting Matic did not return 5 buttons",
+  );
+  for (const b of afterMatic) {
+    const decoded = decodeURIComponent(new URL(b.href).searchParams.get("text") ?? "");
+    assert(
+      decoded.includes("kursus mobil matic"),
+      `branch "${b.branchName}" message should interpolate "matic" after toggle: "${decoded}"`,
+    );
+    // Routing must be unaffected by the transmission selection.
+    assert(
+      b.href.startsWith(`https://wa.me/${EXPECTED[b.branchName]}`),
+      `branch "${b.branchName}" routing changed after toggle: ${b.href}`,
     );
   }
 
   const a = buttons.filter((b) => b.href.includes(CLUSTER_A)).length;
   const bCount = buttons.filter((b) => b.href.includes(CLUSTER_B)).length;
-  return `${buttons.length} branches OK — ${a} -> Cluster A, ${bCount} -> Cluster B`;
+  return `5 branches OK — ${a} -> Cluster A, ${bCount} -> Cluster B; transmission interpolation verified`;
 });

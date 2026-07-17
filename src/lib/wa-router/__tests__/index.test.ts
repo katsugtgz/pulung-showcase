@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildWhatsAppLink } from "../index";
-import { getBranches, getPackageById } from "../../catalog-data";
+import { getBranches } from "../../catalog-data";
 
 const CLUSTER_A_DIGITS = "6281100000001";
 const CLUSTER_B_DIGITS = "6281100000002";
@@ -42,6 +42,10 @@ describe("buildWhatsAppLink — cluster routing (critical business logic)", () =
   });
 });
 
+function decodeText(link: string): string {
+  return decodeURIComponent(new URL(link).searchParams.get("text")!);
+}
+
 describe("buildWhatsAppLink — prefilled message", () => {
   it("encodes the text param with encodeURIComponent", () => {
     const link = buildWhatsAppLink({ branchId: "gunung-anyar" });
@@ -49,39 +53,61 @@ describe("buildWhatsAppLink — prefilled message", () => {
     // encodeURIComponent percent-encodes spaces and commas; parentheses are
     // RFC-unreserved and stay literal, so we only assert those two.
     expect(raw).not.toMatch(/[ ,]/);
-    expect(decodeURIComponent(raw)).toContain("Halo admin Pulung");
+    expect(decodeURIComponent(raw).startsWith("Halo admin Pulung")).toBe(true);
   });
 
-  it("includes the branch name in the decoded message", () => {
-    const link = buildWhatsAppLink({ branchId: "pandugo" });
-    const decoded = decodeURIComponent(new URL(link).searchParams.get("text")!);
-    expect(decoded).toContain("Pandugo");
-  });
-
-  it("includes the package name when packageId is provided", () => {
-    const pkg = getPackageById("paket-manual");
-    const link = buildWhatsAppLink({
-      branchId: "gunung-anyar",
-      packageId: "paket-manual",
-    });
-    const decoded = decodeURIComponent(new URL(link).searchParams.get("text")!);
-    expect(decoded).toContain(pkg.name);
+  it("defaults to 'manual atau matic' and includes the branch area name", () => {
+    const decoded = decodeText(buildWhatsAppLink({ branchId: "gunung-anyar" }));
+    expect(decoded).toContain("kursus mobil manual atau matic");
     expect(decoded).toContain("Gunung Anyar");
   });
 
-  it("omits the package reference when packageId is absent", () => {
-    const link = buildWhatsAppLink({ branchId: "manyar" });
-    const decoded = decodeURIComponent(new URL(link).searchParams.get("text")!);
-    expect(decoded).not.toContain("Paket");
-    expect(decoded).toContain("kursus mengemudi");
+  it("interpolates transmission 'matic'", () => {
+    const decoded = decodeText(
+      buildWhatsAppLink({ branchId: "gunung-anyar", transmission: "matic" }),
+    );
+    expect(decoded).toContain("kursus mobil matic di area");
+  });
+
+  it("interpolates transmission 'manual'", () => {
+    const decoded = decodeText(
+      buildWhatsAppLink({ branchId: "gunung-anyar", transmission: "manual" }),
+    );
+    expect(decoded).toContain("kursus mobil manual di area");
+  });
+
+  it("interpolates transmission 'mixed' as 'manual & matic'", () => {
+    const decoded = decodeText(
+      buildWhatsAppLink({ branchId: "gunung-anyar", transmission: "mixed" }),
+    );
+    expect(decoded).toContain("kursus mobil manual & matic");
+  });
+
+  it("derives transmission from packageId when none is explicit", () => {
+    const decoded = decodeText(
+      buildWhatsAppLink({ branchId: "gunung-anyar", packageId: "paket-matic" }),
+    );
+    expect(decoded).toContain("matic");
+  });
+
+  it("lets explicit transmission override the packageId transmission", () => {
+    const decoded = decodeText(
+      buildWhatsAppLink({
+        branchId: "gunung-anyar",
+        packageId: "paket-matic",
+        transmission: "manual",
+      }),
+    );
+    expect(decoded).toContain("kursus mobil manual");
   });
 
   it("produces a full well-formed link for a known case", () => {
     const link = buildWhatsAppLink({
       branchId: "gunung-anyar",
-      packageId: "paket-manual",
+      transmission: "manual",
     });
-    const message = `Halo admin Pulung, saya ingin bertanya tentang ${getPackageById("paket-manual").name} di cabang Gunung Anyar (Surabaya Selatan & Timur (MERR / Rungkut / Juanda)).`;
+    const message =
+      "Halo admin Pulung, saya mau tanya paket kursus mobil manual di area Gunung Anyar (Surabaya Selatan & Timur (MERR / Rungkut / Juanda)). Bisa info jadwal & harga?";
     expect(link).toBe(
       `https://wa.me/${CLUSTER_A_DIGITS}?text=${encodeURIComponent(message)}`,
     );
