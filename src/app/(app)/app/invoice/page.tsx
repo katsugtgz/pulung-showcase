@@ -52,9 +52,11 @@ export default function InvoicePage() {
 
       {/* Payment list */}
       {payments.length === 0 ? (
-        <div className="rounded-xl border border-neutral-200 bg-white p-6 text-sm text-neutral-500">
-          Belum ada data pembayaran. Lakukan pembayaran melalui halaman katalog
-          paket.
+        <div className="rounded-xl border border-neutral-200 bg-white p-6">
+          <p className="text-sm text-neutral-500">
+            Belum ada data pembayaran. Pilih paket di halaman katalog dan
+            selesaikan pembayaran QRIS untuk mulai kursus.
+          </p>
         </div>
       ) : (
         <ul className="flex flex-col gap-3">
@@ -130,6 +132,19 @@ export default function InvoicePage() {
                   {isVerified && p.verifiedAt ? (
                     <p className="mt-2 text-[11px] text-neutral-400">
                       Diverifikasi: {formatDate(p.verifiedAt)}
+                    </p>
+                  ) : null}
+
+                  {/* Guidance for non-verified states */}
+                  {p.status === "pending" ? (
+                    <p className="mt-2 text-[11px] text-neutral-500">
+                      Admin sedang memverifikasi pembayaranmu — invoice akan
+                      tersedia begitu dikonfirmasi.
+                    </p>
+                  ) : p.status === "ditolak" ? (
+                    <p className="mt-2 text-[11px] text-neutral-500">
+                      Pembayaran ini ditolak. Coba bayar ulang lewat halaman
+                      katalog paket.
                     </p>
                   ) : null}
                 </div>

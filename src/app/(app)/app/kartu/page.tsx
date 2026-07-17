@@ -181,9 +181,18 @@ export default function KartuSiswaPage() {
 
       {/* Download action */}
       {isBlocked ? (
-        <div className="rounded-xl border border-neutral-200 bg-white p-4 text-sm text-neutral-600">
-          Kartu tersedia setelah pendaftaran terkonfirmasi. Hubungi admin Pulung
-          jika pembayaran sudah dilakukan.
+        <div className="rounded-xl border border-neutral-200 bg-white p-4">
+          <p className="text-sm font-semibold text-neutral-700">
+            Kartu belum tersedia
+          </p>
+          <p className="mt-1 text-sm text-neutral-600">
+            {siswa.enrollmentStatus === "menunggu_bayar"
+              ? "Selesaikan pembayaran dulu ya — kartu siswa baru bisa diunduh setelah admin mengkonfirmasi pendaftaranmu."
+              : "Pembayaranmu sedang dicek admin. Kartu siswa akan tersedia begitu pendaftaranmu terkonfirmasi."}
+          </p>
+          <p className="mt-2 text-xs text-neutral-500">
+            Sudah bayar tapi belum dikonfirmasi? Hubungi admin lewat WhatsApp.
+          </p>
         </div>
       ) : (
         // prefetch={false} prevents Next.js from pre-fetching the PDF binary
