@@ -81,6 +81,7 @@ body {
 
 .t-reveal.is-shown {
   transform: translateY(0);
+  will-change: auto;
 }
 
 /*
