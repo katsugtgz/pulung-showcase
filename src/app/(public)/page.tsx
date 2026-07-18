@@ -34,7 +34,7 @@ import {
  */
 export default function HomePage() {
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50">
+    <main className="min-h-dvh bg-neutral-50">
       <Header />
       <Hero />
       <CredibilityStrip />

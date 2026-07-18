@@ -22,8 +22,8 @@ export function Footer() {
   const clusters = getClusters();
 
   return (
-    <footer className="bg-neutral-900 px-6 pb-8 pt-10 text-neutral-300">
-      <div className="mx-auto max-w-md">
+    <footer className="bg-neutral-900 px-6 pb-8 pt-10 text-neutral-300 lg:px-8 lg:pt-16">
+      <div className="mx-auto max-w-md lg:max-w-7xl">
         {/* Identitas */}
         <div className="mb-6 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400">
@@ -38,7 +38,7 @@ export function Footer() {
         </div>
 
         {/* Kontak admin per kluster */}
-        <div className="mb-6 grid gap-4">
+        <div className="mb-6 grid gap-4 lg:grid-cols-2">
           {clusters.map((cluster) => (
             <div
               key={cluster.id}

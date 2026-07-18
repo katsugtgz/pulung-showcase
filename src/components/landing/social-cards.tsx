@@ -48,12 +48,12 @@ export function SocialCards() {
   return (
     <section
       aria-labelledby="sosial-heading"
-      className="bg-white px-6 py-10"
+      className="bg-white px-6 py-10 lg:px-8 lg:py-16"
     >
-      <div className="mx-auto max-w-md">
+      <div className="mx-auto max-w-md md:max-w-2xl lg:max-w-7xl">
         <h2
           id="sosial-heading"
-          className="text-center text-2xl font-bold tracking-tight text-neutral-900"
+          className="text-center text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900"
         >
           Ikuti Kami
         </h2>
@@ -61,7 +61,7 @@ export function SocialCards() {
           Aktivitas terbaru Pulung di media sosial.
         </p>
 
-        <ul className="mt-6 flex flex-col gap-3">
+        <ul className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
           {posts.map((post) => (
             <li key={post.id}>
               <a

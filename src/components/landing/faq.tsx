@@ -17,12 +17,12 @@ export function Faq() {
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="scroll-mt-4 bg-neutral-50 px-6 py-10"
+      className="scroll-mt-4 bg-neutral-50 px-6 py-10 lg:px-8 lg:py-16"
     >
-      <div className="mx-auto max-w-md">
+      <div className="mx-auto max-w-md lg:max-w-3xl">
         <h2
           id="faq-heading"
-          className="text-center text-2xl font-bold tracking-tight text-neutral-900"
+          className="text-center text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900"
         >
           {getSectionHeader("faq")}
         </h2>
