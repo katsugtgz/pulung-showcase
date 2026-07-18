@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
+import { UserMenu } from "@/components/user-menu";
 import { getInstruktur, getSesiByInstruktur } from "@/lib/domain";
 import { getBranchById } from "@/lib/catalog-data";
 import { formatDate } from "@/lib/format";
@@ -46,7 +46,7 @@ export default function JadwalInstrukturPage() {
             Kelola slot ketersediaan instruktur — tambah, ubah, atau hapus sesi.
           </p>
         </header>
-        <UserButton />
+        <UserMenu />
       </div>
 
       {/* Tambah slot baru */}

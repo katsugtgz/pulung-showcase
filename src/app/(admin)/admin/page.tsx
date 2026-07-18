@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { UserButton } from "@clerk/nextjs";
+import { UserMenu } from "@/components/user-menu";
 import {
   getDomainSummary,
   getPembayaran,
@@ -79,7 +79,7 @@ export default function AdminDashboardPage() {
             Kursus Mengemudi Pulung.
           </p>
         </header>
-        <UserButton />
+        <UserMenu />
       </div>
 
       {/* Kartu onboarding pertama login */}
