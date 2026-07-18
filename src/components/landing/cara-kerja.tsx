@@ -23,8 +23,9 @@ export function CaraKerja() {
 
   return (
     <section
+      id="cara-kerja"
       aria-labelledby="cara-kerja-heading"
-      className="bg-white px-6 py-10 lg:px-8 lg:py-16"
+      className="scroll-mt-24 bg-white px-6 py-10 lg:px-8 lg:py-16"
     >
       <div className="mx-auto max-w-md lg:max-w-7xl">
         <h2
