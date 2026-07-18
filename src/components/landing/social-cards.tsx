@@ -6,6 +6,7 @@ import {
   InstagramIcon,
   TiktokIcon,
 } from "@/components/landing/icons";
+import { PretextText } from "@/components/pretext-text";
 
 /*
  * Kartu media sosial — dari getSocialPosts(). Setiap kartu menautkan ke URL
@@ -96,9 +97,14 @@ export function SocialCards() {
                       <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">
                         {label}
                       </span>
-                      <span className="truncate text-sm font-bold">
-                        {post.account}
-                      </span>
+                      <PretextText
+                        text={post.account}
+                        font="700 14px Inter, ui-sans-serif, system-ui, sans-serif"
+                        lineHeight={20}
+                        maxLines={2}
+                        className="text-sm font-bold"
+                        fallbackClassName="truncate text-sm font-bold"
+                      />
                     </div>
                   </div>
 
