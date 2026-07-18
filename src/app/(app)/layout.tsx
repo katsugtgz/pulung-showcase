@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { AuthProvider } from "@/components/auth-provider";
+import { AppShell } from "@/components/app-shell";
 
 /*
  * Pelindung rute untuk grup (app): /app/*. Memeriksa role 'siswa' dari
@@ -30,5 +31,9 @@ export default async function AppLayout({
       redirect("/");
     }
   }
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      <AppShell>{children}</AppShell>
+    </AuthProvider>
+  );
 }
