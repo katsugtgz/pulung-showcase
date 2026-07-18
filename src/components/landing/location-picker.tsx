@@ -50,6 +50,12 @@ export function LocationPicker() {
   );
   const cta = getCta();
   const transmissionHelp = getLocationTransmissionHelp();
+  const selectedTransmission = TRANSMISSION_OPTIONS.find(
+    (option) => option.value === transmission,
+  );
+  const waCtaLabel = selectedTransmission
+    ? `Tanya Kursus ${selectedTransmission.label} via WA`
+    : cta.primary;
 
   return (
     <section
@@ -237,10 +243,25 @@ export function LocationPicker() {
                             </span>
                           )}
                         </div>
-                        <p className="mb-3 flex items-start gap-2 text-sm text-neutral-600">
-                          <PinIcon className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                          <span>{branch.address}</span>
-                        </p>
+                        <div className="mb-3 text-sm text-neutral-600">
+                          <div className="flex items-start gap-2">
+                            <PinIcon className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                            <span>{branch.address}</span>
+                          </div>
+                          {branch.mapsLink && (
+                            <div className="mt-1.5 ml-6">
+                              <a
+                                href={branch.mapsLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 rounded-md text-xs font-semibold text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                              >
+                                <span>Lihat di Google Maps</span>
+                                <span aria-hidden="true" className="text-[10px]">↗</span>
+                              </a>
+                            </div>
+                          )}
+                        </div>
                         {/*
                           WA CTA — py-3 (was py-2.5) for ≥48px touch target
                           (WCAG 2.5.5; issue #50 story #22). bg-[#075E54]
@@ -253,11 +274,11 @@ export function LocationPicker() {
                           })}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`${cta.primary} — cabang ${branch.name}`}
+                          aria-label={`${waCtaLabel} — cabang ${branch.name}`}
                           className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#075E54] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#064a43] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#075E54] focus-visible:ring-offset-2 active:scale-[0.98]"
                         >
                           <WhatsappIcon className="h-4 w-4" />
-                          {cta.primary}
+                          {waCtaLabel}
                         </a>
                       </article>
                     </li>

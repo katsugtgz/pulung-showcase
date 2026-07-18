@@ -84,18 +84,21 @@ export const branches: readonly Branch[] = [
     clusterId: "cluster_a_merr_selatan",
     address: "Jl. Dr. Ir. H. Soekarno (MERR) No. 9D, Surabaya",
     isMain: true,
+    mapsLink: "https://www.google.com/search?kgmid=/g/11tmw7dhf5",
   },
   {
     id: "pandugo",
     name: "Pandugo",
     clusterId: "cluster_a_merr_selatan",
     address: "Jl. Dr. Ir. H. Soekarno (MERR) No. 2P, Surabaya",
+    mapsLink: "https://www.google.com/search?kgmid=/g/11k3q42h4p",
   },
   {
     id: "juanda",
     name: "Juanda",
     clusterId: "cluster_a_merr_selatan",
     address: "Perumahan Juanda Harapan Permai K-22/23, Sidoarjo",
+    mapsLink: "https://www.google.com/maps/search/?api=1&query=Kursus+Mengemudi+Pulung+Juanda+Sidoarjo",
   },
   {
     id: "manyar",
@@ -103,12 +106,14 @@ export const branches: readonly Branch[] = [
     clusterId: "cluster_b_manyar_pusat",
     address: "Jl. Raya Manyar No. 89, Surabaya",
     isMain: true,
+    mapsLink: "https://www.google.com/search?kgmid=/g/11tghkmyct",
   },
   {
     id: "pucang",
     name: "Pucang",
     clusterId: "cluster_b_manyar_pusat",
     address: "Jl. Pucang Sewu No. 45, Surabaya",
+    mapsLink: "https://www.google.com/maps/search/?api=1&query=Kursus+Mengemudi+Pulung+Pucang+Surabaya",
   },
 ] as const;
 
