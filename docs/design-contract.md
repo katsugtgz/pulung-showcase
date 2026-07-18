@@ -77,9 +77,12 @@ value is `bg-[#075E54]` for the WhatsApp dark-green CTA (see §6).
 ### The one-red-primary-CTA rule
 
 Each viewport (one scroll-stop on mobile, one screen on desktop) renders
-**at most one** accent-red button or accent-red display headline. The
-PULUNG wordmark counts as the red CTA of its viewport.
+**at most one** accent-red button or accent-red display headline.
 
+- The PULUNG wordmark on its ADR-004 light-pill surface does **not** count
+  as the viewport's red CTA — the pill plate makes the wordmark a "name
+  plate" lockup, materially different from a direct red element. The hero
+  may therefore pair the pill wordmark with one `bg-accent` CTA button.
 - A second action in the same viewport must be `bg-primary`, a text link,
   or an outline button (`border border-neutral-300`).
 - Trust badges, package headers, and rating stars use `text-accent` as a
