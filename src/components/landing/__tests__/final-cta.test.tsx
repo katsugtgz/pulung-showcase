@@ -2,7 +2,7 @@ import "@testing-library/jest-dom/vitest";
 import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import { FinalCta } from "../final-cta";
-import { getCta } from "@/lib/copy";
+import { getCta, getSectionBody, getSectionHeader } from "@/lib/copy";
 
 afterEach(cleanup);
 
@@ -16,6 +16,7 @@ afterEach(cleanup);
  *   4. Surface is bg-primary (the legal third primary band; design-contract
  *      §5 — hero + experience-band are the first two).
  *   5. No fabricated trust claims or owner-unverified copy.
+ *   6. H2 + body copy flow through @/lib/copy (no hardcoded strings).
  */
 describe("FinalCta", () => {
   it("renders exactly one call-to-action link (no competing actions)", () => {
@@ -69,5 +70,32 @@ describe("FinalCta", () => {
     const section = container.querySelector("section");
     expect(section).not.toBeNull();
     expect(section!.className).toMatch(/bg-primary\b/);
+  });
+
+  /*
+   * Copy-sourcing regression guard. An earlier revision hardcoded the H2 and
+   * pulled body copy from the "testimonials" key — which rendered the
+   * testimonials empty-state placeholder ("Cerita alumni Pulung akan tampil
+   * di sini...") as the closing marketing message. The H2 + body MUST come
+   * from the dedicated "final-cta" keys in the copy module.
+   */
+  it("renders the H2 from getSectionHeader('final-cta') — no hardcoded headline", () => {
+    render(<FinalCta />);
+    const expected = getSectionHeader("final-cta");
+    const h2 = screen.getByRole("heading", { level: 2 });
+    expect(h2).toHaveTextContent(expected);
+  });
+
+  it("renders the body from getSectionBody('final-cta') — never the testimonials placeholder", () => {
+    render(<FinalCta />);
+    const expected = getSectionBody("final-cta");
+    const testimonialsPlaceholder = getSectionBody("testimonials");
+    // The rendered paragraph must be the final-cta copy, not testimonials.
+    expect(expected).not.toBe(testimonialsPlaceholder);
+    expect(screen.getByText(expected)).toBeInTheDocument();
+    // Explicit guard: the testimonials empty-state line must NOT appear.
+    expect(
+      screen.queryByText(testimonialsPlaceholder),
+    ).not.toBeInTheDocument();
   });
 });
