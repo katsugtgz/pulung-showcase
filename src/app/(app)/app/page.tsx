@@ -10,9 +10,12 @@ import { getPackageById } from "@/lib/catalog-data";
 import { formatIDR, formatDate } from "@/lib/format";
 
 /*
- * Dasbor Siswa — shell kosong bermerek untuk area siswa (/app). Menampilkan
- * jadwal sesi dan status pembayaran siswa contoh dari modul domain (siswa-001).
- * Dijaga oleh layout (role 'siswa') dan proxy.ts.
+ * Dasbor Siswa — halaman Beranda area siswa (/app). Menampilkan jadwal sesi
+ * dan status pembayaran siswa contoh dari modul domain (siswa-001).
+ *
+ * Shell <AppShell/> di layout menyediakan: <main> kontainer, header desktop
+ * (wordmark + nav + UserButton), dan bottom nav mobile. Halaman ini hanya
+ * bertanggung jawab atas kontennya.
  *
  * Catatan: slice ini menampilkan data mock siswa-001 sebagai perwakilan demo.
  * Pengikatan ke Clerk user id sesungguhnya adalah epik sesudahnya.
@@ -53,25 +56,29 @@ export default function SiswaDashboardPage() {
     latestPayment?.status === "ditolak" ? "Coba Lagi Bayar" : "Bayar Sekarang";
 
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
-      <div className="mb-6 flex items-start justify-between gap-3">
-        <header>
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-            Area Siswa
-          </p>
-          <h1 className="mt-1 text-2xl font-bold text-neutral-900">
-            Halo, {siswa.fullName.split(" ")[0]}!
-          </h1>
-          <p className="mt-1 text-sm text-neutral-600">
-            {pkg.name} — pantau jadwal dan status pembayaran kursus Anda.
-          </p>
-        </header>
+    <div className="flex flex-col gap-8">
+      {/*
+        Mobile-only UserButton bar. Pada desktop (lg+) header AppShell sudah
+        menyediakan UserButton — di-hide di sini untuk menghindari duplikat
+        (spec #59: "Clerk UserButton di header melayani profil"). Mobile tidak
+        punya header, jadi UserButton perlu tetap tersedia untuk sign-out.
+      */}
+      <div className="mb-2 flex justify-end lg:hidden">
         <UserButton />
       </div>
 
+      <header>
+        <h1 className="text-2xl font-bold text-neutral-900">
+          Halo, {siswa.fullName.split(" ")[0]}!
+        </h1>
+        <p className="mt-1 text-sm text-neutral-600">
+          {pkg.name} — pantau jadwal dan status pembayaran kursus Anda.
+        </p>
+      </header>
+
       <section
         aria-labelledby="status-heading"
-        className="mb-6 rounded-2xl border border-primary/20 bg-primary/5 p-4"
+        className="rounded-2xl border border-primary/20 bg-primary/5 p-4"
       >
         <h2 id="status-heading" className="sr-only">
           Status pendaftaran
@@ -106,7 +113,7 @@ export default function SiswaDashboardPage() {
         )}
       </section>
 
-      <section aria-labelledby="schedule-heading" className="mb-8">
+      <section aria-labelledby="schedule-heading">
         <h2
           id="schedule-heading"
           className="mb-3 text-base font-bold text-neutral-900"
@@ -137,8 +144,20 @@ export default function SiswaDashboardPage() {
         )}
       </section>
 
+      {/*
+        Tautan Cara Pakai — /app/cara-pakai BUKAN tab bottom nav (spec #59),
+        tetap di-link dari Beranda. Diletakkan setelah jadwal karena alur
+        pakai relevan setelah siswa melihat sesi mereka.
+      */}
+      <Link
+        href="/app/cara-pakai"
+        className="inline-flex w-fit items-center text-sm font-medium text-primary hover:text-primary-dark"
+      >
+        Cara pakai aplikasi →
+      </Link>
+
       {latestPayment ? (
-        <section aria-labelledby="payment-heading" className="mb-8">
+        <section aria-labelledby="payment-heading">
           <h2
             id="payment-heading"
             className="mb-3 text-base font-bold text-neutral-900"
@@ -179,55 +198,6 @@ export default function SiswaDashboardPage() {
           </div>
         </section>
       ) : null}
-
-      {/* Quick-nav: halaman siswa */}
-      <nav aria-label="Menu siswa" className="mb-8">
-        <h2 className="mb-3 text-base font-bold text-neutral-900">
-          Menu Kursus
-        </h2>
-        <ul className="flex flex-col gap-2">
-          {(
-            [
-              { href: "/app/jadwal", label: "Pilih Jadwal" },
-              { href: "/app/invoice", label: "Invoice Pembayaran" },
-              { href: "/app/kartu", label: "Kartu Siswa" },
-              { href: "/app/cara-pakai", label: "Cara Pakai" },
-            ] as const
-          ).map(({ href, label }) => (
-            <li key={href}>
-              <Link
-                href={href}
-                className="flex items-center justify-between rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium text-neutral-800 shadow-sm transition hover:bg-neutral-50"
-              >
-                {label}
-                <svg
-                  className="h-4 w-4 text-neutral-400"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <footer className="mt-10 border-t border-neutral-200 pt-6">
-        <Link
-          href="/"
-          className="text-sm font-medium text-primary hover:text-primary-dark"
-        >
-          ← Kembali ke beranda
-        </Link>
-      </footer>
-    </main>
+    </div>
   );
 }
