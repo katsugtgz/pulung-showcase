@@ -79,6 +79,7 @@ export const sectionHeaders: Readonly<Record<Exclude<SectionKey, "hero">, string
   testimonials: "Kata Mereka yang Udah Bisa Nyetir",
   faq: "Masih Ragu? Ini Jawabannya",
   "cara-kerja": "Cara Daftar, Tiga Langkah",
+  "final-cta": "Siap Memulai Kursus Mengemudi Anda?",
 } as const;
 
 /** Short body copy per section. */
@@ -101,6 +102,11 @@ export const sectionBody: Readonly<Record<BodySectionKey, string>> = {
     // Verified: 3 packages (catalog-data), 2 clusters + 5 branches (contact.md),
     // cluster-routed WhatsApp (wa-router). No invented claims.
     "Alur sederhana Pulung — tiga langkah sampai kamu chat admin cabang yang sesuai.",
+  "final-cta":
+    // Verified: matches the three Cara Kerja steps (pilih paket → pilih cabang
+    // → chat admin). Reinforces the conversion path without inventing claims,
+    // prices, or guarantees. NO "daftar gratis" / "dijamin lulus" fabrication.
+    "Tiga langkah saja: pilih paket, pilih cabang, lalu chat admin klaster via WhatsApp.",
 } as const;
 
 /**

@@ -51,10 +51,16 @@ export type SectionKey =
   | "paket"
   | "testimonials"
   | "faq"
-  | "cara-kerja";
+  | "cara-kerja"
+  | "final-cta";
 
 /** Sections that carry short body copy beneath the header. */
-export type BodySectionKey = "paket" | "testimonials" | "faq" | "cara-kerja";
+export type BodySectionKey =
+  | "paket"
+  | "testimonials"
+  | "faq"
+  | "cara-kerja"
+  | "final-cta";
 
 /** WhatsApp-first, low-friction CTA labels (never "Daftar"/"Submit"). */
 export interface CtaCopy {

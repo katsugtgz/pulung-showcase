@@ -1,5 +1,4 @@
-import { getSectionHeader, getSectionBody } from "@/lib/copy";
-import { getCta } from "@/lib/copy";
+import { getSectionBody, getSectionHeader, getCta } from "@/lib/copy";
 import { ArrowRightIcon } from "@/components/landing/icons";
 
 /*
@@ -12,9 +11,9 @@ import { ArrowRightIcon } from "@/components/landing/icons";
  * neutral-900 not primary). Pola visual mirror Hero (split + banner motif)
  * supaya pembacaan sebagai "penutup banner biru".
  *
- * Copy: headline + subheadline dari @/lib/copy (sumber tunggal — tidak
- * ada string hardcode). Tombol utama memakai bg-accent (satu-satunya CTA
- * merah di viewport ini; design-contract §3 one-red-primary-CTA rule).
+ * Copy: H2 + body dari @/lib/copy (sumber tunggal — tidak ada string
+ * hardcode). Tombol utama memakai bg-accent (satu-satunya CTA merah di
+ * viewport ini; design-contract §3 one-red-primary-CTA rule).
  *
  * Anchor: href ke #lokasi — mengembalikan pengunjung ke signature location
  * widget untuk routing klaster admin yang benar. Bukan wa.me langsung
@@ -22,8 +21,8 @@ import { ArrowRightIcon } from "@/components/landing/icons";
  */
 export function FinalCta() {
   const cta = getCta();
-  const header = getSectionHeader("paket");
-  const body = getSectionBody("testimonials");
+  const header = getSectionHeader("final-cta");
+  const body = getSectionBody("final-cta");
 
   return (
     <section
@@ -41,18 +40,15 @@ export function FinalCta() {
         className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-accent/10 blur-3xl"
       />
 
+      {/*
+        Konten terpusat — penutup ceremonial, bukan section informasi.
+        H1 dibawakan oleh Hero; di sini <h2> agar struktur heading halaman
+        tetap rasional (satu H1 per page).
+      */}
       <div className="relative mx-auto max-w-md lg:max-w-3xl">
-        {/*
-          Konten terpusat — penutup ceremonial, bukan section informasi.
-          H1 dibawakan oleh Hero; di sini kita memakai <p> eyebrow + <h2>
-          agar struktur heading halaman tetap rasional.
-        */}
         <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/95">
+          <h2 className="text-balance text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
             {header}
-          </p>
-          <h2 className="mt-3 text-balance text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
-            Siap Memulai Kursus Mengemudi Anda?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-balance text-sm leading-relaxed text-white/90 lg:text-base">
             {body}
