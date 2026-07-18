@@ -253,7 +253,7 @@ export function LocationPicker() {
                           })}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Chat admin ${branch.name} via WhatsApp`}
+                          aria-label={`${cta.primary} — cabang ${branch.name}`}
                           className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#075E54] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#064a43] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#075E54] focus-visible:ring-offset-2 active:scale-[0.98]"
                         >
                           <WhatsappIcon className="h-4 w-4" />
