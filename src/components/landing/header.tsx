@@ -28,18 +28,16 @@ export function Header() {
     <header className="sticky top-0 z-30 bg-primary px-6 py-3 text-white lg:px-8">
       <div className="mx-auto flex max-w-md lg:max-w-7xl items-center justify-between gap-3">
         {/*
-          * Wordmark — pill lockup ADR-004 (konsisten dengan Hero & Footer).
-          * Wordmark merah #D22B3A TIDAK lagi diletakkan langsung di atas
-          * bg-primary (rasio ~1.03:1, gagal WCAG 3:1 large-text). Pill putih
-          * memberi kontras ~5:1 (lulus) tanpa mengubah warna wordmark.
-          * Compact sizing (badge h-6 w-6 + text-xl) agar muat di sticky bar
-          * py-3. Focus ring putih + offset biru (story #21).
-          * Komposisi: anchor nav selalu mengikuti jejak Hero (#packages,
-          * #lokasi, #faq).
-          */}
+          Wordmark — pill lockup ADR-004 (konsisten dengan Hero & Footer).
+          Wordmark merah #D22B3A TIDAK lagi diletakkan langsung di atas
+          bg-primary (rasio ~1.03:1, gagal WCAG 3:1 large-text). Pill putih
+          memberi kontras ~5:1 (lulus) tanpa mengubah warna wordmark.
+          Compact sizing (badge h-6 w-6 + text-xl) agar muat di sticky bar
+          py-3. Focus ring putih + offset biru (story #21).
+        */}
         <Link
           href="/"
-          aria-label="Pulung — beranda"
+          aria-label="P PULUNG — beranda"
           className="inline-flex select-none items-center gap-2 rounded-full bg-white py-1 pl-1.5 pr-4 shadow-md shadow-primary-dark/30 ring-1 ring-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
         >
           <span
@@ -53,13 +51,19 @@ export function Header() {
           </span>
         </Link>
 
-        {/* Nav anchor ke section landing — hanya tampil di desktop */}
+        {/* Desktop nav (lg+) — Paket, Cara Kerja, Lokasi, FAQ */}
         <nav aria-label="Navigasi utama" className="hidden gap-6 lg:flex">
           <Link
             href="#packages"
             className="rounded-md text-sm font-medium text-white/90 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           >
             Paket
+          </Link>
+          <Link
+            href="#cara-kerja"
+            className="rounded-md text-sm font-medium text-white/90 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+          >
+            Cara Kerja
           </Link>
           <Link
             href="#lokasi"
@@ -75,22 +79,83 @@ export function Header() {
           </Link>
         </nav>
 
-        {/* Tautan auth statis — menuju halaman Clerk yang di-render terpisah */}
-        <div className="flex items-center gap-2">
+        {/*
+          Auth links — static <Link> to /sign-in + /sign-up (ADR-002: landing
+          ships zero Clerk JS). On mobile, these are demoted to compact
+          text-link treatment so the course-discovery pill nav below gets
+          the visual priority (issue #50 ticket #55). Desktop keeps the
+          button treatment.
+        */}
+        <div className="flex items-center gap-1 sm:gap-2">
           <Link
             href="/sign-in"
-            className="rounded-lg border border-white/50 px-3 py-1.5 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:scale-[0.98]"
+            className="rounded-md px-2 py-1 text-xs font-semibold text-white/95 transition hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:rounded-lg sm:border sm:border-white/50 sm:px-3 sm:py-1.5 sm:text-sm sm:text-white sm:hover:border-white sm:hover:bg-white/10 active:scale-[0.98] lg:active:scale-[0.98]"
           >
             Masuk
           </Link>
           <Link
             href="/sign-up"
-            className="rounded-lg bg-accent px-3 py-1.5 text-sm font-bold text-white shadow-sm shadow-accent/30 transition hover:bg-accent-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:scale-[0.98]"
+            className="rounded-md bg-accent/90 px-2 py-1 text-xs font-bold text-white transition hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:rounded-lg sm:px-3 sm:py-1.5 sm:text-sm sm:shadow-sm sm:shadow-accent/30 sm:hover:bg-accent-dark active:scale-[0.98] lg:active:scale-[0.98]"
           >
             Daftar
           </Link>
         </div>
       </div>
+
+      {/*
+        Mobile anchor nav (issue #50 ticket #55). Compact horizontally-
+        scrollable pill row visible only below lg. Gives mobile users
+        reach to Paket / Cara Kerja / Lokasi / FAQ without scrolling back
+        to the hero. Course-discovery priority over Masuk/Daftar (which
+        are demoted above). aria-label matches the desktop nav contract
+        so screen readers announce both as the same landmark type when
+        the user toggles breakpoints.
+      */}
+      <nav
+        aria-label="Navigasi section (mobile)"
+        className="lg:hidden"
+      >
+        {/*
+          Mobile anchor pills. Solid border + text-white (no bg-white/10 +
+          backdrop-blur — that combo lowered effective contrast below WCAG
+          4.5:1 on the primary field per Lighthouse color-contrast audit).
+          Hover/focus state lifts to bg-white/20 for affordance.
+        */}
+        <ul className="mx-auto flex max-w-md gap-2 overflow-x-auto pb-1 pt-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <li className="flex-shrink-0">
+            <Link
+              href="#packages"
+              className="inline-flex items-center rounded-full border border-white/50 bg-white/25 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:scale-[0.98]"
+            >
+              Paket
+            </Link>
+          </li>
+          <li className="flex-shrink-0">
+            <Link
+              href="#cara-kerja"
+              className="inline-flex items-center rounded-full border border-white/50 bg-white/25 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:scale-[0.98]"
+            >
+              Cara Kerja
+            </Link>
+          </li>
+          <li className="flex-shrink-0">
+            <Link
+              href="#lokasi"
+              className="inline-flex items-center rounded-full border border-white/50 bg-white/25 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:scale-[0.98]"
+            >
+              Lokasi
+            </Link>
+          </li>
+          <li className="flex-shrink-0">
+            <Link
+              href="#faq"
+              className="inline-flex items-center rounded-full border border-white/50 bg-white/25 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:scale-[0.98]"
+            >
+              FAQ
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </header>
   );
 }
