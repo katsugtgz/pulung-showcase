@@ -65,7 +65,7 @@ export default function AdminDashboardPage() {
   const recentSiswa = getSiswa().slice(0, 5);
 
   return (
-    <main className="mx-auto min-h-dvh max-w-2xl bg-neutral-50 px-4 py-8">
+    <main className="mx-auto min-h-dvh w-full max-w-2xl bg-neutral-50 px-4 py-8 lg:max-w-5xl">
       <div className="mb-6 flex items-start justify-between gap-3">
         <header>
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">
@@ -117,7 +117,7 @@ export default function AdminDashboardPage() {
         <h2 id="stats-heading" className="sr-only">
           Ringkasan operasional
         </h2>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <StatCard
             label="Total Siswa"
             value={summary.totalSiswa}
@@ -272,7 +272,7 @@ export default function AdminDashboardPage() {
         >
           Kelola
         </h2>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Link
             href="/admin/siswa"
             className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm font-semibold text-neutral-900 transition hover:border-primary/30 hover:bg-primary/5"
