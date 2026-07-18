@@ -52,6 +52,18 @@ body {
 }
 
 /*
+ * Smooth scroll anchor nav (#packages/#lokasi/#faq) + CTA Hero. Dilingkupi
+ * prefers-reduced-motion: no-preference agar pengguna sensitif gerak tetap
+ * dapat jump instan — konsisten dengan blok prefers-reduced-motion: reduce
+ * untuk .t-reveal di bawah.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/*
  * Scroll-reveal per section (dipakai <Reveal/>). Konten mulai turun + buram +
  * transparan, lalu .is-shown (dari IntersectionObserver) mengembalikannya ke
  * posisi diam. Hanya section di bawah lipatan yang dibungkus — Hero (elemen

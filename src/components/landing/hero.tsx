@@ -29,9 +29,16 @@ export function Hero() {
         className="pointer-events-none absolute -bottom-20 -left-12 h-44 w-44 rounded-full bg-accent/10"
       />
 
-      <div className="relative mx-auto flex max-w-md lg:max-w-7xl flex-col items-center lg:flex-row lg:gap-12 lg:text-left">
-        {/* Kolom kiri: eyebrow → wordmark → headline → subheadline → CTA */}
-        <div className="lg:flex-1 lg:text-left">
+      {/*
+        Mobile: flex-col dengan THREE flex item agar urutan visual cocok dengan
+        spec §3/§11 (eyebrow → wordmark → headline → subheadline → chips → CTA).
+        Desktop: grid dua-kolom — chips di kolom kanan (row-span-2, self-center),
+        teks di kolom kiri baris 1, CTA di kolom kiri baris 2. Tanpa trik ini
+        CTA muncul sebelum chips di mobile karena CTA ikut kolom kiri.
+      */}
+      <div className="relative mx-auto flex max-w-md flex-col items-center lg:max-w-7xl lg:grid lg:grid-cols-[1fr_auto] lg:items-center lg:gap-12 lg:text-left">
+        {/* Teks — order 1 di mobile, kolom-1/baris-1 di desktop */}
+        <div className="order-1 lg:col-start-1 lg:row-start-1 lg:text-left">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
             Kursus Mengemudi
           </p>
@@ -48,28 +55,15 @@ export function Hero() {
           <p className="mt-2 text-balance text-sm leading-relaxed text-white/90 lg:text-base">
             {subheadline}
           </p>
-
-          {/* CTA — label WhatsApp dari @/lib/copy; keduanya menuju #lokasi
-              (pemilih area) agar routing kluster WhatsApp selalu benar. */}
-          <div className="mt-8 flex w-full flex-col gap-3 lg:max-w-md lg:flex-row">
-            <a
-              href="#lokasi"
-              className="w-full rounded-xl bg-accent px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-accent/30 transition hover:bg-accent-dark active:scale-[0.99]"
-            >
-              {cta.primary}
-            </a>
-            <a
-              href="#lokasi"
-              className="w-full rounded-xl border-2 border-white/40 bg-white/5 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition hover:border-white/70 hover:bg-white/10 active:scale-[0.99]"
-            >
-              {cta.secondary}
-            </a>
-          </div>
         </div>
 
-        {/* Kolom kanan: trust-bar chips dari @/lib/copy */}
-        <div className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
-          <ul className="flex flex-wrap items-center justify-center gap-2">
+        {/*
+          Trust-bar chips — order 2 di mobile (ANTARA subheadline dan CTA,
+          sesuai spec §3); kolom-2/baris-1 dengan row-span-2 + self-center di
+          desktop agar vertikal tengah terhadap gabungan teks + CTA.
+        */}
+        <div className="order-2 mt-5 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:w-72 lg:flex-shrink-0 lg:self-center">
+          <ul className="flex flex-wrap items-center justify-center gap-2 lg:justify-end">
             {trustBar.map((chip) => (
               <li
                 key={chip.id}
@@ -79,6 +73,22 @@ export function Hero() {
               </li>
             ))}
           </ul>
+        </div>
+
+        {/* CTA — order 3 di mobile (setelah chips); kolom-1/baris-2 di desktop */}
+        <div className="order-3 mt-8 flex w-full flex-col gap-3 lg:col-start-1 lg:row-start-2 lg:mt-8 lg:max-w-md lg:flex-row">
+          <a
+            href="#lokasi"
+            className="w-full rounded-xl bg-accent px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-accent/30 transition hover:bg-accent-dark active:scale-[0.99]"
+          >
+            {cta.primary}
+          </a>
+          <a
+            href="#lokasi"
+            className="w-full rounded-xl border-2 border-white/40 bg-white/5 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition hover:border-white/70 hover:bg-white/10 active:scale-[0.99]"
+          >
+            {cta.secondary}
+          </a>
         </div>
       </div>
 

@@ -43,7 +43,7 @@ export function Packages() {
     <section
       id="packages"
       aria-labelledby="packages-heading"
-      className="scroll-mt-4 bg-neutral-50 px-6 py-10 lg:px-8 lg:py-16"
+      className="scroll-mt-24 bg-neutral-50 px-6 py-10 lg:px-8 lg:py-16"
     >
       <div className="mx-auto max-w-md md:max-w-5xl lg:max-w-7xl">
         <h2
@@ -58,9 +58,9 @@ export function Packages() {
 
         <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((pkg) => (
-            <li key={pkg.id}>
-              <article className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
-                <div className="p-5">
+            <li key={pkg.id} className="h-full">
+              <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
+                <div className="flex flex-1 flex-col p-5">
                   {/* Judul + badge transmisi */}
                   <div className="mb-3 flex items-start justify-between gap-2">
                     <h3 className="text-lg font-bold leading-tight text-neutral-900">
@@ -112,8 +112,8 @@ export function Packages() {
                     ))}
                   </ul>
 
-                  {/* Harga + CTA */}
-                  <div className="flex items-end justify-between gap-3 border-t border-neutral-100 pt-4">
+                  {/* Harga + CTA — mt-auto mendorong ke bawah kartu agar tinggi seragam */}
+                  <div className="mt-auto flex items-end justify-between gap-3 border-t border-neutral-100 pt-4">
                     <div className="flex flex-col">
                       <span className="text-xs text-neutral-500">
                         Mulai dari
