@@ -20,7 +20,7 @@ import { getBranches, getClusters, getPackages } from "@/lib/catalog-data";
  *  - bg-primary field with text-white body, text-white/90+ secondary text.
  *  - Asymmetric: heading left-aligned on desktop (varies rhythm vs the
  *    centered-heading packages section above and location section below).
- *  - 3-up stat grid at sm+; stacked 1-up on mobile with breathing room.
+ *  - 2-up stat grid on mobile (grid-cols-2), 4-up at sm+ (sm:grid-cols-4).
  *  - Decorative blurred accent corner (aria-hidden) preserves the banner
  *    motif established in hero. No new image asset (no Lighthouse penalty).
  *  - "Cabang Utama" tag and pricing claims are NOT here — only verified
@@ -60,9 +60,15 @@ export function ExperienceBand() {
             Lebih dari 25 tahun mengajar Surabaya berkendara dengan aman.
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-white/90 lg:text-base">
-            Sejak 2000, Pulung mendaftarkan calon pengemudi ke ujian SIM dengan
-            kurikulum yang terdaftar resmi. Setiap cabang punya admin klaster
-            yang siap membantu pendaftaranmu.
+            {/*
+              Verified facts only (no SIM-registration claim — FAQ hedges SIM
+              assistance behind // TODO: verify owner, so this band must not
+              assert it more strongly). Founding year + cluster admin routing
+              are both verified in contact.md + research brief.
+            */}
+            Sejak 2000, Pulung mengajar calon pengemudi Surabaya berkendara
+            dengan aman. Setiap cabang punya admin klaster yang siap membantu
+            pendaftaranmu.
           </p>
         </div>
 
