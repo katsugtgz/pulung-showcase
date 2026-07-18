@@ -11,7 +11,7 @@ import {
 const TRANSMISSION_LABEL: Record<TransmissionType, string> = {
   manual: "Manual",
   matic: "Matic",
-  mixed: "Kombinasi",
+  mixed: "Campuran",
 };
 
 /*
@@ -84,11 +84,11 @@ function PackageCard({ pkg }: { pkg: Package }) {
             </dd>
           </div>
           <div className="rounded-lg bg-white/70 py-2.5 ring-1 ring-neutral-100">
-            <dt className="text-[10px] font-medium uppercase tracking-wide text-neutral-500">
+            <dt className="text-[10px] font-medium uppercase tracking-wide text-neutral-600">
               Mobil
             </dt>
             <dd className="mt-0.5 text-sm font-bold leading-tight text-neutral-900">
-              Full AC
+              {pkg.vehicle.replace(/^Mobil\s+/, "")}
             </dd>
           </div>
         </dl>
