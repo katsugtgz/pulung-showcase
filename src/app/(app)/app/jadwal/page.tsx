@@ -72,7 +72,7 @@ export default function JadwalSiswaPage() {
   }
 
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
+    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 px-4 py-8 lg:max-w-3xl">
       <div className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-primary">
           Area Siswa
