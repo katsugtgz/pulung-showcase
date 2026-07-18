@@ -32,7 +32,7 @@ export function Header() {
         </Link>
 
         {/* Nav anchor ke section landing — hanya tampil di desktop */}
-        <nav className="hidden gap-6 lg:flex">
+        <nav aria-label="Navigasi utama" className="hidden gap-6 lg:flex">
           <Link
             href="#packages"
             className="text-sm font-medium text-white/90 hover:text-white"

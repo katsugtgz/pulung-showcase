@@ -59,12 +59,12 @@ export function Testimonials() {
         {testimonials.length > 0 ? (
           <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((t) => (
-              <li key={t.id}>
-                <figure className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
+              <li key={t.id} className="h-full">
+                <figure className="flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
                   <blockquote className="text-sm leading-relaxed text-neutral-700">
                     &ldquo;{t.quote}&rdquo;
                   </blockquote>
-                  <figcaption className="mt-3 border-t border-neutral-100 pt-3">
+                  <figcaption className="mt-auto border-t border-neutral-100 pt-3">
                     <p className="font-semibold text-neutral-900">{t.name}</p>
                     {t.context && (
                       <p className="text-xs text-neutral-500">{t.context}</p>
