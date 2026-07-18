@@ -53,7 +53,7 @@ export default function SiswaDashboardPage() {
     latestPayment?.status === "ditolak" ? "Coba Lagi Bayar" : "Bayar Sekarang";
 
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
+    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 px-4 py-8 lg:max-w-3xl">
       <div className="mb-6 flex items-start justify-between gap-3">
         <header>
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">
@@ -185,7 +185,7 @@ export default function SiswaDashboardPage() {
         <h2 className="mb-3 text-base font-bold text-neutral-900">
           Menu Kursus
         </h2>
-        <ul className="flex flex-col gap-2">
+        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {(
             [
               { href: "/app/jadwal", label: "Pilih Jadwal" },

@@ -4,6 +4,7 @@ import { getPembayaranBySiswa, getSiswaById } from "@/lib/domain";
 import { getPackageById } from "@/lib/catalog-data";
 import { formatDate, formatIDR } from "@/lib/format";
 import { invoiceNumber } from "@/lib/pdf/invoice";
+import { PretextText } from "@/components/landing/pretext-text";
 
 /*
  * Halaman Daftar Invoice (/app/invoice). Menampilkan seluruh pembayaran demo
@@ -36,7 +37,7 @@ export default function InvoicePage() {
   const payments = getPembayaranBySiswa(DEMO_SISWA_ID);
 
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
+    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 px-4 py-8 lg:max-w-3xl">
       {/* Page header */}
       <header className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-primary">
@@ -59,7 +60,7 @@ export default function InvoicePage() {
           </p>
         </div>
       ) : (
-        <ul className="flex flex-col gap-3">
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {payments.map((p) => {
             const pkg = getPackageById(p.packageId);
             const isVerified = p.status === "terverifikasi";
@@ -90,9 +91,14 @@ export default function InvoicePage() {
                 <div className="px-4 py-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-bold text-neutral-900">
-                        {pkg.name}
-                      </p>
+                      <PretextText
+                        text={pkg.name}
+                        font="700 14px Inter, ui-sans-serif, system-ui, sans-serif"
+                        lineHeight={20}
+                        maxLines={2}
+                        className="text-sm font-bold text-neutral-900"
+                        fallbackClassName="truncate text-sm font-bold text-neutral-900"
+                      />
                       <p className="mt-0.5 text-xs text-neutral-500">
                         {METHOD_LABEL[p.method] ?? p.method} ·{" "}
                         {formatDate(p.createdAt)}

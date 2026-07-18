@@ -59,7 +59,7 @@ const STEPS: Step[] = [
 
 export default function CaraPakaiPage() {
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
+    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 px-4 py-8 lg:max-w-3xl">
       <header className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-primary">
           Panduan Siswa
@@ -106,7 +106,7 @@ export default function CaraPakaiPage() {
         >
           Halaman yang sering kamu butuhkan
         </h2>
-        <ul className="flex flex-col gap-2">
+        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-3">
           <li>
             <Link
               href="/app/jadwal"

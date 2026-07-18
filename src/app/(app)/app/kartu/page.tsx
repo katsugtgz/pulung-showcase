@@ -54,7 +54,7 @@ export default function KartuSiswaPage() {
     : pkg.name;
 
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
+    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 px-4 py-8 lg:max-w-3xl">
       {/* Page header */}
       <header className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-primary">
@@ -71,7 +71,7 @@ export default function KartuSiswaPage() {
       {/* Card preview (HTML rendition) */}
       <section
         aria-label="Pratinjau kartu siswa"
-        className="mb-6 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm"
+        className="mb-6 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm lg:mx-auto lg:max-w-md"
       >
         {/* Blue header band */}
         <div className="bg-primary px-5 py-3">
