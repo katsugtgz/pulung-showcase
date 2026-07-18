@@ -1,48 +1,86 @@
+import Link from "next/link";
 import { getClusters } from "@/lib/catalog-data";
+import { InstagramIcon, WhatsappIcon } from "@/components/landing/icons";
 
 /*
  * Footer — identitas bisnis, kluster admin (WhatsApp + IG), dan kredit demo.
- * Data kluster dari catalog-data; tidak ada hardcode nomor/IG di JSX.
+ * Data kluster dari catalog-data; TIDAK ada hardcode nomor/IG di JSX.
+ *
+ * Wordmark lockup memakai pill putih + badge "P" + teks "PULUNG" merah —
+ * konsisten dengan Hero (ADR-004). Kontras merah-ke-putih lulus WCAG 3:1
+ * large-text, sementara tetap mempertahankan warna brand. Anchor nav
+ * (Lokasi/Paket/FAQ) hadir di desktop untuk paritas dengan Header.
  */
 
-function WhatsappIcon() {
-  return (
-    <svg
-      className="h-4 w-4"
-      fill="currentColor"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z" />
-    </svg>
-  );
-}
+/*
+ * Anchor nav — mengunci ke id section yang sudah dipasang di page.tsx
+ * (#packages, #lokasi, #faq). Urutan mengikuti Header agar konsisten.
+ */
+const FOOTER_NAV: ReadonlyArray<{ href: string; label: string }> = [
+  { href: "#packages", label: "Paket" },
+  { href: "#lokasi", label: "Lokasi" },
+  { href: "#faq", label: "FAQ" },
+];
 
 export function Footer() {
   const clusters = getClusters();
 
   return (
-    <footer className="bg-neutral-900 px-6 pb-8 pt-10 text-neutral-300">
-      <div className="mx-auto max-w-md">
-        {/* Identitas */}
-        <div className="mb-6 text-center">
+    <footer className="bg-neutral-900 px-6 pb-8 pt-10 text-neutral-300 lg:px-8 lg:pt-16">
+      <div className="mx-auto max-w-md lg:max-w-7xl">
+        {/*
+         * Identitas — wordmark pill lockup (ADR-004). Pill putih di atas
+         * neutral-900 memberi kontras tinggi; wordmark merah #D22B3A di atas
+         * pill putih mencapai ~5:1 (lulus WCAG large-text 3:1).
+         */}
+        <div className="mb-6 flex flex-col items-center gap-3 text-center">
+          <div className="inline-flex select-none items-center gap-2.5 rounded-full bg-white py-1.5 pl-2 pr-5 shadow-lg shadow-black/30 ring-1 ring-black/5">
+            <span
+              aria-hidden="true"
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-xs font-black text-white"
+            >
+              P
+            </span>
+            <span className="text-2xl font-black tracking-tight text-accent lg:text-3xl">
+              PULUNG
+            </span>
+          </div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400">
             Kursus Mengemudi
           </p>
-          <p className="mt-1 text-3xl font-black tracking-tight text-accent">
-            PULUNG
-          </p>
-          <p className="mt-2 text-sm text-neutral-400">
+          <p className="text-sm text-neutral-400">
             Safe Drive Training &middot; Berdiri sejak 2000 &middot; Surabaya
           </p>
         </div>
 
-        {/* Kontak admin per kluster */}
-        <div className="mb-6 grid gap-4">
+        {/*
+         * Anchor nav — paritas dengan Header, hanya desktop. Mobile tidak
+         * mendapat nav duplikat (section pendek, scroll singkat).
+         */}
+        <nav
+          aria-label="Navigasi kaki halaman"
+          className="mb-6 hidden justify-center gap-6 lg:flex"
+        >
+          {FOOTER_NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-md px-1 py-2 text-sm font-medium text-neutral-300 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/*
+         * Kontak admin per kluster — semua nomor/IG dari getClusters(),
+         * tidak ada hardcode. Tap target py-2.5 (~28px) ≥ 24px WCAG 2.5.5.
+         */}
+        <div className="mb-6 grid gap-4 lg:grid-cols-2">
           {clusters.map((cluster) => (
             <div
               key={cluster.id}
-              className="rounded-xl bg-neutral-800 p-4"
+              className="rounded-xl bg-neutral-800 p-4 ring-1 ring-neutral-700/60"
             >
               <p className="text-sm font-semibold text-white">
                 {cluster.region}
@@ -52,9 +90,9 @@ export function Footer() {
                   href={`https://wa.me/${cluster.whatsapp.replace(/\D+/g, "")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex w-fit items-center gap-2 py-1.5 text-neutral-300 transition hover:text-white"
+                  className="flex w-fit items-center gap-2 rounded-md py-2.5 text-neutral-300 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-800"
                 >
-                  <WhatsappIcon />
+                  <WhatsappIcon className="h-4 w-4" />
                   <span>{cluster.whatsapp}</span>
                 </a>
                 <a
@@ -64,9 +102,10 @@ export function Footer() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex w-fit items-center py-1.5 text-neutral-300 transition hover:text-white"
+                  className="flex w-fit items-center gap-2 rounded-md py-2.5 text-neutral-300 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-800"
                 >
-                  {cluster.instagram}
+                  <InstagramIcon className="h-4 w-4" />
+                  <span>{cluster.instagram}</span>
                 </a>
               </div>
             </div>
@@ -75,15 +114,12 @@ export function Footer() {
 
         {/* Akreditasi */}
         <div className="mb-6 border-t border-neutral-800 pt-4 text-center text-xs text-neutral-400">
-          <p>
-            Terdaftar KORLANTAS POLRI &amp; Dishub Surabaya
-          </p>
+          <p>Terdaftar KORLANTAS POLRI &amp; Dishub Surabaya</p>
         </div>
 
         {/* Kredit */}
         <p className="text-center text-xs text-neutral-400">
-          Demo oleh{" "}
-          <span className="font-semibold text-neutral-300">RW Dev</span>
+          Demo oleh <span className="font-semibold text-neutral-300">RW Dev</span>
         </p>
       </div>
     </footer>
