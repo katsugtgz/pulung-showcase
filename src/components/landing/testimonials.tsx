@@ -4,6 +4,8 @@ import {
   getTestimonials,
 } from "@/lib/copy";
 import { getMapsRating } from "@/lib/maps-reviews";
+import { PretextText } from "@/components/pretext-text";
+
 import { StarIcon } from "@/components/landing/icons";
 import type { TestimonialEntry } from "@/lib/copy";
 
@@ -83,13 +85,23 @@ function TestimonialCard({
           {initialsOf(entry.name)}
         </span>
         <div className="min-w-0 flex-1">
-          <p className="truncate font-semibold text-neutral-900">
-            {entry.name}
-          </p>
+          <PretextText
+            text={entry.name}
+            font="600 16px Inter, ui-sans-serif, system-ui, sans-serif"
+            lineHeight={24}
+            maxLines={2}
+            className="font-semibold text-neutral-900"
+            fallbackClassName="truncate font-semibold text-neutral-900"
+          />
           {entry.context && (
-            <p className="truncate text-xs text-neutral-500">
-              {entry.context}
-            </p>
+            <PretextText
+              text={entry.context}
+              font="400 12px Inter, ui-sans-serif, system-ui, sans-serif"
+              lineHeight={16}
+              maxLines={2}
+              className="text-xs text-neutral-500"
+              fallbackClassName="truncate text-xs text-neutral-500"
+            />
           )}
         </div>
         <span
@@ -116,7 +128,7 @@ export function Testimonials() {
       aria-labelledby="testimoni-heading"
       className="bg-white px-6 py-10 lg:px-8 lg:py-16"
     >
-      <div className="mx-auto max-w-md lg:max-w-7xl">
+      <div className="mx-auto max-w-md md:max-w-5xl lg:max-w-7xl">
         <h2
           id="testimoni-heading"
           className="text-center text-2xl font-bold tracking-tight text-neutral-900 lg:text-3xl"

@@ -4,7 +4,7 @@ import { getPembayaranBySiswa, getSiswaById } from "@/lib/domain";
 import { getPackageById } from "@/lib/catalog-data";
 import { formatDate, formatIDR } from "@/lib/format";
 import { invoiceNumber } from "@/lib/pdf/invoice";
-import { PretextText } from "@/components/landing/pretext-text";
+import { PretextText } from "@/components/pretext-text";
 
 /*
  * Halaman Daftar Invoice (/app/invoice). Menampilkan seluruh pembayaran demo
