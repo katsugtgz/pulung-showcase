@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import {
   getSesiBySiswa,
@@ -72,21 +71,16 @@ export default function JadwalSiswaPage() {
   }
 
   return (
-    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 px-4 py-8 lg:max-w-3xl">
-      <div className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-          Area Siswa
-        </p>
-        <h1 className="mt-1 text-2xl font-bold text-neutral-900">
-          Pilih Jadwal
-        </h1>
+    <div className="flex flex-col gap-8">
+      <header>
+        <h1 className="text-2xl font-bold text-neutral-900">Pilih Jadwal</h1>
         <p className="mt-1 text-sm text-neutral-600">
           Pilih slot jadwal yang tersedia untuk sesi mengemudi Anda.
         </p>
-      </div>
+      </header>
 
       {/* Booking aktif */}
-      <section aria-labelledby="my-booking-heading" className="mb-8">
+      <section aria-labelledby="my-booking-heading">
         <h2
           id="my-booking-heading"
           className="mb-3 text-base font-bold text-neutral-900"
@@ -97,7 +91,7 @@ export default function JadwalSiswaPage() {
       </section>
 
       {/* Slot tersedia */}
-      <section aria-labelledby="available-heading" className="mb-8">
+      <section aria-labelledby="available-heading">
         <h2
           id="available-heading"
           className="mb-3 text-base font-bold text-neutral-900"
@@ -106,15 +100,6 @@ export default function JadwalSiswaPage() {
         </h2>
         <BookableSlotList groups={groups} />
       </section>
-
-      <footer className="mt-10 border-t border-neutral-200 pt-6">
-        <Link
-          href="/app"
-          className="text-sm font-medium text-primary hover:text-primary-dark"
-        >
-          ← Kembali ke dasbor
-        </Link>
-      </footer>
-    </main>
+    </div>
   );
 }

@@ -59,12 +59,9 @@ const STEPS: Step[] = [
 
 export default function CaraPakaiPage() {
   return (
-    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 px-4 py-8 lg:max-w-3xl">
-      <header className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-          Panduan Siswa
-        </p>
-        <h1 className="mt-1 text-2xl font-bold text-neutral-900">Cara Pakai</h1>
+    <div className="flex flex-col gap-8">
+      <header>
+        <h1 className="text-2xl font-bold text-neutral-900">Cara Pakai</h1>
         <p className="mt-1 text-sm text-neutral-600">
           5 langkah dari daftar sampai dapat kartu siswa. Santai aja!
         </p>
@@ -98,7 +95,7 @@ export default function CaraPakaiPage() {
       {/* Kartu quick-links */}
       <section
         aria-labelledby="dokumen-heading"
-        className="mt-6 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm"
+        className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm"
       >
         <h2
           id="dokumen-heading"
@@ -138,7 +135,7 @@ export default function CaraPakaiPage() {
       </section>
 
       {/* WA help */}
-      <section className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-4">
+      <section className="rounded-xl border border-primary/20 bg-primary/5 p-4">
         <p className="text-xs font-semibold text-primary">Butuh bantuan?</p>
         <ul className="mt-1 flex flex-col gap-1">
           {getClusters().map((cluster) => (
@@ -149,15 +146,6 @@ export default function CaraPakaiPage() {
           ))}
         </ul>
       </section>
-
-      <footer className="mt-10 border-t border-neutral-200 pt-6">
-        <Link
-          href="/app"
-          className="text-sm font-medium text-primary hover:text-primary-dark"
-        >
-          ← Kembali ke dasbor
-        </Link>
-      </footer>
-    </main>
+    </div>
   );
 }

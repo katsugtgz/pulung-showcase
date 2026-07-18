@@ -54,13 +54,10 @@ export default function KartuSiswaPage() {
     : pkg.name;
 
   return (
-    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 px-4 py-8 lg:max-w-3xl">
+    <div className="flex flex-col gap-8">
       {/* Page header */}
-      <header className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-          Kartu Siswa
-        </p>
-        <h1 className="mt-1 text-2xl font-bold text-neutral-900">
+      <header>
+        <h1 className="text-2xl font-bold text-neutral-900">
           Unduh Kartu Siswa
         </h1>
         <p className="mt-1 text-sm text-neutral-600">
@@ -71,7 +68,7 @@ export default function KartuSiswaPage() {
       {/* Card preview (HTML rendition) */}
       <section
         aria-label="Pratinjau kartu siswa"
-        className="mb-6 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm lg:mx-auto lg:max-w-md"
+        className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm lg:mx-auto lg:max-w-md"
       >
         {/* Blue header band */}
         <div className="bg-primary px-5 py-3">
@@ -164,7 +161,7 @@ export default function KartuSiswaPage() {
       {/* Enrollment status */}
       <section
         aria-labelledby="status-heading"
-        className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-4"
+        className="rounded-xl border border-primary/20 bg-primary/5 p-4"
       >
         <p className="text-xs uppercase tracking-wide text-primary" id="status-heading">
           Status Pendaftaran
@@ -204,15 +201,6 @@ export default function KartuSiswaPage() {
           Unduh Kartu Siswa (PDF)
         </Link>
       )}
-
-      <footer className="mt-10 border-t border-neutral-200 pt-6">
-        <Link
-          href="/app"
-          className="text-sm font-medium text-primary hover:text-primary-dark"
-        >
-          ← Kembali ke dasbor
-        </Link>
-      </footer>
-    </main>
+    </div>
   );
 }
