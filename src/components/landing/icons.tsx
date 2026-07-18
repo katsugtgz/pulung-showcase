@@ -35,9 +35,12 @@ interface IconProps {
  * --------------------------------------------------------------------------*/
 
 /**
- * WhatsApp glyph. Corporate green color is the caller's responsibility
- * (`text-[#25D366]` per AGENTS.md sanctioned arbitrary value) — this component
- * only carries the shape and inherits color via `currentColor`.
+ * WhatsApp glyph. The corporate-green surface color is the caller's
+ * responsibility — per design contract §6 / ADR-004, the landing uses the
+ * dark WhatsApp green `bg-[#075E54]` (≈7.67:1 contrast with white text,
+ * passes WCAG AA) rather than the bright `bg-[#25D366]` (≈1.98:1, fails).
+ * This component only carries the shape and inherits color via
+ * `currentColor`.
  */
 export function WhatsappIcon({ className }: IconProps) {
   return (
