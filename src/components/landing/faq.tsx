@@ -46,7 +46,7 @@ export function Faq() {
                   onClick={() =>
                     setOpenId((cur) => (cur === entry.id ? null : entry.id))
                   }
-                  className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left font-semibold text-neutral-900"
+                  className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left font-semibold text-neutral-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
                   <span>{entry.question}</span>
                   <svg
