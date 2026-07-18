@@ -36,13 +36,10 @@ export default function InvoicePage() {
   const payments = getPembayaranBySiswa(DEMO_SISWA_ID);
 
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50 px-4 py-8">
+    <div className="flex flex-col gap-8">
       {/* Page header */}
-      <header className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-          Invoice
-        </p>
-        <h1 className="mt-1 text-2xl font-bold text-neutral-900">
+      <header>
+        <h1 className="text-2xl font-bold text-neutral-900">
           Invoice Pembayaran
         </h1>
         <p className="mt-1 text-sm text-neutral-600">
@@ -153,15 +150,6 @@ export default function InvoicePage() {
           })}
         </ul>
       )}
-
-      <footer className="mt-10 border-t border-neutral-200 pt-6">
-        <Link
-          href="/app"
-          className="text-sm font-medium text-primary hover:text-primary-dark"
-        >
-          ← Kembali ke dasbor
-        </Link>
-      </footer>
-    </main>
+    </div>
   );
 }
