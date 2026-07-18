@@ -1,4 +1,4 @@
-import { UserButton } from "@clerk/nextjs";
+import { UserMenu } from "@/components/user-menu";
 
 /*
  * Dasbor Siswa (placeholder). Menjadi rumah kontrol akun terautentikasi:
@@ -15,7 +15,7 @@ export default function DashboardPage() {
         <span className="select-none text-xl font-black tracking-tight text-accent">
           PULUNG
         </span>
-        <UserButton />
+        <UserMenu />
       </div>
       <main className="flex flex-col items-center justify-center gap-4 px-6 py-16 text-center">
         <h1 className="text-2xl font-bold text-neutral-900">Dasbor Siswa</h1>

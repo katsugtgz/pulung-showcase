@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { UserButton } from "@clerk/nextjs";
+import { UserMenu } from "@/components/user-menu";
 import {
   getSesi,
   getSiswaById,
@@ -79,7 +79,7 @@ export default function JadwalSiswaPage() {
             Kelola booking sesi aktif — pindahkan atau batalkan jadwal siswa.
           </p>
         </header>
-        <UserButton />
+        <UserMenu />
       </div>
 
       {/* Ringkasan */}

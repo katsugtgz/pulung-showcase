@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { UserButton } from "@clerk/nextjs";
+import { UserMenu } from "@/components/user-menu";
 import {
   getPembayaranBySiswa,
   getSesiBySiswa,
@@ -66,7 +66,7 @@ export default function SiswaDashboardPage() {
             {pkg.name} — pantau jadwal dan status pembayaran kursus Anda.
           </p>
         </header>
-        <UserButton />
+        <UserMenu />
       </div>
 
       <section
