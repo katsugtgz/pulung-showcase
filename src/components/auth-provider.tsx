@@ -32,15 +32,41 @@ const appearance = {
   },
 };
 
+// Override Clerk default idID localization to translate input placeholders
+// and fix lowercase brand casing "pulung" -> uppercase "PULUNG"
+const customLocalization = {
+  ...idID,
+  signIn: {
+    ...idID.signIn,
+    start: {
+      ...idID.signIn?.start,
+      title: "Masuk ke PULUNG",
+    },
+  },
+  signUp: {
+    ...idID.signUp,
+    start: {
+      ...idID.signUp?.start,
+      title: "Buat akun PULUNG Anda",
+    },
+  },
+  formFieldInputPlaceholder__emailAddress: "Masukkan alamat email Anda",
+  formFieldInputPlaceholder__firstName: "Nama depan Anda",
+  formFieldInputPlaceholder__lastName: "Nama belakang Anda",
+  formFieldInputPlaceholder__password: "Masukkan kata sandi Anda",
+  formFieldInputPlaceholder__signUpPassword: "Buat kata sandi Anda",
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   if (!clerkPubKey) return <>{children}</>;
   return (
     <ClerkProvider
       publishableKey={clerkPubKey}
-      localization={idID}
+      localization={customLocalization}
       appearance={appearance}
     >
       {children}
     </ClerkProvider>
   );
 }
+

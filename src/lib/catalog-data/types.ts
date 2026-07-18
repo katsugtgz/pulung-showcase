@@ -54,6 +54,8 @@ export interface Branch {
   address: string;
   /** True for the cluster's primary/main location. */
   isMain?: boolean;
+  /** Optional Google Maps location link. */
+  mapsLink?: string;
 }
 
 export type SocialPlatform = "instagram" | "tiktok";
