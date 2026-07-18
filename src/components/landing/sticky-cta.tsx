@@ -26,12 +26,10 @@ export function StickyCta() {
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
     const lokasi = document.getElementById("lokasi");
-    const packages = document.getElementById("packages");
     const finalCta = document.getElementById("final-cta");
     const footer = document.querySelector("footer");
     const targets: Element[] = [];
     if (lokasi) targets.push(lokasi);
-    if (packages) targets.push(packages);
     if (finalCta) targets.push(finalCta);
     if (footer) targets.push(footer);
     if (targets.length === 0) return;
