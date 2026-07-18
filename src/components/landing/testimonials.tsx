@@ -49,8 +49,15 @@ function TestimonialCard({
       className={`flex h-full flex-col rounded-2xl border border-neutral-200 p-5 shadow-sm ${surface}`}
     >
       {/* Bintang 5/5 — semua testimoni snapshot sudah difilter rating=5 */}
+      {/*
+        role="img" + aria-label: role REQUIRED on this <div> because aria-label
+        is prohibited on role-less divs (WCAG aria-prohibited-attr audit).
+        The role="img" treats the star row as a single image with the rating
+        as its accessible name — keeps "5 dari 5 bintang" as the announcement.
+      */}
       <div
         className="flex items-center gap-0.5 text-accent"
+        role="img"
         aria-label="5 dari 5 bintang"
       >
         {Array.from({ length: 5 }).map((_, i) => (
