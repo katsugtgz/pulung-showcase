@@ -13,17 +13,24 @@
 
 import {
   activeHeroVariant,
+  caraKerjaSteps,
   cta,
+  credibility,
   faq,
   heroCopy,
   heroVariants,
+  locationTransmissionHelp,
+  samplePriceDisclaimer,
   sectionBody,
   sectionHeaders,
   seo,
+  stickyCta,
   testimonials,
 } from "./data";
 import type {
   BodySectionKey,
+  CaraKerjaStep,
+  CredibilityItem,
   CtaCopy,
   FaqEntry,
   HeroCopy,
@@ -31,11 +38,16 @@ import type {
   HeroVariant,
   SectionKey,
   SeoCopy,
+  StickyCtaCopy,
   TestimonialEntry,
 } from "./types";
 
 export type {
   BodySectionKey,
+  CaraKerjaStep,
+  CredibilityIconKey,
+  CredibilityItem,
+  CredibilitySurface,
   CtaCopy,
   FaqEntry,
   HeroCopy,
@@ -43,6 +55,7 @@ export type {
   HeroVariant,
   SectionKey,
   SeoCopy,
+  StickyCtaCopy,
   TestimonialEntry,
   TrustBarItem,
 } from "./types";
@@ -120,4 +133,48 @@ export function getFaq(): readonly FaqEntry[] {
  */
 export function getSeoCopy(): SeoCopy {
   return { ...seo, keywords: [...seo.keywords] };
+}
+
+/**
+ * Credibility strip badges — three trust signals rendered compactly under the
+ * hero (registration, founding year, motto). All facts are verified in
+ * `data.ts`. Returns a fresh array so callers can never mutate source.
+ */
+export function getCredibility(): readonly CredibilityItem[] {
+  return credibility.map((item) => ({ ...item }));
+}
+
+/**
+ * "Cara Kerja" steps — three ordered steps describing existing Pulung
+ * behavior (choose package → choose branch → chat routed admin). Returns a
+ * fresh array so callers can never mutate source.
+ */
+export function getCaraKerja(): readonly CaraKerjaStep[] {
+  return caraKerjaSteps.map((step) => ({ ...step }));
+}
+
+/**
+ * One-line Indonesian microcopy for the location picker's transmission toggle,
+ * explaining that the choice personalizes the WhatsApp inquiry (issue #50
+ * story #14).
+ */
+export function getLocationTransmissionHelp(): string {
+  return locationTransmissionHelp;
+}
+
+/**
+ * Sticky floating CTA copy. Routes to #lokasi so the prospect reaches the
+ * cluster-routed WhatsApp link rather than a generic number.
+ */
+export function getStickyCta(): StickyCtaCopy {
+  return { ...stickyCta };
+}
+
+/**
+ * Canonical Indonesian sample-price disclaimer — single source of truth for
+ * the "*harga contoh" tag used on package cards, FAQ answers, and any future
+ * surface that displays dummy catalog prices.
+ */
+export function getSamplePriceDisclaimer(): string {
+  return samplePriceDisclaimer;
 }
