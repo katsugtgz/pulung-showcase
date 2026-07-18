@@ -72,12 +72,12 @@ export function LocationPicker() {
     <section
       id="lokasi"
       aria-labelledby="lokasi-heading"
-      className="scroll-mt-4 bg-white px-6 py-10"
+      className="scroll-mt-4 bg-white px-6 py-10 lg:px-8 lg:py-16"
     >
-      <div className="mx-auto max-w-md">
+      <div className="mx-auto max-w-md lg:max-w-7xl">
         <h2
           id="lokasi-heading"
-          className="text-center text-2xl font-bold tracking-tight text-neutral-900"
+          className="text-center text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900"
         >
           Pilih Lokasi
         </h2>
@@ -115,7 +115,7 @@ export function LocationPicker() {
           })}
         </div>
 
-        <div className="mt-6 flex flex-col gap-6">
+        <div className="mt-6 flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-8">
           {clusters.map((cluster) => {
             const branches = getBranchesByCluster(cluster.id);
             return (

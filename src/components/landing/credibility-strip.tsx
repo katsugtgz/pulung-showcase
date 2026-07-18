@@ -74,7 +74,7 @@ interface BadgeProps {
 function Badge({ icon, label }: BadgeProps) {
   return (
     <li className="flex flex-col items-center gap-2 px-2 text-center">
-      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 lg:h-14 lg:w-14">
         {icon}
       </span>
       <span className="text-xs font-medium leading-tight text-neutral-700">
@@ -88,9 +88,9 @@ export function CredibilityStrip() {
   return (
     <section
       aria-label="Kredibilitas"
-      className="bg-neutral-50 px-6 pt-8 pb-6"
+      className="bg-neutral-50 px-6 pt-8 pb-6 lg:px-8 lg:pt-12 lg:pb-10"
     >
-      <ul className="mx-auto grid max-w-md grid-cols-3 gap-3">
+      <ul className="mx-auto grid max-w-md lg:max-w-4xl grid-cols-3 gap-3 lg:gap-8">
         <Badge
           icon={<ShieldIcon />}
           label={

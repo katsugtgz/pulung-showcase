@@ -40,12 +40,12 @@ export function Testimonials() {
   return (
     <section
       aria-labelledby="testimoni-heading"
-      className="bg-neutral-50 px-6 py-10"
+      className="bg-neutral-50 px-6 py-10 lg:px-8 lg:py-16"
     >
-      <div className="mx-auto max-w-md">
+      <div className="mx-auto max-w-md lg:max-w-7xl">
         <h2
           id="testimoni-heading"
-          className="text-center text-2xl font-bold tracking-tight text-neutral-900"
+          className="text-center text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900"
         >
           {getSectionHeader("testimonials")}
         </h2>
@@ -57,7 +57,7 @@ export function Testimonials() {
         </p>
 
         {testimonials.length > 0 ? (
-          <ul className="mt-6 flex flex-col gap-4">
+          <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((t) => (
               <li key={t.id}>
                 <figure className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">

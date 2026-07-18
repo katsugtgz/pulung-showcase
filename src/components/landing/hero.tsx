@@ -18,7 +18,7 @@ export function Hero() {
   const cta = getCta();
 
   return (
-    <header className="relative overflow-hidden bg-primary px-6 pb-12 pt-14 text-center text-white">
+    <header className="relative overflow-hidden bg-primary px-6 pb-12 pt-14 text-center text-white lg:px-8 lg:pb-20 lg:pt-20">
       {/* Aksen sudut — meniru potongan banner jalan */}
       <div
         aria-hidden="true"
@@ -29,51 +29,56 @@ export function Hero() {
         className="pointer-events-none absolute -bottom-20 -left-12 h-44 w-44 rounded-full bg-accent/10"
       />
 
-      <div className="relative mx-auto flex max-w-md flex-col items-center">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
-          Kursus Mengemudi
-        </p>
+      <div className="relative mx-auto flex max-w-md lg:max-w-7xl flex-col items-center lg:flex-row lg:gap-12 lg:text-left">
+        {/* Kolom kiri: eyebrow → wordmark → headline → subheadline → CTA */}
+        <div className="lg:flex-1 lg:text-left">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
+            Kursus Mengemudi
+          </p>
 
-        {/* Wordmark PULUNG — merah di atas biru, identitas banner */}
-        <h1 className="select-none text-6xl font-black tracking-tight text-accent drop-shadow-sm">
-          PULUNG
-        </h1>
+          {/* Wordmark PULUNG — merah di atas biru, identitas banner */}
+          <h1 className="select-none text-6xl lg:text-7xl font-black tracking-tight text-accent drop-shadow-sm">
+            PULUNG
+          </h1>
 
-        {/* Headline PAS aktif + subheadline dari @/lib/copy */}
-        <p className="mt-4 text-balance text-lg font-medium leading-snug text-white">
-          {headline}
-        </p>
-        <p className="mt-2 text-balance text-sm leading-relaxed text-white/90">
-          {subheadline}
-        </p>
+          {/* Headline PAS aktif + subheadline dari @/lib/copy */}
+          <p className="mt-4 text-balance text-lg font-medium leading-snug text-white lg:text-2xl">
+            {headline}
+          </p>
+          <p className="mt-2 text-balance text-sm leading-relaxed text-white/90 lg:text-base">
+            {subheadline}
+          </p>
 
-        {/* Trust-bar chips dari @/lib/copy */}
-        <ul className="mt-5 flex flex-wrap items-center justify-center gap-2">
-          {trustBar.map((chip) => (
-            <li
-              key={chip.id}
-              className="rounded-full border border-white/40 px-3 py-1 text-xs font-medium text-white"
+          {/* CTA — label WhatsApp dari @/lib/copy; keduanya menuju #lokasi
+              (pemilih area) agar routing kluster WhatsApp selalu benar. */}
+          <div className="mt-8 flex w-full flex-col gap-3 lg:max-w-md lg:flex-row">
+            <a
+              href="#lokasi"
+              className="w-full rounded-xl bg-accent px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-accent/30 transition hover:bg-accent-dark active:scale-[0.99]"
             >
-              {chip.label}
-            </li>
-          ))}
-        </ul>
+              {cta.primary}
+            </a>
+            <a
+              href="#lokasi"
+              className="w-full rounded-xl border-2 border-white/40 bg-white/5 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition hover:border-white/70 hover:bg-white/10 active:scale-[0.99]"
+            >
+              {cta.secondary}
+            </a>
+          </div>
+        </div>
 
-        {/* CTA — label WhatsApp dari @/lib/copy; keduanya menuju #lokasi
-            (pemilih area) agar routing kluster WhatsApp selalu benar. */}
-        <div className="mt-8 flex w-full flex-col gap-3">
-          <a
-            href="#lokasi"
-            className="w-full rounded-xl bg-accent px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-accent/30 transition hover:bg-accent-dark active:scale-[0.99]"
-          >
-            {cta.primary}
-          </a>
-          <a
-            href="#lokasi"
-            className="w-full rounded-xl border-2 border-white/40 bg-white/5 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition hover:border-white/70 hover:bg-white/10 active:scale-[0.99]"
-          >
-            {cta.secondary}
-          </a>
+        {/* Kolom kanan: trust-bar chips dari @/lib/copy */}
+        <div className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
+          <ul className="flex flex-wrap items-center justify-center gap-2">
+            {trustBar.map((chip) => (
+              <li
+                key={chip.id}
+                className="rounded-full border border-white/40 px-3 py-1 text-xs font-medium text-white"
+              >
+                {chip.label}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

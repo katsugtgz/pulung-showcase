@@ -20,8 +20,8 @@ import Link from "next/link";
  */
 export function Header() {
   return (
-    <header className="sticky top-0 z-30 bg-primary px-6 py-3 text-white">
-      <div className="mx-auto flex max-w-md items-center justify-between gap-3">
+    <header className="sticky top-0 z-30 bg-primary px-6 py-3 text-white lg:px-8">
+      <div className="mx-auto flex max-w-md lg:max-w-7xl items-center justify-between gap-3">
         {/* Wordmark — merah di atas biru, konsisten dengan Hero & Footer */}
         <Link
           href="/"
@@ -30,6 +30,28 @@ export function Header() {
         >
           PULUNG
         </Link>
+
+        {/* Nav anchor ke section landing — hanya tampil di desktop */}
+        <nav className="hidden gap-6 lg:flex">
+          <Link
+            href="#packages"
+            className="text-sm font-medium text-white/90 hover:text-white"
+          >
+            Paket
+          </Link>
+          <Link
+            href="#lokasi"
+            className="text-sm font-medium text-white/90 hover:text-white"
+          >
+            Lokasi
+          </Link>
+          <Link
+            href="#faq"
+            className="text-sm font-medium text-white/90 hover:text-white"
+          >
+            FAQ
+          </Link>
+        </nav>
 
         {/* Tautan auth statis — menuju halaman Clerk yang di-render terpisah */}
         <div className="flex items-center gap-2">

@@ -43,12 +43,12 @@ export function Packages() {
     <section
       id="packages"
       aria-labelledby="packages-heading"
-      className="scroll-mt-4 bg-neutral-50 px-6 py-10"
+      className="scroll-mt-4 bg-neutral-50 px-6 py-10 lg:px-8 lg:py-16"
     >
-      <div className="mx-auto max-w-md">
+      <div className="mx-auto max-w-md md:max-w-5xl lg:max-w-7xl">
         <h2
           id="packages-heading"
-          className="text-center text-2xl font-bold tracking-tight text-neutral-900"
+          className="text-center text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900"
         >
           {getSectionHeader("paket")}
         </h2>
@@ -56,7 +56,7 @@ export function Packages() {
           {getSectionBody("paket")}
         </p>
 
-        <ul className="mt-6 flex flex-col gap-4">
+        <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((pkg) => (
             <li key={pkg.id}>
               <article className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
@@ -118,7 +118,7 @@ export function Packages() {
                       <span className="text-xs text-neutral-500">
                         Mulai dari
                       </span>
-                      <span className="text-xl font-bold text-neutral-900">
+                      <span className="text-xl lg:text-2xl font-bold text-neutral-900">
                         {formatIDR(pkg.priceIdr)}
                       </span>
                       <span className="text-[10px] italic text-neutral-400">
