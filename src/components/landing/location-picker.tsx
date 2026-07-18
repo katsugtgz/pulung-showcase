@@ -211,7 +211,7 @@ export function LocationPicker() {
 
               <ul
                 aria-label="Daftar cabang"
-                className={selectedClusterId ? "mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4" : "mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4"}
+                className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4"
               >
                 {allBranches.map((branch) => {
                   const visible = selectedClusterId === branch.clusterId;
