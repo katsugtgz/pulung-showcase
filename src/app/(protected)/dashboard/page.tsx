@@ -10,7 +10,7 @@ import { UserMenu } from "@/components/user-menu";
  */
 export default function DashboardPage() {
   return (
-    <div className="mx-auto min-h-dvh max-w-md bg-neutral-50">
+    <div className="mx-auto min-h-dvh max-w-md bg-neutral-50 lg:max-w-3xl">
       <div className="flex items-center justify-between px-6 py-4">
         <span className="select-none text-xl font-black tracking-tight text-accent">
           PULUNG
