@@ -95,7 +95,7 @@ unchanged — every protected route still redirects unauthenticated users to
 ## ADR-003: Brand wordmark exempt from WCAG contrast (red on blue)
 
 **Date:** 2026-07-17
-**Status:** Accepted (slice 8 polish, issue #9)
+**Status:** Superseded by ADR-004 (2026-07-18). Body retained for historical context.
 
 **Context:**
 Pulung's authentic 25-year street-banner identity is the red (`#D22B3A`)
