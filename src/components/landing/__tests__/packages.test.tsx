@@ -49,10 +49,13 @@ describe("Packages section", () => {
 
   it("renders a transmission label chip per package", () => {
     render(<Packages />);
+    // "Campuran" aligns with location-picker.tsx + copy module convention
+    // (caraKerjaSteps, FAQ). Catalog pages use "Kombinasi" for the product
+    // name; the transmission TYPE label is "Campuran" everywhere on landing.
     const expected: Record<TransmissionType, string> = {
       manual: "Manual",
       matic: "Matic",
-      mixed: "Kombinasi",
+      mixed: "Campuran",
     };
     for (const pkg of getPackages()) {
       expect(screen.getByText(expected[pkg.transmission])).toBeInTheDocument();
