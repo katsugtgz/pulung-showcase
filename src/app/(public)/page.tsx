@@ -1,4 +1,5 @@
 import {
+  CaraKerja,
   CredibilityStrip,
   Faq,
   Footer,
@@ -8,6 +9,7 @@ import {
   Packages,
   Reveal,
   SocialCards,
+  StickyCta,
   Testimonials,
 } from "@/components/landing";
 
@@ -17,16 +19,17 @@ import {
  * banner jalan 25 tahun Pulung. Buisnis data hanya dari catalog-data,
  * WhatsApp dari wa-router, mata uang dari format.
  *
- * Urutan section (per T5 / PRD issue #1):
+ * Urutan section (per T5 / PRD issue #1 + spec #50 "Cara Kerja"):
  *   0. Header (sticky, bg-primary menyatu dengan Hero)
  *   1. Hero
  *   2. Strip kredibilitas
- *   3. Paket (#packages)
- *   4. Pilih Lokasi (#lokasi)
- *   5. Testimoni
- *   6. Kartu media sosial
- *   7. FAQ (#faq)
- *   8. Footer
+ *   3. Cara Kerja (tiga langkah — issue #50 story #9)
+ *   4. Paket (#packages)
+ *   5. Pilih Lokasi (#lokasi)
+ *   6. Testimoni
+ *   7. Kartu media sosial
+ *   8. FAQ (#faq)
+ *   9. Footer
  *
  * <Header/> dirender sebagai anak pertama <main> sebelum <Hero/>: keduanya
  * memakai bg-primary sehingga menyatu jadi satu banner biru kontinu, dan
@@ -38,6 +41,9 @@ export default function HomePage() {
       <Header />
       <Hero />
       <CredibilityStrip />
+      <Reveal>
+        <CaraKerja />
+      </Reveal>
       <Reveal>
         <Packages />
       </Reveal>
@@ -54,6 +60,7 @@ export default function HomePage() {
         <Faq />
       </Reveal>
       <Footer />
+      <StickyCta />
     </main>
   );
 }
