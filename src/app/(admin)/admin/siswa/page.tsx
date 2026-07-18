@@ -21,7 +21,7 @@ export default function AdminSiswaPage() {
   const siswaList = getSiswa();
 
   return (
-    <main className="mx-auto min-h-dvh max-w-2xl bg-neutral-50 px-4 py-8">
+    <main className="mx-auto min-h-dvh w-full max-w-2xl bg-neutral-50 px-4 py-8 lg:max-w-5xl">
       <div className="mb-6 flex items-start justify-between gap-3">
         <header>
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">
@@ -52,7 +52,7 @@ export default function AdminSiswaPage() {
             Belum ada siswa terdaftar.
           </p>
         ) : (
-          <ul className="flex flex-col gap-2">
+          <ul className="grid grid-cols-1 gap-2 md:grid-cols-2">
             {siswaList.map((siswa) => {
               const pkg = getPackageById(siswa.packageId);
               const branch = getBranchById(siswa.branchId);

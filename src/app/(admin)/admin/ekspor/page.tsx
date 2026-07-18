@@ -73,7 +73,7 @@ function ExportCard({ title, description, href, filename }: ExportCardProps) {
 
 export default function EksporPage() {
   return (
-    <main className="mx-auto min-h-dvh max-w-2xl bg-neutral-50 px-4 py-8">
+    <main className="mx-auto min-h-dvh w-full max-w-2xl bg-neutral-50 px-4 py-8 lg:max-w-5xl">
       <header className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-primary">
           Panel Admin
@@ -94,7 +94,7 @@ export default function EksporPage() {
         >
           Unduh Data
         </h2>
-        <div className="flex flex-col gap-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           <ExportCard
             title="Data Siswa"
             description="Daftar seluruh siswa beserta paket, cabang, wilayah, dan status pendaftaran."
