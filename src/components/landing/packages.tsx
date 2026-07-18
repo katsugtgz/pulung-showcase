@@ -107,13 +107,13 @@ function PackageCard({ pkg }: { pkg: Package }) {
 
         <div className="mt-auto flex items-end justify-between gap-3 border-t border-neutral-100 pt-4">
           <div className="flex flex-col">
-            <span className="text-[11px] font-medium uppercase tracking-wide text-neutral-500">
+            <span className="text-[11px] font-medium uppercase tracking-wide text-neutral-600">
               Mulai dari
             </span>
             <span className="text-xl font-bold tracking-tight text-neutral-900 lg:text-2xl">
               {formatIDR(pkg.priceIdr)}
             </span>
-            <span className="text-[10px] italic text-neutral-400">
+            <span className="text-[10px] italic text-neutral-600">
               {sampleDisclaimer}
             </span>
           </div>
