@@ -103,18 +103,27 @@ describe("section body", () => {
 });
 
 describe("cta", () => {
-  it("uses WhatsApp-first low-friction microcopy, never Daftar/Submit", () => {
+  it("uses WhatsApp-first low-friction microcopy for primary, anchor-oriented label for secondary — never Daftar/Submit", () => {
     const c = getCta();
     expect(c.primary).toBe("Tanya Jadwal via WhatsApp");
-    expect(c.secondary).toBe("Chat Sekarang");
+    expect(c.secondary).toBe("Lihat Paket");
     expect(c.primary).not.toMatch(/Daftar|Submit/i);
     expect(c.secondary).not.toMatch(/Daftar|Submit/i);
+  });
+
+  it("exposes distinct in-page anchor destinations for the two hero CTAs (issue #50 story #7)", () => {
+    const c = getCta();
+    expect(c.primaryHref).toBe("#lokasi");
+    expect(c.secondaryHref).toBe("#packages");
+    expect(c.primaryHref).not.toBe(c.secondaryHref);
   });
 
   it("returns a fresh copy so source cannot be mutated", () => {
     const a = getCta();
     a.primary = "mutated";
+    a.primaryHref = "mutated";
     expect(getCta().primary).toBe("Tanya Jadwal via WhatsApp");
+    expect(getCta().primaryHref).toBe("#lokasi");
   });
 });
 

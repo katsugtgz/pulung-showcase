@@ -13,6 +13,8 @@
 import { getMapsTestimonials } from "@/lib/maps-reviews";
 import type {
   BodySectionKey,
+  CaraKerjaStep,
+  CredibilityItem,
   CtaCopy,
   FaqEntry,
   HeroCopy,
@@ -20,6 +22,7 @@ import type {
   HeroVariant,
   SectionKey,
   SeoCopy,
+  StickyCtaCopy,
   TestimonialEntry,
   TrustBarItem,
 } from "./types";
@@ -32,10 +35,12 @@ export const heroVariants: readonly HeroVariant[] = [
   },
   {
     direction: "trust",
-    // Authority angle — 25 tahun (sejak 2000) + "Safe Drive Training" motto,
-    // both verified from Hotfrog listing (research brief §1 kutipan #3, §4.2).
+    // Benefit-led H1 (issue #50 story #2): lead with what the prospect gets
+    // (tenang & percaya diri), supported by verified trust anchors — instruktur
+    // sabar (Hotfrog verbatim), Safe Drive Training motto (research brief §1
+    // kutipan #3, §4.2), founding year 2000 (Hotfrog).
     headline:
-      "Safe Drive Training sejak 2000 — instruktur berpengalaman & sabar.",
+      "Belajar Nyetir Tenang & Percaya Diri — Bareng Instruktur Sabar, Sejak 2000.",
   },
   {
     direction: "cepat",
@@ -73,6 +78,7 @@ export const sectionHeaders: Readonly<Record<Exclude<SectionKey, "hero">, string
   paket: "Paket yang Pas Buat Kamu",
   testimonials: "Kata Mereka yang Udah Bisa Nyetir",
   faq: "Masih Ragu? Ini Jawabannya",
+  "cara-kerja": "Cara Daftar, Tiga Langkah",
 } as const;
 
 /** Short body copy per section. */
@@ -91,12 +97,23 @@ export const sectionBody: Readonly<Record<BodySectionKey, string>> = {
     "Cerita alumni Pulung akan tampil di sini begitu ulasan terverifikasi terkumpul.",
   faq:
     "Pertanyaan yang sering muncul dari calon pelajar, beserta jawaban jujur berdasarkan data yang tersedia.",
+  "cara-kerja":
+    // Verified: 3 packages (catalog-data), 2 clusters + 5 branches (contact.md),
+    // cluster-routed WhatsApp (wa-router). No invented claims.
+    "Alur sederhana Pulung — tiga langkah sampai kamu chat admin cabang yang sesuai.",
 } as const;
 
-/** WhatsApp-first CTA labels — low-friction, never "Daftar"/"Submit". */
+/**
+ * WhatsApp-first CTA labels + hero CTA destinations (issue #50 story #7).
+ * Primary routes to #lokasi (location picker → cluster-routed WhatsApp link);
+ * secondary routes to #packages (catalog). Distinct destinations prevent the
+ * two hero CTAs from colliding into a single anchor.
+ */
 export const cta: CtaCopy = {
   primary: "Tanya Jadwal via WhatsApp",
-  secondary: "Chat Sekarang",
+  secondary: "Lihat Paket",
+  primaryHref: "#lokasi",
+  secondaryHref: "#packages",
 } as const;
 
 /**
@@ -201,5 +218,96 @@ export const faq: readonly FaqEntry[] = [
     question: "Berapa harga paketnya?",
     answer:
       "Harga bersifat dinamis dan sering ada paket promo, jadi harga final dikonfirmasi langsung oleh admin. Harga yang tampil di katalog hanya contoh ilustrasi. Tanya penawaran terbaru via WhatsApp sesuai area kamu.",
+  },
+] as const;
+
+/**
+ * "Cara Kerja" section — three steps describing EXISTING Pulung behavior only
+ * (issue #50 story #4). Verified flow: 3 packages (Manual/Matic/Campuran —
+ * catalog-data), 2 clusters + 5 branches (contact.md), cluster-routed WhatsApp
+ * (wa-router). No invented claims, no specific session counts, no price
+ * assertions, no "pasti bisa" promise.
+ */
+export const caraKerjaSteps: readonly CaraKerjaStep[] = [
+  {
+    id: "pilih-paket",
+    title: "Pilih Paket",
+    // Verified: 3 packages MT/AT/Campuran (catalog-data; Hotfrog).
+    description:
+      "Tentukan tujuanmu — Manual, Matic, atau Campuran. Setiap paket memakai mobil Full AC dengan instruktur sabar.",
+  },
+  {
+    id: "pilih-lokasi",
+    title: "Pilih Cabang",
+    // Verified: 2 clusters, 5 branches across Surabaya (contact.md).
+    description:
+      "Pilih cabang Pulung terdekat dari dua klaster area Surabaya. Lokasi menentukan admin yang akan melayanimu.",
+  },
+  {
+    id: "chat-admin",
+    title: "Chat Admin via WhatsApp",
+    // Verified: wa-router routes each branch to the correct cluster admin.
+    description:
+      "Pesan WhatsApp otomatis terisi sesuai pilihanmu dan terujuk ke admin klaster yang benar. Tanya jadwal, konfirmasi, lalu mulai belajar.",
+  },
+] as const;
+
+/**
+ * Microcopy for the transmission toggle in the location picker (issue #50
+ * story #14). Explains in one short Indonesian line that the transmission
+ * choice personalizes the WhatsApp inquiry — i.e. it is not a throwaway
+ * filter. Verified behavior (wa-router interpolates transmission into the
+ * prefilled message); no invented claims.
+ */
+export const locationTransmissionHelp: string =
+  "Pilih transmisi dulu — pesan WhatsApp-mu otomatis sesuai pilihanmu.";
+
+/**
+ * Sticky floating CTA copy (issue #50 story #13). Routes to #lokasi so the
+ * prospect reaches the cluster-routed WhatsApp link rather than a generic
+ * number — defense against the wrong-cluster business bug (AGENTS.md).
+ */
+export const stickyCta: StickyCtaCopy = {
+  label: "Tanya Admin via WhatsApp",
+  href: "#lokasi",
+} as const;
+
+/**
+ * Canonical sample-price disclaimer (issue #50). Replaces the inline
+ * "*harga contoh" literal so package cards, FAQ answers, and future surfaces
+ * pull from a single source. Consistent with `priceIsDummy: true` on every
+ * catalog-data package (AGENTS.md).
+ */
+export const samplePriceDisclaimer: string = "*harga contoh";
+
+/**
+ * Credibility strip badges — compact trust signals under the hero. Verified
+ * facts only: KORLANTAS POLRI + Dishub Surabaya registration (contact.md +
+ * seo copy), founding year 2000 (Hotfrog; hero headline), and "Safe Drive
+ * Training" motto (Hotfrog listing — research brief §1 kutipan #3, §4.2).
+ * The `surface` field alternates tonal variety so the strip is not three
+ * identical white cards.
+ */
+export const credibility: readonly CredibilityItem[] = [
+  {
+    id: "terdaftar",
+    icon: "shield",
+    label: "Terdaftar Resmi",
+    supportingLine: "KORLANTAS POLRI & Dishub Surabaya",
+    surface: "primary",
+  },
+  {
+    id: "sejak-2000",
+    icon: "calendar",
+    label: "Sejak 2000",
+    supportingLine: "Lebih dari 25 tahun mengajar Surabaya",
+    surface: "white",
+  },
+  {
+    id: "safe-drive",
+    icon: "steer",
+    label: "Safe Drive Training",
+    supportingLine: "Motto pengajaran kami",
+    surface: "primary",
   },
 ] as const;
