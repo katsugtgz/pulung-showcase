@@ -20,19 +20,19 @@ export default function CatalogPage() {
   const packages = getPackages();
 
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50">
+    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 lg:max-w-6xl">
       {/* Header */}
-      <header className="rounded-b-3xl bg-primary px-5 pb-6 pt-8 text-white shadow-md">
+      <header className="rounded-b-3xl bg-primary px-5 pb-6 pt-8 text-white shadow-md lg:px-10 lg:pb-12 lg:pt-16">
         <p className="text-sm font-medium text-white/80">Kursus Mengemudi Pulung</p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight">Katalog Paket</h1>
-        <p className="mt-2 text-sm text-white/80">
+        <h1 className="mt-1 text-2xl font-bold tracking-tight lg:text-4xl">Katalog Paket</h1>
+        <p className="mt-2 max-w-2xl text-sm text-white/80 lg:text-base">
           Pilih paket belajar mengemudi yang sesuai untuk Anda.
         </p>
       </header>
 
       {/* Package list */}
-      <section className="px-5 py-6" aria-label="Daftar paket kursus">
-        <ul className="flex flex-col gap-4">
+      <section className="px-5 py-6 lg:px-10 lg:py-12" aria-label="Daftar paket kursus">
+        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((pkg) => (
             <li key={pkg.id}>
               <Reveal>

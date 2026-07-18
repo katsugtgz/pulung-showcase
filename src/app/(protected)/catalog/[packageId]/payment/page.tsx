@@ -53,9 +53,9 @@ export default async function PaymentPage({ params }: Params) {
   const paymentStatus = latestPayment?.status;
 
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50">
+    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 lg:max-w-3xl">
       {/* Header */}
-      <header className="bg-primary px-5 pb-6 pt-8 text-white shadow-md">
+      <header className="bg-primary px-5 pb-6 pt-8 text-white shadow-md lg:px-10 lg:pb-10 lg:pt-12">
         <div className="flex items-center gap-3">
           <Link
             href={`/catalog/${pkg.id}`}
@@ -81,7 +81,7 @@ export default async function PaymentPage({ params }: Params) {
         </div>
       </header>
 
-      <div className="px-5 py-6">
+      <div className="px-5 py-6 lg:px-10 lg:py-10">
         {/* Ringkasan pesanan */}
         <section className="mb-6">
           <h2 className="mb-3 text-base font-bold text-neutral-900">

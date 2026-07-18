@@ -127,14 +127,14 @@ export default async function CourseDetailPage({ params }: Params) {
   const sessions = buildSessionBreakdown(pkg);
 
   return (
-    <main className="mx-auto min-h-dvh max-w-md bg-neutral-50">
+    <main className="mx-auto min-h-dvh w-full max-w-md bg-neutral-50 lg:max-w-5xl">
       {/* Hero image + back button */}
       <div className="relative">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/course-hero.svg"
           alt="Ilustrasi kursus mengemudi Pulung"
-          className="h-56 w-full object-cover"
+          className="h-56 w-full object-cover lg:h-80"
           width={800}
           height={400}
         />
@@ -161,7 +161,7 @@ export default async function CourseDetailPage({ params }: Params) {
       </div>
 
       {/* Content card (overlapping the hero) */}
-      <div className="relative -mt-4 rounded-t-3xl bg-neutral-50 px-5 pb-32 pt-6">
+      <div className="relative -mt-4 rounded-t-3xl bg-neutral-50 px-5 pb-32 pt-6 lg:px-10 lg:pt-10">
         {/* Title + badge */}
         <section className="mb-6">
           <div className="mb-3 flex items-center gap-2">
@@ -246,7 +246,7 @@ export default async function CourseDetailPage({ params }: Params) {
           <h2 className="mb-3 text-base font-bold text-neutral-900">
             Rincian Pertemuan
           </h2>
-          <ol className="flex flex-col gap-2">
+          <ol className="grid grid-cols-1 gap-2 lg:grid-cols-2">
             {sessions.map((session) => (
               <li
                 key={session.title}
@@ -265,7 +265,7 @@ export default async function CourseDetailPage({ params }: Params) {
       </div>
 
       {/* Sticky bottom CTA bar */}
-      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-neutral-200 bg-white px-5 py-4 pb-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-neutral-200 bg-white px-5 py-4 pb-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] lg:max-w-5xl lg:px-10">
         <div className="flex items-center justify-between gap-3">
           <div className="flex flex-col">
             <span className="text-xs text-neutral-500">Total Harga</span>
