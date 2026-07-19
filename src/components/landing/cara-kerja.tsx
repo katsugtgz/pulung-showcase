@@ -13,13 +13,21 @@
  */
 import { getCaraKerja, getSectionBody, getSectionHeader } from "@/lib/copy";
 import { NumberBadge } from "@/components/landing/icons";
+import Image from "next/image";
+import { getSticker } from "@/lib/illustrations";
 
 const STEP_NUMBERS = [1, 2, 3] as const;
+const STEP_STICKER_SLUGS = [
+  "steering_wheel",
+  "traffic_cone",
+  "seatbelt_buckle",
+] as const;
 
 export function CaraKerja() {
   const steps = getCaraKerja();
   const header = getSectionHeader("cara-kerja");
   const body = getSectionBody("cara-kerja");
+  const windingRoad = getSticker("winding_road");
 
   return (
     <section
@@ -37,6 +45,22 @@ export function CaraKerja() {
         <p className="mt-3 text-center text-sm leading-relaxed text-neutral-600 lg:mx-auto lg:max-w-2xl lg:text-base">
           {body}
         </p>
+        {/* Road divider sticker */}
+
+        <div
+          aria-hidden="true"
+          className="mx-auto mt-6 hidden select-none justify-center lg:flex"
+        >
+          <div className="relative h-16 w-64 overflow-hidden rounded-2xl border border-neutral-200 bg-white p-1 shadow-sm">
+            <Image
+              src={windingRoad.src}
+              alt=""
+              fill
+              sizes="256px"
+              className="object-cover"
+            />
+          </div>
+        </div>
 
         <ol className="relative mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-4 lg:mt-10 lg:gap-8">
           {/* Horizontal connector — visible only at lg, sits behind the badges */}
@@ -49,12 +73,26 @@ export function CaraKerja() {
               key={step.id}
               className="relative flex flex-col items-start gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 p-5 sm:items-center sm:text-center lg:p-6"
             >
-              <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-sm">
-                <NumberBadge
-                  number={STEP_NUMBERS[i]}
-                  className="h-8 w-8"
-                />
-              </span>
+              <div className="flex w-full items-center justify-between sm:justify-center sm:gap-4">
+                <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-sm">
+                  <NumberBadge
+                    number={STEP_NUMBERS[i]}
+                    className="h-8 w-8"
+                  />
+                </span>
+                <div
+                  aria-hidden="true"
+                  className="relative h-14 w-14 select-none overflow-hidden rounded-2xl border border-neutral-200 bg-white p-1 shadow-sm"
+                >
+                  <Image
+                    src={getSticker(STEP_STICKER_SLUGS[i]!).src}
+                    alt=""
+                    fill
+                    sizes="56px"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
               <div className="sm:mt-1">
                 <h3 className="text-base font-semibold leading-tight text-neutral-900 lg:text-lg">
                   {step.title}

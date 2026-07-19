@@ -1,5 +1,7 @@
 import { getSectionBody, getSectionHeader, getCta } from "@/lib/copy";
 import { ArrowRightIcon } from "@/components/landing/icons";
+import Image from "next/image";
+import { getSticker } from "@/lib/illustrations";
 
 /*
  * Final-cta — satu-satunya penutup konversi setelah FAQ (issue #50 ticket
@@ -23,6 +25,7 @@ export function FinalCta() {
   const cta = getCta();
   const header = getSectionHeader("final-cta");
   const body = getSectionBody("final-cta");
+  const graduationCar = getSticker("graduation_car");
 
   return (
     <section
@@ -47,6 +50,19 @@ export function FinalCta() {
       */}
       <div className="relative mx-auto max-w-md lg:max-w-3xl">
         <div className="text-center">
+          <div
+            className="mx-auto mb-6 flex select-none justify-center"
+          >
+            <div className="relative h-20 w-20 overflow-hidden rounded-2xl bg-white p-1 shadow-lg shadow-primary-dark/20 ring-1 ring-black/5">
+              <Image
+                src={graduationCar.src}
+                alt={graduationCar.alt}
+                fill
+                sizes="80px"
+                className="object-cover"
+              />
+            </div>
+          </div>
           <h2 className="text-balance text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
             {header}
           </h2>

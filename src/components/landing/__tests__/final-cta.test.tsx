@@ -98,4 +98,13 @@ describe("FinalCta", () => {
       screen.queryByText(testimonialsPlaceholder),
     ).not.toBeInTheDocument();
   });
+
+  it("renders graduation_car sticker as an informative element with proper alt text", () => {
+    const { container } = render(<FinalCta />);
+    const graduationImg = container.querySelector('img[src*="graduation_car.jpg"]') as HTMLImageElement;
+    expect(graduationImg).toBeInTheDocument();
+    expect(graduationImg.alt).toBe("Ilustrasi mobil biru dengan topi wisuda besar di atasnya untuk merayakan kelulusan kursus");
+    expect(graduationImg.closest('[aria-hidden="true"]')).toBeNull();
+  });
 });
+

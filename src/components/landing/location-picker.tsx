@@ -10,6 +10,8 @@ import type { TransmissionType } from "@/lib/catalog-data";
 import { buildWhatsAppLink } from "@/lib/wa-router";
 import { getCta, getLocationTransmissionHelp } from "@/lib/copy";
 import { PinIcon, WhatsappIcon } from "@/components/landing";
+import Image from "next/image";
+import { getSticker } from "@/lib/illustrations";
 
 const TRANSMISSION_OPTIONS: ReadonlyArray<{
   value: TransmissionType;
@@ -56,6 +58,8 @@ export function LocationPicker() {
   const waCtaLabel = selectedTransmission
     ? `Tanya Kursus ${selectedTransmission.label} via WA`
     : cta.primary;
+  const carSuroboyo = getSticker("car_suroboyo");
+  const carSuramadu = getSticker("car_suramadu");
 
   return (
     <section
@@ -63,7 +67,23 @@ export function LocationPicker() {
       aria-labelledby="lokasi-heading"
       className="scroll-mt-24 bg-white px-6 py-10 lg:px-8 lg:py-16"
     >
-      <div className="mx-auto max-w-md lg:max-w-7xl">
+      <div className="relative mx-auto max-w-md lg:max-w-7xl">
+        {/* Floating sticker decorator - car_suroboyo */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none hidden select-none lg:absolute lg:-left-20 lg:top-1/4 lg:block lg:h-28 lg:w-28 lg:-rotate-12"
+        >
+          <div className="relative h-full w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white p-0.5 shadow-md">
+            <Image
+              src={carSuroboyo.src}
+              alt=""
+              fill
+              sizes="112px"
+              className="object-cover"
+            />
+          </div>
+        </div>
+
         <h2
           id="lokasi-heading"
           className="text-center text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900"
@@ -84,7 +104,7 @@ export function LocationPicker() {
           Selectors preserved: every role="group", aria-label, and wa.me link
           stays inside #lokasi for the wa-link-correctness QA flow.
         */}
-        <div className="mt-6 overflow-hidden rounded-2xl bg-neutral-50 ring-1 ring-neutral-200 lg:mt-8">
+        <div className="relative mt-6 overflow-hidden rounded-2xl bg-neutral-50 ring-1 ring-neutral-200 lg:mt-8">
             {/*
               Step 1 — transmission. role="group" + aria-label are read by
               wa-link-correctness.mjs; do NOT change. State visual
@@ -187,13 +207,30 @@ export function LocationPicker() {
               </div>
             </div>
 
+            {/* Card divider sticker - car_suramadu */}
+            <div
+              aria-hidden="true"
+              className="relative flex select-none items-center justify-center py-2"
+            >
+              <div className="absolute inset-x-0 h-px bg-neutral-200" />
+              <div className="relative z-10 flex h-14 w-28 overflow-hidden rounded-xl border border-neutral-200 bg-white p-0.5 shadow-sm">
+                <Image
+                  src={carSuramadu.src}
+                  alt=""
+                  fill
+                  sizes="112px"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
             {/*
               Step 3 — branch list (progressive disclosure target). All 5
               branches remain in the DOM (hidden until cluster selected) so
               SEO, screen-reader, and wa-link-correctness.mjs (which reads
               via querySelectorAll — finds hidden elements) keep working.
             */}
-            <div className="border-t border-neutral-200 px-5 py-5 lg:px-6 lg:py-6">
+            <div className="px-5 py-5 lg:px-6 lg:py-6">
               <div className="mb-3 flex items-center gap-2">
                 <span
                   aria-hidden="true"

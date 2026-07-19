@@ -231,4 +231,21 @@ describe("LocationPicker", () => {
       expect(btn.textContent ?? "").toContain(cluster.whatsapp);
     }
   });
+
+  it("renders car_suroboyo and car_suramadu stickers as decorative elements", () => {
+    const { container } = render(<LocationPicker />);
+    
+    // car_suroboyo floating decorator
+    const suroboyoImg = container.querySelector('img[src*="car_suroboyo.jpg"]') as HTMLImageElement;
+    expect(suroboyoImg).toBeInTheDocument();
+    expect(suroboyoImg.alt).toBe("");
+    expect(suroboyoImg.closest('[aria-hidden="true"]')).not.toBeNull();
+
+    // car_suramadu divider
+    const suramaduImg = container.querySelector('img[src*="car_suramadu.jpg"]') as HTMLImageElement;
+    expect(suramaduImg).toBeInTheDocument();
+    expect(suramaduImg.alt).toBe("");
+    expect(suramaduImg.closest('[aria-hidden="true"]')).not.toBeNull();
+  });
 });
+

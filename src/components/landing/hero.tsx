@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getActiveHeroVariant, getCta, getHeroCopy } from "@/lib/copy";
 import { ArrowRightIcon } from "@/components/landing/icons";
+import { getSticker } from "@/lib/illustrations";
 
 /*
  * Hero — identitas banner Pulung yang diangkat ke digital.
@@ -52,6 +53,8 @@ export function Hero() {
   const { subheadline, trustBar } = getHeroCopy();
   const headline = getActiveHeroVariant().headline;
   const cta = getCta();
+  const learnerCar = getSticker("learner_car");
+  const sideMirror = getSticker("side_mirror");
 
   return (
     <header className="relative overflow-hidden bg-primary px-6 pb-14 pt-10 text-white lg:px-8 lg:pb-20 lg:pt-16">
@@ -71,6 +74,22 @@ export function Hero() {
         gambar kanan. items-center agar kedua kolom sejajar secara vertikal.
       */}
       <div className="relative mx-auto flex max-w-md flex-col items-start lg:max-w-7xl lg:grid lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-12">
+        {/* Floating sticker decorator - learner_car */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none hidden select-none rounded-2xl bg-white p-1 shadow-lg shadow-primary-dark/20 ring-1 ring-black/5 lg:absolute lg:-right-6 lg:-top-16 lg:block lg:h-24 lg:w-24 lg:rotate-12"
+        >
+          <div className="relative h-full w-full overflow-hidden rounded-xl">
+            <Image
+              src={learnerCar.src}
+              alt=""
+              fill
+              sizes="96px"
+              className="object-cover"
+            />
+          </div>
+        </div>
+
         {/* Kolom teks — semua copy + trust chips + CTA */}
         <div className="flex w-full flex-col items-start">
           {/* Eyebrow */}
@@ -119,7 +138,22 @@ export function Hero() {
             menyertai kolom teks. Border-only agar teks putih tetap di atas
             biru (tidak ada frost glass yang menurunkan kontras).
           */}
-          <ul className="mt-6 flex flex-wrap gap-2">
+          <ul className="mt-6 flex flex-wrap items-center gap-2">
+            {/* Trust-bar sticker accent */}
+            <li
+              aria-hidden="true"
+              className="flex h-7 w-7 select-none items-center justify-center rounded-full bg-white p-0.5 shadow-md shadow-primary-dark/20 ring-1 ring-black/5"
+            >
+              <div className="relative h-full w-full overflow-hidden rounded-full">
+                <Image
+                  src={sideMirror.src}
+                  alt=""
+                  fill
+                  sizes="28px"
+                  className="object-cover"
+                />
+              </div>
+            </li>
             {trustBar.map((chip) => (
               <li
                 key={chip.id}
