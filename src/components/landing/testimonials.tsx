@@ -5,6 +5,8 @@ import {
 } from "@/lib/copy";
 import { getMapsRating } from "@/lib/maps-reviews";
 import { PretextText } from "@/components/pretext-text";
+import Image from "next/image";
+import { getSticker } from "@/lib/illustrations";
 
 import { StarIcon } from "@/components/landing/icons";
 import type { TestimonialEntry } from "@/lib/copy";
@@ -122,13 +124,31 @@ export function Testimonials() {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   });
+  const instructorStudent = getSticker("instructor_student");
+  const roundaboutSign = getSticker("roundabout_sign");
 
   return (
     <section
       aria-labelledby="testimoni-heading"
       className="bg-white px-6 py-10 lg:px-8 lg:py-16"
     >
-      <div className="mx-auto max-w-md md:max-w-5xl lg:max-w-7xl">
+      <div className="relative mx-auto max-w-md md:max-w-5xl lg:max-w-7xl">
+        {/* Floating sticker decorator - roundabout_sign */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none hidden select-none lg:absolute lg:-right-16 lg:bottom-10 lg:block lg:h-20 lg:w-20 lg:rotate-12"
+        >
+          <div className="relative h-full w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white p-0.5 shadow-md">
+            <Image
+              src={roundaboutSign.src}
+              alt=""
+              fill
+              sizes="80px"
+              className="object-cover"
+            />
+          </div>
+        </div>
+
         <h2
           id="testimoni-heading"
           className="text-center text-2xl font-bold tracking-tight text-neutral-900 lg:text-3xl"
@@ -141,38 +161,61 @@ export function Testimonials() {
          * Kontrak teks lama dipertahankan: ratingLabel standalone dan
          * "dari X ulasan Google" sebagai satu node teks (lihat __tests__).
          */}
-        <div className="mx-auto mt-5 max-w-md rounded-2xl border border-neutral-200 bg-neutral-50 px-6 py-5">
-          <div className="flex items-center justify-center gap-4">
-            <span className="text-5xl font-black leading-none tracking-tight text-neutral-900">
-              {ratingLabel}
-            </span>
-            <div className="flex flex-col items-start gap-1.5">
-              <div
-                className="flex items-center gap-0.5 text-accent"
-                aria-hidden="true"
-              >
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <StarIcon key={i} className="h-4 w-4" />
-                ))}
-              </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-neutral-700 ring-1 ring-neutral-200">
-                <span aria-hidden="true" className="text-[11px] font-black">
-                  G
-                </span>
-                Google
+        <div className="mx-auto mt-5 flex max-w-2xl flex-col items-center justify-center gap-4 sm:flex-row sm:items-stretch">
+          {/* Rating Summary Card */}
+          <div className="flex w-full max-w-md flex-col justify-center rounded-2xl border border-neutral-200 bg-neutral-50 px-6 py-5">
+            <div className="flex items-center justify-center gap-4">
+              <span className="text-5xl font-black leading-none tracking-tight text-neutral-900">
+                {ratingLabel}
               </span>
+              <div className="flex flex-col items-start gap-1.5">
+                <div
+                  className="flex items-center gap-0.5 text-accent"
+                  aria-hidden="true"
+                >
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <StarIcon key={i} className="h-4 w-4" />
+                  ))}
+                </div>
+                <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-neutral-700 ring-1 ring-neutral-200">
+                  <span aria-hidden="true" className="text-[11px] font-black">
+                    G
+                  </span>
+                  Google
+                </span>
+              </div>
             </div>
+            {/*
+             * Baris kontrak teks lama — dipertahankan persis agar
+             * testimonials.test.tsx lulus. `<StarIcon/>` (SVG tanpa teks) +
+             * teks "dari X ulasan Google" sebagai text node langsung `<p>`:
+             * satu-satunya elemen yang cocok dengan matcher getByText.
+             */
+            }
+            <p className="mt-3 flex items-center justify-center gap-1.5 text-sm text-neutral-700">
+              <StarIcon className="h-3 w-3 text-accent" aria-hidden="true" />
+              dari {reviewCount} ulasan Google
+            </p>
           </div>
-          {/*
-           * Baris kontrak teks lama — dipertahankan persis agar
-           * testimonials.test.tsx lulus. `<StarIcon/>` (SVG tanpa teks) +
-           * teks "dari X ulasan Google" sebagai text node langsung `<p>`:
-           * satu-satunya elemen yang cocok dengan matcher getByText.
-           */}
-          <p className="mt-3 flex items-center justify-center gap-1.5 text-sm text-neutral-700">
-            <StarIcon className="h-3 w-3 text-accent" aria-hidden="true" />
-            dari {reviewCount} ulasan Google
-          </p>
+
+          {/* Framed Companion Tile - instructor_student */}
+          <div
+            aria-hidden="true"
+            className="flex w-full max-w-md flex-col items-center justify-center rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm sm:max-w-xs"
+          >
+            <div className="relative h-24 w-24 select-none overflow-hidden rounded-xl">
+              <Image
+                src={instructorStudent.src}
+                alt={instructorStudent.alt}
+                fill
+                sizes="96px"
+                className="object-cover"
+              />
+            </div>
+            <p className="mt-2 text-center text-xs font-semibold text-neutral-600">
+              Instruktur Ramah &amp; Sabar
+            </p>
+          </div>
         </div>
 
         {testimonials.length > 0 ? (

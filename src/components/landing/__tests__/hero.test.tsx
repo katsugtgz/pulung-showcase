@@ -110,4 +110,18 @@ describe("Hero", () => {
     expect(primary.className).toContain("bg-accent");
     expect(secondary.className).not.toContain("bg-accent");
   });
+
+  it("renders learner_car and side_mirror stickers as decorative elements", () => {
+    const { container } = render(<Hero />);
+    const learnerImg = container.querySelector('img[src*="learner_car.jpg"]') as HTMLImageElement;
+    expect(learnerImg).toBeInTheDocument();
+    expect(learnerImg.alt).toBe("");
+    expect(learnerImg.closest('[aria-hidden="true"]')).not.toBeNull();
+
+    const sideMirrorImg = container.querySelector('img[src*="side_mirror.jpg"]') as HTMLImageElement;
+    expect(sideMirrorImg).toBeInTheDocument();
+    expect(sideMirrorImg.alt).toBe("");
+    expect(sideMirrorImg.closest('[aria-hidden="true"]')).not.toBeNull();
+  });
 });
+

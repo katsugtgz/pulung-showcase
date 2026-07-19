@@ -73,11 +73,33 @@ describe("Testimonials section", () => {
    * the decorative initials avatar (a <span>, not an <img>). If a future
    * author adds an <img> with a stock-photo URL, this test fails.
    */
-  it("does not render any <img> element (no fabricated reviewer photos)", () => {
+  it("renders stickers from the illustrations module and hides decorative ones", () => {
     const { container } = render(<Testimonials />);
     const imgs = container.querySelectorAll("img");
-    expect(imgs.length).toBe(0);
+    expect(imgs.length).toBe(2);
+
+    // instructor_student sticker (informative, has actual alt text)
+    const instructorImg = container.querySelector('img[src*="instructor_student.jpg"]') as HTMLImageElement;
+    expect(instructorImg).toBeInTheDocument();
+    expect(instructorImg.alt).toBe("Ilustrasi instruktur mengemudi tersenyum ramah menyapa siswa dari kursi penumpang");
+
+    // roundabout_sign sticker (decorative, empty alt, under aria-hidden container)
+    const roundaboutImg = container.querySelector('img[src*="roundabout_sign.jpg"]') as HTMLImageElement;
+    expect(roundaboutImg).toBeInTheDocument();
+    expect(roundaboutImg.alt).toBe("");
+    expect(roundaboutImg.closest('[aria-hidden="true"]')).not.toBeNull();
   });
+
+  it("does not render any reviewer-profile <img> element (no fabricated reviewer photos)", () => {
+    const { container } = render(<Testimonials />);
+    const imgs = container.querySelectorAll("img");
+    for (const img of Array.from(imgs)) {
+      const src = img.getAttribute("src") || "";
+      // Only allow stickers in testimonials section
+      expect(src).toMatch(/stickers/);
+    }
+  });
+
 
   /*
    * Visual differentiation contract (ticket #56). Testimonial cards must

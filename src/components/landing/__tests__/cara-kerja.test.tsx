@@ -58,4 +58,31 @@ describe("CaraKerja", () => {
       expect(svg).not.toBeNull();
     }
   });
+
+  it("renders winding_road divider and step sticker pictograms", () => {
+    const { container } = render(<CaraKerja />);
+    
+    // winding_road divider (decorative, hidden, empty alt)
+    const windingRoadImg = container.querySelector('img[src*="winding_road.jpg"]') as HTMLImageElement;
+    expect(windingRoadImg).toBeInTheDocument();
+    expect(windingRoadImg.alt).toBe("");
+    expect(windingRoadImg.closest('[aria-hidden="true"]')).not.toBeNull();
+
+    // step stickers (all decorative, hidden, empty alt)
+    const steeringImg = container.querySelector('img[src*="steering_wheel.jpg"]') as HTMLImageElement;
+    expect(steeringImg).toBeInTheDocument();
+    expect(steeringImg.alt).toBe("");
+    expect(steeringImg.closest('[aria-hidden="true"]')).not.toBeNull();
+
+    const coneImg = container.querySelector('img[src*="traffic_cone.jpg"]') as HTMLImageElement;
+    expect(coneImg).toBeInTheDocument();
+    expect(coneImg.alt).toBe("");
+    expect(coneImg.closest('[aria-hidden="true"]')).not.toBeNull();
+
+    const seatbeltImg = container.querySelector('img[src*="seatbelt_buckle.jpg"]') as HTMLImageElement;
+    expect(seatbeltImg).toBeInTheDocument();
+    expect(seatbeltImg.alt).toBe("");
+    expect(seatbeltImg.closest('[aria-hidden="true"]')).not.toBeNull();
+  });
 });
+
