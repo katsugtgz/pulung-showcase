@@ -8,6 +8,12 @@ Full context: `docs/prd-proposal-aligned.md` (PRD, scope source of truth), `cont
 
 Subdirectory guides: [`src/app/AGENTS.md`](src/app/AGENTS.md) · [`src/lib/AGENTS.md`](src/lib/AGENTS.md) · [`src/components/AGENTS.md`](src/components/AGENTS.md)
 
+## OWNER PROFILE & INTERACTION MODE
+
+- **Owner is non-technical, concept-oriented.** Architecture, state machines, library choices, implementation patterns, and code are delegated to the AI agent + coding harness. Present trade-offs at the concept level in plain Indonesian; do not expect the owner to make engineering micro-decisions. When a technical decision has a clear best-practice answer, make the call and state it — don't ask.
+- **Batch proposals — never drip.** When a task involves multiple decisions or recommendations, present them ALL in ONE output as a single package (table or structured summary). The owner reviews the entire package in one response — NOT one question at a time. One-question-at-a-time grilling is forbidden unless the owner explicitly requests it.
+- **Indonesian for owner-facing summaries.** Code, commits, and issue bodies stay per existing conventions; but owner-facing decision tables, summaries, and explanations must be in Bahasa Indonesia, brief, and concept-level (not jargon).
+
 ## STRUCTURE
 
 ```
@@ -65,10 +71,11 @@ pulung/
 - **No `as any`, `@ts-ignore`, `@ts-expect-error`, `@ts-nocheck`** anywhere (ADR-001). The `as unknown as DomainStore` cast in `src/lib/domain/store.ts` is the *only* sanctioned cast and is documented inline.
 - **Playwright is forbidden** repo-wide. Browser QA via `agent-browser` CLI only.
 - **Never use bare `npx lhci`** — resolves to an unrelated typosquat. Always `npx @lhci/cli@latest`.
-- **Never fabricate visual content** — image work ALWAYS routes through `/vision-9router` skill (orchestrator is vision-blind). Requires `NINEROUTER_URL` (and `NINEROUTER_KEY` if auth on) — verify with `curl $NINEROUTER_URL/api/health` → `{"ok":true}`.
+- **Never block UI work only because an image asset is missing.** Choose the correct, independent asset path from the Visual Asset Workflow below: SerpAPI finds existing external imagery; `agy` creates new AI-generated illustrative assets.
 - **Never claim "dijamin lulus" / guaranteed pass** in copy (legal/ethical rule, enforced by `research/copy-research.md`).
 - **Never edit `.github/workflows/ci.yml` to "fix" red CI** — GitHub Actions ALWAYS FAILS due to account billing issue (regardless of code quality). Run gates locally instead.
 - **Never resolve `// TODO: verify owner` markers** in `src/lib/copy/data.ts` with invented values — they require owner confirmation.
+- **Never load Claude-Code-only worker skills inside opencode.** When running inside opencode (this environment), skills that shell out to `opencode run` or external CLIs are forbidden — they spawn nested-process chaos. Banned list: `worker-team`, `worker-implement`, `worker-review`, `worker-digest`, `pi-custom-model`, `claude-handoff`. Signature of incompatibility: skill description mentions "opencode run", "headless GLM worker", "pi agent", "1M context via pi", or "Claude Code". The only valid dispatch primitives inside opencode are native `task()` (with `category` + `load_skills`) and `team_*` tools (when `team_mode.enabled=true`); everything else falls through to built-in tools (Bash, Read, Edit, Grep, etc.).
 
 ## UNIQUE STYLES
 
@@ -97,7 +104,22 @@ npx @lhci/cli@latest collect && npx @lhci/cli@latest assert   # all Lighthouse c
 pnpm test                           # Vitest unit tests must pass
 ```
 
-Placeholder images: generate via `agy` CLI. WA routing QA: `node scripts/qa/wa-link-correctness.mjs` (manual, business-critical).
+## VISUAL ASSET WORKFLOW
+
+- First inspect `public/images/`, `asset-image/`, and `assets/`; reuse a suitable local asset before creating another one.
+- **Path A — existing external imagery via SerpAPI.** Use this when the design needs an existing real-world photo, business image, or web-sourced reference. Search with the local `SERPAPI_KEY`; never print or commit the key. Verify reuse rights and record the source before shipping a downloaded image.
+- **Path B — new AI-generated asset via Antigravity.** Use this for synthetic illustrations, decorative visuals, placeholders, or sticker-style assets like those already under `public/images/stickers/`. This path does not use SerpAPI. Run the Antigravity CLI headlessly; its root model delegates rendering to its image-capable sub-agent.
+- For Path B, always use `agy --print`, request one concrete asset, reference the desired local visual style when useful, and include the exact workspace destination and extension. Example:
+
+  ```bash
+  agy --print "Generate one sticker-style illustration of a driving instructor guiding a student, matching the visual style of ./public/images/stickers/instructor_student.jpg, using Pulung blue and red accents; save it to ./public/images/stickers/instructor-guiding-student.webp"
+  ```
+
+- SerpAPI and `agy` are separate tools for separate intents. Never describe or execute them as a sequential fallback chain.
+- Generated people, vehicles, and locations are illustrative. Never present them as actual Pulung staff, students, fleet, or branches. Use neutral alt text and replace them with owner-confirmed photography when authenticity is required.
+- Keep runtime assets local under `public/images/`, use descriptive kebab-case filenames, set useful alt text, and optimize dimensions/format before shipping.
+
+WA routing QA: `node scripts/qa/wa-link-correctness.mjs` (manual, business-critical).
 
 ## NOTES
 
