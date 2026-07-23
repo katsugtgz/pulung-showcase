@@ -2,7 +2,20 @@ minimumReleaseAge: 10080
 trustPolicy: no-downgrade
 allowBuilds:
   sharp: true
+overrides:
+  sharp: 0.35.3
 minimumReleaseAgeExclude:
+  # Security patch release; trusted despite the 7-day quarantine.
+  - next@16.2.11
+  - '@next/env@16.2.11'
+  - '@next/swc-darwin-arm64@16.2.11'
+  - '@next/swc-darwin-x64@16.2.11'
+  - '@next/swc-linux-arm64-gnu@16.2.11'
+  - '@next/swc-linux-arm64-musl@16.2.11'
+  - '@next/swc-linux-x64-gnu@16.2.11'
+  - '@next/swc-linux-x64-musl@16.2.11'
+  - '@next/swc-win32-arm64-msvc@16.2.11'
+  - '@next/swc-win32-x64-msvc@16.2.11'
   - '@clerk/backend@3.11.7'
   - '@clerk/nextjs@7.5.20'
   - '@clerk/react@6.12.5'
