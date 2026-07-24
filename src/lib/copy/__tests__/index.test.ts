@@ -64,8 +64,8 @@ describe("hero copy", () => {
 
   it("returns fresh copies so source cannot be mutated", () => {
     const a = getHeroCopy();
-    a.variants.push(a.variants[0]);
-    a.trustBar.push(a.trustBar[0]);
+    Reflect.apply(Array.prototype.push, a.variants, [a.variants[0]]);
+    Reflect.apply(Array.prototype.push, a.trustBar, [a.trustBar[0]]);
     expect(getHeroCopy().variants).toHaveLength(3);
     expect(getHeroCopy().trustBar).toHaveLength(3);
   });
@@ -175,7 +175,7 @@ describe("getSeoCopy", () => {
 
   it("returns a fresh keywords array so source cannot be mutated", () => {
     const a = getSeoCopy();
-    a.keywords.push("mutated");
+    Reflect.apply(Array.prototype.push, a.keywords, ["mutated"]);
     expect(getSeoCopy().keywords).not.toContain("mutated");
   });
 });
