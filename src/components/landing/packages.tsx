@@ -48,7 +48,6 @@ function PackageCard({ pkg }: { pkg: Package }) {
   const TransmissionIcon = transmissionIconByKey(pkg.transmission);
   const sampleDisclaimer = getSamplePriceDisclaimer();
   const gearShift = getSticker("gear_shift");
-  const keyFob = getSticker("key_fob");
   return (
     <article
       className={
@@ -57,20 +56,6 @@ function PackageCard({ pkg }: { pkg: Package }) {
           : "flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm"
       }
     >
-      {isMixed && (
-        <div
-          aria-hidden="true"
-          className="absolute -right-2 -top-2 z-10 h-12 w-12 rotate-12 select-none rounded-xl border border-primary/20 bg-white p-0.5 shadow-md"
-        >
-          <Image
-            src={keyFob.src}
-            alt=""
-            fill
-            sizes="48px"
-            className="object-cover"
-          />
-        </div>
-      )}
       <div className="flex flex-1 flex-col p-5">
         <div className="mb-4 flex items-start justify-between gap-3">
           <div className="flex flex-col">
@@ -165,7 +150,6 @@ function PackageCard({ pkg }: { pkg: Package }) {
 
 export function Packages() {
   const packages = getPackages();
-  const driversLicense = getSticker("drivers_license");
 
   return (
     <section
@@ -174,20 +158,6 @@ export function Packages() {
       className="scroll-mt-24 bg-neutral-50 px-6 py-10 lg:px-8 lg:py-16"
     >
       <div className="mx-auto max-w-md md:max-w-5xl lg:max-w-7xl">
-        <div
-          aria-hidden="true"
-          className="mx-auto mb-3 flex select-none justify-center"
-        >
-          <div className="relative h-14 w-20 overflow-hidden rounded-xl border border-neutral-200 bg-white p-0.5 shadow-sm">
-            <Image
-              src={driversLicense.src}
-              alt=""
-              fill
-              sizes="80px"
-              className="object-cover"
-            />
-          </div>
-        </div>
         <h2
           id="packages-heading"
           className="text-center text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900"
