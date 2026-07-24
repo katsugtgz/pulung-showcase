@@ -93,6 +93,9 @@ describe("Hero", () => {
     // preload-link emission, not for an <img> attribute), so it's enforced
     // at the JSX source level + Lighthouse LCP audit instead.
     expect(image).toHaveAttribute("data-nimg", "fill");
+    expect(image.className).toContain("object-contain");
+    expect(image.className).toContain("object-center");
+    expect(image.className).not.toContain("object-cover");
     // The "Contoh" overlay chip is rendered as a sibling span — verify the
     // word is visible to sighted users (defense against removal).
     expect(screen.getByText("Contoh")).toBeInTheDocument();
