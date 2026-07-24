@@ -2,7 +2,12 @@ import "@testing-library/jest-dom/vitest";
 import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import { Hero } from "../hero";
-import { getActiveHeroVariant, getCta, getHeroCopy } from "@/lib/copy";
+import {
+  getActiveHeroVariant,
+  getCta,
+  getHeroCopy,
+  getSeoCopy,
+} from "@/lib/copy";
 
 afterEach(cleanup);
 
@@ -58,32 +63,29 @@ describe("Hero", () => {
     render(<Hero />);
     const { trustBar } = getHeroCopy();
     for (const chip of trustBar) {
-      expect(screen.getByText(chip.label)).toBeInTheDocument();
+      expect(screen.getAllByText(chip.label).length).toBeGreaterThan(0);
     }
   });
 
-  it("uses the eyebrow 'Kursus Mengemudi' to label the business category (not a claim)", () => {
+  it("uses the SEO business-category keyword as the eyebrow", () => {
     render(<Hero />);
-    expect(screen.getByText("Kursus Mengemudi")).toBeInTheDocument();
+    expect(screen.getByText(getSeoCopy().keywords[0]!)).toBeInTheDocument();
   });
 
   /*
    * Hero image (issue #50 story #43 — reserve dimensions + LCP-aware).
-   * The image is a placeholder SVG with priority + fill + unoptimized so the
-   * browser never makes a runtime third-party request and never reflows when
-   * the SVG resolves. The "Contoh" overlay (story #37) marks it as a stand-in
-   * for the owner-supplied photo that doesn't exist yet — guardrails here
-   * prevent a future regression that drops priority (hurting LCP) or drops
-   * the alt text (hurting screen-reader users).
+   * The selected editorial composition uses the local instructor/student
+   * illustration. "Contoh" remains visible so it cannot be mistaken for
+   * actual Pulung staff or a documentary branch photo.
    */
   it("renders the hero image with descriptive alt text, priority, and the 'Contoh' overlay (stories #37, #43)", () => {
     render(<Hero />);
     const image = screen.getByRole("img");
-    expect(image).toHaveAttribute("src", "/images/hero-placeholder.svg");
+    expect(image.getAttribute("src")).toContain("instructor_student.jpg");
     // Alt text must be non-empty and describe the illustration honestly.
     const alt = image.getAttribute("alt") ?? "";
     expect(alt.length).toBeGreaterThan(20);
-    expect(alt.toLowerCase()).toContain("contoh");
+    expect(alt.toLowerCase()).toContain("ilustrasi");
     // data-nimg is next/image's structural marker — guards against a future
     // regression that swaps it for a raw <img> and loses the optimization
     // pipeline (reserved dimensions, lazy-loading policy, etc). The
@@ -111,17 +113,16 @@ describe("Hero", () => {
     expect(secondary.className).not.toContain("bg-accent");
   });
 
-  it("renders learner_car and side_mirror stickers as decorative elements", () => {
+  it("renders one honest instructor/student illustration, not the rejected decorative pair", () => {
     const { container } = render(<Hero />);
-    const learnerImg = container.querySelector('img[src*="learner_car.jpg"]') as HTMLImageElement;
-    expect(learnerImg).toBeInTheDocument();
-    expect(learnerImg.alt).toBe("");
-    expect(learnerImg.closest('[aria-hidden="true"]')).not.toBeNull();
-
-    const sideMirrorImg = container.querySelector('img[src*="side_mirror.jpg"]') as HTMLImageElement;
-    expect(sideMirrorImg).toBeInTheDocument();
-    expect(sideMirrorImg.alt).toBe("");
-    expect(sideMirrorImg.closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(
+      container.querySelector('img[src*="instructor_student.jpg"]'),
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('img[src*="learner_car.jpg"]'),
+    ).not.toBeInTheDocument();
+    expect(
+      container.querySelector('img[src*="side_mirror.jpg"]'),
+    ).not.toBeInTheDocument();
   });
 });
-

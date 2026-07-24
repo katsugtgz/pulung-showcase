@@ -12,6 +12,7 @@ export { Faq } from "./faq";
 export { FinalCta } from "./final-cta";
 export { Footer } from "./footer";
 export { Reveal } from "./reveal";
+export { HoverTilt } from "./hover-tilt";
 export { StickyCta } from "./sticky-cta";
 
 // Shared icon vocabulary (issue #50). Section authors import these from

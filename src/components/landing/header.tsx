@@ -25,7 +25,7 @@ import Link from "next/link";
  */
 export function Header() {
   return (
-    <header className="sticky top-0 z-30 bg-primary px-6 py-3 text-white lg:px-8">
+    <header className="sticky top-0 z-30 border-b border-white/15 bg-primary px-6 py-3 text-white lg:px-8">
       <div className="mx-auto flex max-w-md lg:max-w-7xl items-center justify-between gap-3">
         {/*
           Wordmark — pill lockup ADR-004 (konsisten dengan Hero & Footer).
@@ -55,25 +55,25 @@ export function Header() {
         <nav aria-label="Navigasi utama" className="hidden gap-6 lg:flex">
           <Link
             href="#packages"
-            className="rounded-md text-sm font-medium text-white/90 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            className="t-nav-link rounded-md text-sm font-medium text-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           >
             Paket
           </Link>
           <Link
             href="#cara-kerja"
-            className="rounded-md text-sm font-medium text-white/90 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            className="t-nav-link rounded-md text-sm font-medium text-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           >
             Cara Kerja
           </Link>
           <Link
             href="#lokasi"
-            className="rounded-md text-sm font-medium text-white/90 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            className="t-nav-link rounded-md text-sm font-medium text-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           >
             Lokasi
           </Link>
           <Link
             href="#faq"
-            className="rounded-md text-sm font-medium text-white/90 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            className="t-nav-link rounded-md text-sm font-medium text-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           >
             FAQ
           </Link>
@@ -89,13 +89,13 @@ export function Header() {
         <div className="flex items-center gap-1 sm:gap-2">
           <Link
             href="/sign-in"
-            className="rounded-md px-2 py-1 text-xs font-semibold text-white/95 transition hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:rounded-lg sm:border sm:border-white/50 sm:px-3 sm:py-1.5 sm:text-sm sm:text-white sm:hover:border-white sm:hover:bg-white/10 active:scale-[0.98] lg:active:scale-[0.98]"
+            className="t-header-action rounded-md px-2 py-1 text-xs font-semibold text-white/95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:rounded-lg sm:border sm:border-white/50 sm:px-3 sm:py-1.5 sm:text-sm sm:text-white"
           >
             Masuk
           </Link>
           <Link
             href="/sign-up"
-            className="rounded-md bg-accent/90 px-2 py-1 text-xs font-bold text-white transition hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:rounded-lg sm:px-3 sm:py-1.5 sm:text-sm sm:shadow-sm sm:shadow-accent/30 sm:hover:bg-accent-dark active:scale-[0.98] lg:active:scale-[0.98]"
+            className="t-header-action rounded-md bg-accent/90 px-2 py-1 text-xs font-bold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:rounded-lg sm:px-3 sm:py-1.5 sm:text-sm sm:shadow-sm sm:shadow-accent/30"
           >
             Daftar
           </Link>
