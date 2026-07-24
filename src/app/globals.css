@@ -35,23 +35,38 @@
 :root {
   color-scheme: light;
 
-  /*
-   * Motion tokens (kosakata transitions-dev). Dipakai oleh .t-reveal untuk
-   * transisi halus saat section masuk viewport. Progressive enhancement
-   * (issue #50 story #24): konten selalu tampil penuh secara default — token
-   * ini hanya mengatur jarak + durasi gerakan kecil, BUKAN menghilangkan
-   * visibilitas. Tidak ada `opacity: 0` atau `filter: blur()` pada kondisi
-   * awal; baseline tetap terlihat walau JS gagal dimuat.
-   */
-  --reveal-dur: 400ms;
-  --reveal-distance: 10px;
+  /* transitions.dev semantic motion tokens */
+  --reveal-dur: 680ms;
+  --reveal-distance: 52px;
+  --reveal-blur: 8px;
+  --reveal-scale: 0.965;
+  --reveal-stagger: 90ms;
   --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-card-dur: 620ms;
+  --motion-card-stagger: 75ms;
+  --motion-card-distance: 34px;
+  --motion-card-scale: 0.96;
+  --motion-card-blur: 5px;
+  --surface-hover-lift: -8px;
+  --surface-hover-scale: 1.012;
+  --tilt-perspective: 1000px;
+  --tilt-return: 1000ms;
+  --tilt-return-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tilt-follow: 400ms;
+  --tilt-follow-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tilt-glare-opacity: 0.32;
+  --tilt-glare-fade: 300ms;
+  --tilt-glare-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html,
 body {
   background-color: var(--color-neutral-50);
   color: var(--color-neutral-900);
+}
+
+.landing-page {
+  overflow-x: clip;
 }
 
 /*
@@ -66,31 +81,246 @@ body {
   }
 }
 
-/*
- * Scroll-reveal per section (dipakai <Reveal/>). Konten tampil penuh secara
- * default — BUKAN opacity:0/blur — lalu .is-shown (dari IntersectionObserver)
- * hanya menyeterakan posisi ke netral. Progressive enhancement (issue #50
- * story #24): jika JS gagal/IntersectionObserver tak didukung, halaman tetap
- * terbaca penuh tanpa animasi. Hero (elemen LCP) tidak dibungkus.
- */
 .t-reveal {
-  transform: translateY(var(--reveal-distance));
-  transition: transform var(--reveal-dur) var(--reveal-ease);
-  will-change: transform;
+  --reveal-x: 0px;
+  --reveal-y: var(--reveal-distance);
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
 }
 
-.t-reveal.is-shown {
-  transform: translateY(0);
+.t-reveal[data-scroll-from="top"] {
+  --reveal-y: calc(var(--reveal-distance) * -1);
+}
+
+.t-reveal.is-motion-ready {
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    transform var(--reveal-dur) var(--reveal-ease),
+    filter var(--reveal-dur) var(--reveal-ease);
+}
+
+.t-reveal.is-motion-ready:not(.is-shown):not(.t-reveal-stagger) {
+  opacity: 0;
+  transform: translate3d(var(--reveal-x), var(--reveal-y), 0)
+    scale(var(--reveal-scale));
+  filter: blur(var(--reveal-blur));
+  transform-origin: 50% 100%;
+  will-change: transform, opacity, filter;
+}
+
+.t-reveal.is-shown:not(.t-reveal-stagger) {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
   will-change: auto;
 }
 
-/*
- * Wajib dipertahankan: menonaktifkan gerak untuk pengguna yang meminta lebih
- * sedikit animasi di tingkat OS. Konten langsung tampil penuh.
- */
+.t-reveal[data-scroll-preparing="true"],
+.t-reveal[data-scroll-preparing="true"] > .t-reveal-line {
+  transition: none !important;
+}
+
+.t-reveal-stagger {
+  transition: none;
+}
+
+.t-reveal-line {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    transform var(--reveal-dur) var(--reveal-ease),
+    filter var(--reveal-dur) var(--reveal-ease);
+  transition-delay: calc(var(--reveal-index, 0) * var(--reveal-stagger));
+}
+
+.t-reveal-stagger.is-motion-ready:not(.is-shown) > .t-reveal-line {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y), 0);
+  filter: blur(var(--reveal-blur));
+  will-change: transform, opacity, filter;
+}
+
+.t-reveal-stagger.is-shown > .t-reveal-line {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+  will-change: auto;
+}
+
+@media (min-width: 768px) {
+  main > .t-reveal:nth-of-type(odd) {
+    --reveal-x: -32px;
+  }
+
+  main > .t-reveal:nth-of-type(even) {
+    --reveal-x: 32px;
+  }
+}
+
+[data-motion-card="ready"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+  transition:
+    opacity var(--motion-card-dur) var(--reveal-ease),
+    transform var(--motion-card-dur) var(--reveal-ease),
+    filter var(--motion-card-dur) var(--reveal-ease),
+    border-color 300ms ease,
+    box-shadow 420ms var(--reveal-ease);
+}
+
+[data-motion-card="ready"][data-motion-shown="false"] {
+  opacity: 0;
+  transform: translate3d(
+      0,
+      var(--motion-card-y, var(--motion-card-distance)),
+      0
+    )
+    scale(var(--motion-card-scale));
+  filter: blur(var(--motion-card-blur));
+  transition-delay: var(--motion-card-delay, 0ms);
+  will-change: transform, opacity, filter;
+}
+
+[data-motion-card="ready"][data-motion-preparing="true"] {
+  transition: none !important;
+}
+
+[data-motion-card="ready"][data-motion-from="top"] {
+  --motion-card-y: calc(var(--motion-card-distance) * -1);
+}
+
+[data-motion-card="ready"][data-motion-shown="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+  transition-delay: var(--motion-card-delay, 0ms);
+}
+
+[data-motion-card="ready"][data-motion-shown="true"][data-motion-settled="true"] {
+  transition-delay: 0ms;
+  will-change: auto;
+}
+
+[data-motion-card="ready"] img {
+  transition: transform 600ms var(--reveal-ease);
+}
+
+.t-tilt {
+  touch-action: none;
+}
+
+.t-tilt-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  transform: perspective(var(--tilt-perspective))
+    rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform var(--tilt-return) var(--tilt-return-ease);
+  will-change: transform;
+}
+
+.t-tilt-card.is-tilting {
+  transition: transform var(--tilt-follow) var(--tilt-follow-ease);
+}
+
+.t-tilt-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(
+      circle 95px at var(--tilt-gx, 50%) var(--tilt-gy, 50%),
+      rgba(255, 255, 255, 0.48),
+      rgba(255, 255, 255, 0.06) 52%,
+      transparent 84%
+    ),
+    radial-gradient(
+      circle 260px at var(--tilt-gx, 50%) var(--tilt-gy, 50%),
+      rgba(255, 255, 255, 0.2),
+      transparent 82%
+    );
+  transition: opacity var(--tilt-glare-fade) var(--tilt-glare-ease);
+}
+
+.t-tilt.is-hover .t-tilt-glare {
+  opacity: var(--tilt-glare-opacity);
+}
+
+.t-action,
+.t-header-action,
+.t-nav-link {
+  transition:
+    color 250ms ease,
+    background-color 250ms ease,
+    border-color 250ms ease,
+    box-shadow 350ms var(--reveal-ease),
+    transform 350ms var(--reveal-ease);
+}
+
+.t-action:active,
+.t-header-action:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-motion-card="ready"][data-motion-shown="true"]:hover {
+    transform: translateY(var(--surface-hover-lift))
+      scale(var(--surface-hover-scale));
+    border-color: color-mix(in srgb, var(--color-primary) 42%, transparent);
+    box-shadow:
+      0 24px 44px -28px rgba(15, 23, 42, 0.46),
+      0 10px 20px -16px rgba(30, 111, 184, 0.42);
+  }
+
+  [data-motion-card="ready"][data-motion-shown="true"]:hover img {
+    transform: scale(1.045);
+  }
+
+  .t-action:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 18px 30px -16px rgba(15, 23, 42, 0.5);
+  }
+
+  .t-action:not(.t-action-secondary):hover {
+    background-color: var(--color-accent-dark);
+  }
+
+  .t-action-secondary:hover,
+  .t-header-action:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .t-nav-link:hover {
+    color: white;
+    transform: translateY(-2px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .t-reveal {
-    transform: none;
-    transition: none;
+  .t-reveal,
+  .t-reveal-line,
+  [data-motion-card="ready"],
+  [data-motion-card="ready"] img,
+  .t-tilt-card,
+  .t-action,
+  .t-header-action,
+  .t-nav-link {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+
+@media (pointer: coarse) {
+  .t-tilt {
+    touch-action: pan-y;
   }
 }

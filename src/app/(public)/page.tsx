@@ -47,11 +47,13 @@ import {
  */
 export default function HomePage() {
   return (
-    <>
+    <div className="landing-page">
       <Header />
       <main className="min-h-dvh bg-neutral-50">
         <Hero />
-        <CredibilityStrip />
+        <Reveal>
+          <CredibilityStrip />
+        </Reveal>
         <Reveal>
           <CaraKerja />
         </Reveal>
@@ -89,8 +91,10 @@ export default function HomePage() {
           <FinalCta />
         </Reveal>
       </main>
-      <Footer />
+      <Reveal>
+        <Footer />
+      </Reveal>
       <StickyCta />
-    </>
+    </div>
   );
 }
