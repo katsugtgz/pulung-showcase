@@ -89,7 +89,7 @@ export function Hero() {
                   fill
                   priority
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-cover"
+                  className="object-contain object-center"
                 />
                 <figcaption className="absolute left-3 top-3 rounded-md bg-neutral-900/75 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-white">
                   Contoh

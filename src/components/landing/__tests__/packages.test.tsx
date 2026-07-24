@@ -126,14 +126,8 @@ describe("Packages section", () => {
     void within;
   });
 
-  it("renders drivers_license, gear_shift, and key_fob stickers as decorative elements", () => {
+  it("keeps the gear-shift cue and hides the requested package stickers", () => {
     const { container } = render(<Packages />);
-    
-    // drivers_license header badge
-    const driversLicenseImg = container.querySelector('img[src*="drivers_license.jpg"]') as HTMLImageElement;
-    expect(driversLicenseImg).toBeInTheDocument();
-    expect(driversLicenseImg.alt).toBe("");
-    expect(driversLicenseImg.closest('[aria-hidden="true"]')).not.toBeNull();
 
     // gear_shift in manual card
     const gearShiftImg = container.querySelector('img[src*="gear_shift.jpg"]') as HTMLImageElement;
@@ -141,11 +135,11 @@ describe("Packages section", () => {
     expect(gearShiftImg.alt).toBe("");
     expect(gearShiftImg.closest('[aria-hidden="true"]')).not.toBeNull();
 
-    // key_fob in mixed card
-    const keyFobImg = container.querySelector('img[src*="key_fob.jpg"]') as HTMLImageElement;
-    expect(keyFobImg).toBeInTheDocument();
-    expect(keyFobImg.alt).toBe("");
-    expect(keyFobImg.closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(
+      container.querySelector('img[src*="drivers_license.jpg"]'),
+    ).not.toBeInTheDocument();
+    expect(
+      container.querySelector('img[src*="key_fob.jpg"]'),
+    ).not.toBeInTheDocument();
   });
 });
-

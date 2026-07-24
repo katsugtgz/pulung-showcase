@@ -59,7 +59,6 @@ export function LocationPicker() {
     ? `Tanya Kursus ${selectedTransmission.label} via WA`
     : cta.primary;
   const carSuroboyo = getSticker("car_suroboyo");
-  const carSuramadu = getSticker("car_suramadu");
 
   return (
     <section
@@ -204,23 +203,6 @@ export function LocationPicker() {
                     </button>
                   );
                 })}
-              </div>
-            </div>
-
-            {/* Card divider sticker - car_suramadu */}
-            <div
-              aria-hidden="true"
-              className="relative flex select-none items-center justify-center py-2"
-            >
-              <div className="absolute inset-x-0 h-px bg-neutral-200" />
-              <div className="relative z-10 flex h-14 w-28 overflow-hidden rounded-xl border border-neutral-200 bg-white p-0.5 shadow-sm">
-                <Image
-                  src={carSuramadu.src}
-                  alt=""
-                  fill
-                  sizes="112px"
-                  className="object-cover"
-                />
               </div>
             </div>
 
