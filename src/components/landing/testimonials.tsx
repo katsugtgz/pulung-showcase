@@ -108,9 +108,14 @@ function TestimonialCard({
         </div>
         <span
           aria-label="Sumber: Google"
-          className="flex-shrink-0 rounded-full bg-neutral-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-neutral-600"
+          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-white ring-1 ring-neutral-200"
         >
-          Google
+          <Image
+            src="/images/google-g.svg"
+            alt=""
+            width={15}
+            height={16}
+          />
         </span>
       </figcaption>
     </figure>
@@ -177,11 +182,16 @@ export function Testimonials() {
                     <StarIcon key={i} className="h-4 w-4" />
                   ))}
                 </div>
-                <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-neutral-700 ring-1 ring-neutral-200">
-                  <span aria-hidden="true" className="text-[11px] font-black">
-                    G
-                  </span>
-                  Google
+                <span
+                  aria-label="Sumber: Google"
+                  className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white ring-1 ring-neutral-200"
+                >
+                  <Image
+                    src="/images/google-g.svg"
+                    alt=""
+                    width={15}
+                    height={16}
+                  />
                 </span>
               </div>
             </div>

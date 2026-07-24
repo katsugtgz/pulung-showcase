@@ -47,10 +47,8 @@ describe("Testimonials section", () => {
 
   /*
    * Google provenance contract (issue #50 ticket #56). Every testimonial
-   * card MUST carry a visible "Google" marker so the proof stays attributed.
-   * The current implementation uses a badge in figcaption; a future author
-   * may refactor to a "via Google" caption — either form satisfies the
-   * contract as long as the literal "Google" appears on every card.
+   * card MUST carry a visible official Google mark so the proof stays
+   * attributed without a text-only imitation of the brand.
    */
   it("renders a visible 'Google' provenance marker on every testimonial card", () => {
     render(<Testimonials />);
@@ -59,10 +57,10 @@ describe("Testimonials section", () => {
     const cards = document.querySelectorAll("figure");
     expect(cards.length).toBe(entries.length);
     for (const card of Array.from(cards)) {
-      // The "Google" badge lives in figcaption. Match exact text to avoid
-      // matching the section-level "Google" badge in the rating block.
       const figcaption = card.querySelector("figcaption");
-      expect(figcaption?.textContent).toContain("Google");
+      const badge = figcaption?.querySelector('[aria-label="Sumber: Google"]');
+      expect(badge).not.toBeNull();
+      expect(badge?.querySelector('img[src*="google-g.svg"]')).not.toBeNull();
     }
   });
 
@@ -75,8 +73,8 @@ describe("Testimonials section", () => {
    */
   it("renders stickers from the illustrations module and hides decorative ones", () => {
     const { container } = render(<Testimonials />);
-    const imgs = container.querySelectorAll("img");
-    expect(imgs.length).toBe(2);
+    const stickerImgs = container.querySelectorAll('img[src*="stickers"]');
+    expect(stickerImgs.length).toBe(2);
 
     // instructor_student sticker (informative, has actual alt text)
     const instructorImg = container.querySelector('img[src*="instructor_student.jpg"]') as HTMLImageElement;
@@ -95,8 +93,8 @@ describe("Testimonials section", () => {
     const imgs = container.querySelectorAll("img");
     for (const img of Array.from(imgs)) {
       const src = img.getAttribute("src") || "";
-      // Only allow stickers in testimonials section
-      expect(src).toMatch(/stickers/);
+      // Only allow section stickers and the official Google provenance mark.
+      expect(src).toMatch(/stickers|google-g\.svg/);
     }
   });
 
