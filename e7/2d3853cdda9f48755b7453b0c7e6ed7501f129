@@ -1,0 +1,19 @@
+src/components/landing/sticky-cta.tsx
+  s_143088636d6479::t_d86392b2beb9ac 51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "e72d3853cdda9f48755b7453b0c7e6ed7501f129",
+  "prompts": {},
+  "sessions": {
+    "s_143088636d6479": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_066cf0641ffesv3lD46AKkhhLp",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
