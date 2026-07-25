@@ -48,7 +48,7 @@ export function StickyCta() {
       },
       { threshold: 0 },
     );
-    targets.forEach((t) => io.observe(t));
+    for (const t of targets) io.observe(t);
     return () => io.disconnect();
   }, []);
 
