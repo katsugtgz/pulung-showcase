@@ -1,0 +1,27 @@
+DECISIONS.md
+  s_038d67559c775f::t_3ac1b8e3b061c2 102-103
+  s_038d67559c775f::t_946a8317225a57 46-48
+  s_038d67559c775f::t_1e346b6d99d3d0 114
+  s_038d67559c775f::t_a66b3b77b8d338 6,9
+  s_038d67559c775f::t_2c89359197e28d 119
+.gitignore
+  s_038d67559c775f::t_ce46e6c8801354 2,9
+docs/contact.md
+  s_038d67559c775f::t_c2a2c0eb7bf0db 22,28,40,72,82,94,104,113
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "7b411bcca27287e405b66ee13924f60198af9034",
+  "prompts": {},
+  "sessions": {
+    "s_038d67559c775f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8ac43211-929f-4887-90cb-9d4473d7cf07",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
