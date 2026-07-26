@@ -1,69 +1,78 @@
-# Pulung — Demo Sistem Kursus Mengemudi
+# Pulung — Driving School Platform
 
-Prototipe web untuk **Kursus Mengemudi Pulung** (Surabaya, berdiri 2000): landing page mobile-first, pendaftaran siswa, katalog paket, pembayaran QRIS (mock), sampai dashboard admin — sesuai [PRD proposal](docs/prd-proposal-aligned.md).
+Full-stack web platform for a driving school in Surabaya, Indonesia: public marketing site, student enrollment and scheduling, mock QRIS payments, and a complete admin back office.
 
-## Fitur
+**Live demo:** https://pulung.vercel.app
 
-**Sudah jalan (sisi publik & siswa)**
+## Features
 
-- Landing page lengkap: hero, paket & harga, pilih lokasi cabang, testimoni, FAQ, footer — semua copy Bahasa Indonesia dari modul copy ber-type.
-- Routing WhatsApp per cluster cabang (MERR/Selatan vs Manyar/Pusat) + pesan CTA yang terisi otomatis sesuai pilihan transmisi.
-- Auth Clerk (sign-in/up bertema brand) dengan area aplikasi terproteksi.
-- Katalog kursus + halaman detail silabus.
-- Alur enrollment dengan mock pembayaran QRIS.
+- Role-based access control with Clerk (admin and student roles enforced at the edge, layout, and server-action level)
+- Student dashboard: lesson scheduling with conflict detection, downloadable student ID card, and payment history
+- Course catalog with per-package syllabus pages and an enrollment flow
+- Mock QRIS payment flow with admin-side payment confirmation
+- PDF invoice and student-card generation, downloadable from the app
+- Admin dashboard: student management, instructor and student schedule management with clash prevention, and Excel export
+- Branch-aware WhatsApp routing that pre-fills contact messages per location and transmission choice
+- Mobile-first landing page with localized Indonesian copy, FAQ, testimonials, and branch selector
 
-**Sedang dikerjakan** (lihat [issues](../../issues))
+## Tech Stack
 
-- Chatbot "Tanya Pulung" (Gemini) di landing page.
-- Dashboard admin: kelola siswa, jadwal instruktur & siswa (anti-bentrok), konfirmasi bayar, invoice otomatis, kartu siswa PDF, ekspor Excel.
-- SEO meta + deploy demo ke Vercel.
+- **Framework:** Next.js 16 (App Router, React Server Components), React 19
+- **Language:** TypeScript (strict mode)
+- **Auth:** Clerk (custom role metadata)
+- **Styling:** Tailwind CSS 4 (CSS-first `@theme`)
+- **Documents:** pdf-lib (invoices, student cards), ExcelJS (admin exports)
+- **Testing:** Vitest + Testing Library
+- **Tooling:** pnpm, Node.js 24 LTS
 
-## Tech stack
+## Getting Started
 
-Next.js 16 · React 19 · Tailwind CSS 4 (CSS-first `@theme`) · Clerk · Vitest · pnpm · Node 24 LTS. Versi dipin persis — alasan keputusan penting (mis. TypeScript ditahan di 5.9.x) ada di [DECISIONS.md](DECISIONS.md).
+### Prerequisites
 
-## Menjalankan lokal
+- Node.js 24 LTS
+- pnpm
+- A [Clerk](https://clerk.com) application (free tier works)
+
+### Install and run
 
 ```bash
 pnpm install
-cp .env.example .env.local   # isi kunci Clerk & Gemini
-pnpm dev                     # http://localhost:3000
+cp .env.example .env.local
+pnpm dev   # http://localhost:3000
 ```
 
-## Quality gates (jalankan lokal)
+### Environment variables
 
-> ⚠️ CI GitHub Actions **selalu merah** karena kendala billing akun — itu bukan indikator kualitas kode. Gate yang berlaku adalah yang lokal:
+Set these in `.env.local` (see `.env.example` for details):
 
-```bash
-pnpm build                          # wajib sukses
-pnpm test                           # unit test Vitest
-npx react-doctor@latest --json      # skor harus 100
-npx lhci collect && npx lhci assert # semua kategori Lighthouse ≥ 0.9
-```
-
-QA browser memakai CLI `agent-browser` (Playwright tidak dipakai di repo ini).
-
-## Struktur penting
-
-| Path | Isi |
+| Variable | Description |
 |---|---|
-| `src/` | Aplikasi Next.js (App Router) |
-| `docs/prd-proposal-aligned.md` | PRD — sumber kebenaran scope |
-| `contact.md` | Data bisnis (cabang, nomor WA, harga) — satu-satunya sumber; UI membacanya via modul `catalog-data` |
-| `stitch/` | Desain mobile referensi |
-| `AGENTS.md` / `DECISIONS.md` | Aturan kerja agent & catatan keputusan arsitektur |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key |
+| `CLERK_SECRET_KEY` | Clerk secret key |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | Sign-in route (default `/sign-in`) |
+| `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | Sign-up route (default `/sign-up`) |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL` | Post-sign-in redirect (default `/dashboard`) |
+| `NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL` | Post-sign-up redirect (default `/dashboard`) |
 
-## Versioning & rilis
+The app builds without Clerk keys (auth is env-gated), but sign-in and the protected dashboards require them.
 
-Repo ini memakai [SemVer](https://semver.org) dengan tag `vX.Y.Z`:
-
-- Selama fase demo, versi tetap `0.x` — **minor** naik tiap milestone selesai (mis. epic PRD kelar), **patch** untuk perbaikan kecil.
-- `v1.0.0` = seluruh alur proposal (siswa + admin, E1–E12) terdemokan end-to-end.
-
-Cara rilis (satu perintah, tag dibuat otomatis dari `main`):
+### Tests and build
 
 ```bash
-gh release create v0.X.0 --target main --title "v0.X.0 — <nama milestone>" --generate-notes
+pnpm test    # Vitest unit tests
+pnpm build   # production build with strict type checking
 ```
 
-Riwayat rilis: lihat halaman [Releases](../../releases).
+## Project Structure
+
+| Path | Contents |
+|---|---|
+| `src/app/` | App Router routes in four groups: public, protected, student (`/app`), admin (`/admin`) |
+| `src/lib/` | Feature modules (catalog data, scheduling, PDF, Excel export, WhatsApp routing) |
+| `src/components/` | Landing sections and shared UI |
+| `docs/` | Product requirements, guides, and business data |
+| `DECISIONS.md` | Architecture decision records |
+
+## License
+
+MIT — see [LICENSE](LICENSE).
