@@ -1,0 +1,42 @@
+src/components/app-shell/index.tsx
+  s_038d67559c775f::t_2350e9fad3353e 24,27
+src/lib/copy/types.ts
+  s_038d67559c775f::t_8514c0d68ba151 8-9
+src/components/landing/experience-band.tsx
+  s_038d67559c775f::t_0c8435652922c2 64-67
+src/components/app-shell/bottom-nav.tsx
+  s_038d67559c775f::t_ce8ac96498f9ff 8-9
+src/lib/copy/index.ts
+  s_038d67559c775f::t_41676ba3f9aed9 10-11
+src/components/landing/social-cards.tsx
+  s_038d67559c775f::t_b4f34a887f8b59 21
+src/app/globals.css
+  s_038d67559c775f::t_de41bb8da3a688 5-6
+src/lib/copy/data.ts
+  s_038d67559c775f::t_f489350ef4d433 186
+  s_038d67559c775f::t_9b77c9855fa212 214
+  s_038d67559c775f::t_db98c0718c82dc 88-89
+  s_038d67559c775f::t_981d9c5cb14a31 5
+  s_038d67559c775f::t_7662fb49c86a82 179
+  s_038d67559c775f::t_0b6e28965e2eea 200
+  s_038d67559c775f::t_5be37d3a00a8a1 167
+  s_038d67559c775f::t_9c7c0565a1f4e6 207
+DECISIONS.md
+  s_038d67559c775f::t_0db5ea77a5f433 193
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "14a1913d5a6fdade695f04187e1b8757ba70c8f3",
+  "prompts": {},
+  "sessions": {
+    "s_038d67559c775f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8ac43211-929f-4887-90cb-9d4473d7cf07",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
