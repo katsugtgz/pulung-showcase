@@ -19,13 +19,13 @@ clusters:
     instagram: "@pulungkursusmengemudi"
 ---
 
-# 🚗 Kursus Mengemudi PULUNG (Pulung Driving Course)
+# Kursus Mengemudi PULUNG (Pulung Driving Course)
 
 Comprehensive business profile, branch segmentation, and contact directory.
 
 ---
 
-## 📋 Business Overview
+## Business Overview
 
 | Attribute | Details |
 | :--- | :--- |
@@ -37,7 +37,7 @@ Comprehensive business profile, branch segmentation, and contact directory.
 
 ---
 
-## 🗺️ Operational Clusters & Branch Directory
+## Operational Clusters & Branch Directory
 
 The business is divided into **two operational clusters** managed by different administrative teams. Clients should contact the admin matching their preferred training location.
 
@@ -69,7 +69,7 @@ The business is divided into **two operational clusters** managed by different a
 
 ---
 
-## 📱 Social Media Segmentation Analysis
+## Social Media Segmentation Analysis
 
 | Account | Status | Cluster Focus | Associated WhatsApp | Actionable Recommendation |
 | :--- | :--- | :--- | :--- | :--- |
@@ -79,7 +79,7 @@ The business is divided into **two operational clusters** managed by different a
 
 ---
 
-## 🛠️ Services & Facilities
+## Services & Facilities
 
 * **Transmission Types:**
   * **Manual (MT):** Traditional manual gear shifting techniques.
@@ -91,7 +91,7 @@ The business is divided into **two operational clusters** managed by different a
 
 ---
 
-## ⏱️ Operation & Pricing
+## Operation & Pricing
 
 * **Working Hours:** Hours are flexible but not statically published. Live schedules must be coordinated directly with the respective cluster admin on WhatsApp.
 * **Pricing Model:** Advertised as "affordable and competitive". 
@@ -101,7 +101,7 @@ The business is divided into **two operational clusters** managed by different a
 
 ---
 
-## 💡 Recommended Registration Questions
+## Recommended Registration Questions
 
 When reaching out to the admin, verify the following details:
 1. **Package Promos:** Are there active promos for 5x, 8x, or 10x training slots?
@@ -110,7 +110,7 @@ When reaching out to the admin, verify the following details:
 
 ---
 
-## 🔗 References & Citations
+## References & Citations
 
 1. [Cluster A Instagram (@pulung_drivingcourse)](https://www.instagram.com/pulung_drivingcourse/)
 2. [Cluster B Instagram (@pulungkursusmengemudi)](https://www.instagram.com/pulungkursusmengemudi/)

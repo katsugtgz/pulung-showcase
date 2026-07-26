@@ -3,10 +3,10 @@
 ## ADR-001: TypeScript 5.9.3 over 7.0.2
 
 **Date:** 2026-07-17
-**Status:** Accepted (lead-approved deviation from AGENTS.md original pin)
+**Status:** Accepted (lead-approved deviation from the original pin)
 
 **Context:**
-AGENTS.md originally pinned TypeScript 7.0.2 (npm `latest` dist-tag). TS 7.x is
+The project originally pinned TypeScript 7.0.2 (npm `latest` dist-tag). TS 7.x is
 the native Go rewrite ("tsgo"). Its package `exports` map points the main entry
 (`.`) to `./lib/version.cjs`, which exports only `version`. The classic compiler
 API (`createProgram`, `createIncrementalProgram`, `readConfigFile`,
@@ -43,9 +43,9 @@ enforcement — a load-bearing part of the project's quality model
   client demo.
 
 **Consequence:**
-Deviates from the AGENTS.md original "TS 7.0.2" pin. AGENTS.md will be updated
-to reflect 5.9.3 so future agents don't re-hit this wall. 5.9.3 has every TS
-feature used by this codebase.
+Deviates from the original "TS 7.0.2" pin; the project docs were updated to
+reflect 5.9.3 so this wall isn't re-hit. 5.9.3 has every TS feature used by
+this codebase.
 
 ## ADR-002: Public landing ships zero Clerk (provider + middleware scoped away from `/`)
 
@@ -99,8 +99,8 @@ unchanged — every protected route still redirects unauthenticated users to
 
 **Context:**
 Pulung's authentic 25-year street-banner identity is the red (`#D22B3A`)
-"PULUNG" wordmark on the primary blue (`#1E6FB8`) field — a hard brand rule in
-AGENTS.md. Those two colors are near iso-luminant, so their contrast ratio is
+"PULUNG" wordmark on the primary blue (`#1E6FB8`) field — a hard brand rule for
+this project. Those two colors are near iso-luminant, so their contrast ratio is
 ~1.03:1, far below WCAG's 3:1 (large text). Lighthouse's `color-contrast` audit
 flags the hero `<h1>` and the sticky-header wordmark link.
 
@@ -111,12 +111,12 @@ contrast issue on the landing was fixed (hero secondary text bumped to
 `text-white/90`+, frosted trust chips switched to bordered-only so white text
 sits on the blue, footer `neutral-500/600` bumped to `neutral-400`, footer
 social tap targets enlarged to ≥24px). Result: accessibility 0.96 — above the
-AGENTS.md hard gate (no category < 0.9) — with the wordmark the sole remaining
+project's hard gate (no category < 0.9) — with the wordmark the sole remaining
 flag.
 
 **Alternatives rejected:**
 - Recoloring the wordmark (white/dark) or placing it on a light plate: would
-  pass the audit but violates the AGENTS.md brand rule and loses the banner
+  pass the audit but violates the brand rule and loses the banner
   identity. A white text-stroke reads better for humans but doesn't change
   Lighthouse's fill-vs-background computation, so it wouldn't clear the audit.
 

@@ -1,11 +1,12 @@
 .DS_Store
+.claude/
 .tokensave/
 .omo/
-.claude/settings.local.json
 node_modules/
 .next/
 .env*
 !.env.example
+*.log
 
 # Lighthouse CI local reports
 .lighthouseci/
