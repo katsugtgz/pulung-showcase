@@ -1,0 +1,26 @@
+docs/design-contract.md
+  s_038d67559c775f::t_a35d0341f4a69c 238
+  s_038d67559c775f::t_6ef6f1c0427516 5,7
+  s_038d67559c775f::t_de88c200f39eed 299
+  s_038d67559c775f::t_11f229fef9be90 128
+  s_038d67559c775f::t_03288fc1571cf0 343
+  s_038d67559c775f::t_841af478d70f46 11
+  s_038d67559c775f::t_d22017123dc4f9 226
+  s_038d67559c775f::t_0e5779e656b701 267
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "8bc0a94b48c473bf72d2da26b529d1f46c2c648d",
+  "prompts": {},
+  "sessions": {
+    "s_038d67559c775f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8ac43211-929f-4887-90cb-9d4473d7cf07",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
