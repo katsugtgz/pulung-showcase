@@ -190,7 +190,7 @@ without a separating surface. A light plate behind the wordmark:
 - Primary blue `#1E6FB8` (and `-dark`/`-light` variants) — unchanged.
 - Accent red `#D22B3A` (CTAs and the wordmark) — unchanged.
 - Neutral scale (white, `neutral-50` … `neutral-900`) — unchanged.
-- Forbidden: stitch purple `#5e4399` (still forbidden).
+- Forbidden: legacy mockup purple `#5e4399` (still forbidden).
 
 The only delta vs ADR-003 is **where the red wordmark is allowed to sit**: not
 directly on the blue field; on a light surface.

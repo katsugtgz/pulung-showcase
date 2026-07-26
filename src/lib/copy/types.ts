@@ -5,9 +5,8 @@
  * Mirrors the catalog-data module conventions: UI consumes copy through the
  * query functions in `index.ts`; raw strings live in `data.ts` and are not
  * re-exported. All content is Indonesian and sourced from
- * `research/copy-research.md`. Unverifiable business claims are marked
- * `// TODO: verify owner` in `data.ts` and phrased neutrally — never asserted
- * as fact.
+ * `research/copy-research.md`. Unverifiable business claims are phrased
+ * neutrally in `data.ts` — never asserted as fact.
  */
 
 /**

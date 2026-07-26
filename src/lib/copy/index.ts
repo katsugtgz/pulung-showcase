@@ -7,8 +7,8 @@
  * and are intentionally not re-exported here. `getHeroVariant` / `getSection*`
  * throw a TypeError on unknown keys so callers surface the failure loudly.
  *
- * Sourcing & verification rules: see `data.ts`. Unverified claims are marked
- * `// TODO: verify owner` and phrased neutrally — never displayed as fact.
+ * Sourcing & verification rules: see `data.ts`. Unverified claims are phrased
+ * neutrally — never displayed as fact.
  */
 
 import {

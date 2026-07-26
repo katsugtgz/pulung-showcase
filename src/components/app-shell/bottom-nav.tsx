@@ -5,9 +5,8 @@ import { usePathname } from "next/navigation";
 import { TABS, isActive } from "@/components/app-shell/tabs";
 
 /*
- * BottomNav — bottom tab bar (mobile/tablet only, lg:hidden). Referensi layout:
- * stitch/course_catalog_dashboard_polished BottomNavigation. Warna active biru
- * primary per spec #59, BUKAN brand-purple stitch yang dilarang AGENTS.md.
+ * BottomNav — bottom tab bar (mobile/tablet only, lg:hidden). Warna active
+ * biru primary sesuai palet brand, BUKAN purple mockup lama yang dilarang.
  *
  * Safe-area inset via pb-[max(0.5rem,env(safe-area-inset-bottom))] supaya
  * tidak overlap home indicator iOS.

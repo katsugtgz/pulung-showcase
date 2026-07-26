@@ -21,10 +21,10 @@ import { BottomNav } from "@/components/app-shell/bottom-nav";
  *      text-[10px], warna active biru primary. Fixed bottom + safe-area inset
  *      untuk home indicator iOS.
  *
- * Spec #59: tab adalah Beranda (/app) / Jadwal (/app/jadwal) /
+ * Tab adalah Beranda (/app) / Jadwal (/app/jadwal) /
  * Invoice (/app/invoice) / Kartu (/app/kartu). /app/cara-pakai BUKAN tab
  * dan tetap ditautkan dari dasbor Home. Profile ditangani <UserButton/> Clerk,
- * BUKAN tab terpisah (deviasi eksplisit dari stitch yang punya slot Profil).
+ * BUKAN tab terpisah (deviasi eksplisit dari mockup awal yang punya slot Profil).
  *
  * Server Component (default) — tidak butuh "use client" sendiri; AppHeader &
  * BottomNav sudah "use client" di file-nya masing-masing.

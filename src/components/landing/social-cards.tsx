@@ -18,7 +18,7 @@ import { PretextText } from "@/components/pretext-text";
  * Varian warna header mengikuti identitas platform tanpa memasukkan palet
  * non-brand baru di luar band: Instagram warm tint (rose → pink → amber),
  * TikTok dark (neutral-900). Body kartu tetap bg-white agar teks caption
- * kontras dan mudah dibaca. TIDAK memakai stitch purple #5e4399.
+ * kontras dan mudah dibaca. TIDAK memakai mockup purple #5e4399.
  */
 
 const PLATFORM_ICON: Record<SocialPlatform, typeof InstagramIcon> = {

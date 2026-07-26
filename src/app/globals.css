@@ -2,8 +2,8 @@
 
 /*
  * Brand theme tokens (CSS-first @theme, Tailwind v4).
- * Source: AGENTS.md — primary blue #1E6FB8, accent red #D22B3A (CTAs only),
- * neutral white/gray scale. Old stitch purple #5e4399 is forbidden.
+ * Brand palette: primary blue #1E6FB8, accent red #D22B3A (CTAs only),
+ * neutral white/gray scale. Old mockup purple #5e4399 is forbidden.
  * These tokens generate utilities: bg-primary, text-accent, border-neutral-200, etc.
  */
 @theme {

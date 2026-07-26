@@ -2,8 +2,7 @@
  * Internal Indonesian copy data. NOT part of the public module surface —
  * consumers must use the query functions in `index.ts`. Every string is
  * sourced from `research/copy-research.md`. Unverifiable business claims are
- * marked `// TODO: verify owner` and phrased neutrally; no claim is asserted
- * as fact without a public source.
+ * phrased neutrally; no claim is asserted as fact without a public source.
  *
  * Brand voice (research brief §4): lead with "Safe Drive Training" safety
  * angle, keep "sabar" as the beginner anchor, use "kamu" not "kami", prefer
@@ -86,9 +85,8 @@ export const sectionHeaders: Readonly<Record<Exclude<SectionKey, "hero">, string
 export const sectionBody: Readonly<Record<BodySectionKey, string>> = {
   paket:
     // Verified: manual/matic/campuran (Hotfrog), mobil Full AC (contact.md),
-    // instruktur sabar (Hotfrog verbatim).
-    // TODO: verify owner — jumlah pertemuan eksak & harga per paket belum
-    // dipublikasikan di sumber mana pun (research brief §2 Q8).
+    // instruktur sabar (Hotfrog verbatim). Jumlah pertemuan eksak & harga per
+    // paket belum dipublikasikan di sumber mana pun (research brief §2 Q8).
     "Pilih Manual, Matic, atau Campuran. Semua paket memakai mobil Full AC dengan instruktur sabar yang menemani kamu dari nol sampai percaya diri.",
   testimonials:
     // Placeholder: research brief §1 menemukan NOL kutipan pelanggan yang
@@ -166,7 +164,7 @@ export const heroCopy: HeroCopy = {
  * Landing FAQ — sourced from `research/copy-research.md` §2. Every answer is
  * phrased so no unverified specific (exact session count, jemput fee, age
  * policy, SIM mechanics, hours, price) is asserted as fact; those are deferred
- * to the admin via WhatsApp and flagged below with `// TODO: verify owner`.
+ * to the admin via WhatsApp.
  */
 export const faq: readonly FaqEntry[] = [
   {
@@ -178,14 +176,14 @@ export const faq: readonly FaqEntry[] = [
   },
   {
     id: "pertemuan",
-    // TODO: verify owner — exact session count/duration per package.
+    // Exact session count/duration per package is deferred to the admin.
     question: "Berapa kali pertemuan sampai bisa nyetir?",
     answer:
       "Paket disusun mengikuti kemampuan kamu, dan jadwalnya saling menyesuaikan. Instruktur sabar menemani dari nol sampai kamu percaya diri — kami tidak menjanjikan 'pasti bisa dalam sekian hari' karena tiap orang berbeda. Jumlah pertemuan tiap paket bisa kamu tanyakan langsung ke admin.",
   },
   {
     id: "antar-jemput",
-    // TODO: verify owner — jemput included vs. extra fee, radius per cabang.
+    // Jemput included vs. extra fee and radius per cabang deferred to the admin.
     question: "Bisa dijemput di rumah?",
     answer:
       "Bisa — Pulung menyediakan layanan antar-jemput kursus. Untuk cakupan area jemput dan apakah ada biaya tambahan, konfirmasikan dulu ke admin cabang sesuai lokasimu.",
@@ -199,21 +197,21 @@ export const faq: readonly FaqEntry[] = [
   },
   {
     id: "usia",
-    // TODO: verify owner — Pulung's own participant age policy. 17 = SIM A regulation only.
+    // Pulung's own participant age policy deferred to the admin. 17 = SIM A regulation only.
     question: "Berapa usia minimum untuk ikut?",
     answer:
       "Belajar mengemudi bisa kamu mulai kapan saja. Untuk membuat SIM A sendiri, syarat usia minimum di Indonesia adalah 17 tahun. Ketentuan usia peserta kursus bisa kamu tanyakan ke admin.",
   },
   {
     id: "sim",
-    // TODO: verify owner — nature of SIM assistance + whether cost is separate. Never claim "dijamin lulus".
+    // Nature of SIM assistance + whether cost is separate deferred to the admin. Never claim "dijamin lulus".
     question: "Pulung bantu urus SIM A?",
     answer:
       "Ya, Pulung melayani pendampingan pengurusan SIM A & SIM C. Untuk bentuk bantuannya dan apakah biayanya terpisah dari paket kursus, tanyakan ke admin via WhatsApp.",
   },
   {
     id: "jadwal",
-    // TODO: verify owner — operating hours + weekend slots per cabang.
+    // Operating hours + weekend slots per cabang deferred to the admin.
     question: "Jadwalnya fleksibel?",
     answer:
       "Fleksibel — jadwal Pulung saling menyesuaikan dengan waktumu. Untuk jam operasional cabang dan ketersediaan slot akhir pekan, konfirmasi ke admin cabang.",

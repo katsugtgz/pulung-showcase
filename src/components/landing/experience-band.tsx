@@ -61,10 +61,10 @@ export function ExperienceBand() {
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-white/90 lg:text-base">
             {/*
-              Verified facts only (no SIM-registration claim — FAQ hedges SIM
-              assistance behind // TODO: verify owner, so this band must not
-              assert it more strongly). Founding year + cluster admin routing
-              are both verified in contact.md + research brief.
+              Verified facts only (no SIM-registration claim — the FAQ hedges
+              SIM assistance as owner-unverified, so this band must not assert
+              it more strongly). Founding year + cluster admin routing are both
+              verified in contact.md + research brief.
             */}
             Sejak 2000, Pulung mengajar calon pengemudi Surabaya berkendara
             dengan aman. Setiap cabang punya admin klaster yang siap membantu
