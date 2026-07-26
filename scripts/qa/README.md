@@ -1,7 +1,7 @@
 # Pulung QA Harness (agent-browser)
 
 End-to-end browser checks for the Pulung driving-school demo. Uses the
-[`agent-browser`](https://github.com/...) CLI only — **no Playwright**.
+[`agent-browser`](https://github.com/vercel-labs/agent-browser) CLI only — **no Playwright**.
 
 ## Prerequisites
 

@@ -11,15 +11,10 @@
 !.env.example
 
 # Local-only working directories.
-.codegraph
-.omo
 .claude
-.tokensave
-research
 .DS_Store
 
 # Source-of-truth assets not needed at runtime.
-stitch
 assets
 
 # CI / docs / Docker metadata (not part of the runtime image).
