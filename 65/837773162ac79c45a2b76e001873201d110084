@@ -1,0 +1,92 @@
+src/lib/format/__tests__/index.test.ts
+  s_62acf454c51dc3::t_bc66e3807e2d20 80-90
+  s_62acf454c51dc3::t_a3f8930f23a8e9 9-11
+  s_62acf454c51dc3::t_492a4df563fad6 2-8,12-14
+src/lib/domain/index.ts
+  s_62acf454c51dc3::t_62dbb05265db4d 343-350,353-360,380-390
+src/app/(app)/app/invoice/[pembayaranId]/unduh/route.ts
+  s_62acf454c51dc3::t_083a6be4a54d2d 6,15-17,21,31,33-34,38,49-50
+src/app/(admin)/admin/jadwal-instruktur/actions.ts
+  s_62acf454c51dc3::t_779bd5344dc30a 30
+  s_62acf454c51dc3::t_8e386eb5aad210 5-12
+  s_62acf454c51dc3::t_b76eb36b499e0f 57,89-100,105-142,154-172
+  s_62acf454c51dc3::t_888cfd8e56993d 101-104,151-153
+  s_62acf454c51dc3::t_a1ea1b8c39672b 31-35
+  s_62acf454c51dc3::t_4312f7165a3fc5 52,55-56
+  s_62acf454c51dc3::t_83f457dcbab78a 13
+src/app/(protected)/catalog/[packageId]/payment/actions.ts
+  s_62acf454c51dc3::t_245017dfce80de 6-7,12-14,20,22-25,30,35-42,47,49
+src/lib/jadwal-booking/index.ts
+  s_62acf454c51dc3::t_6d3f7a0136bfab 238-244,246,253-255
+  s_62acf454c51dc3::t_a1f012f1ac7a01 256-257
+src/app/(app)/app/invoice/page.tsx
+  s_62acf454c51dc3::t_06b38d242484a1 3,9,12-14,16-17,35-39
+src/app/(app)/app/jadwal/actions.ts
+  s_62acf454c51dc3::t_a6c65d15d4210a 6,16-17,44,55,57,70-71,81,83,91-93
+src/lib/jadwal-booking/__tests__/index.test.ts
+  s_62acf454c51dc3::t_d6d6f0958aee84 326,333-348
+src/lib/auth/siswa-id.ts
+  s_62acf454c51dc3::t_9f5b41bcd96cac 1-26
+src/lib/auth/__tests__/siswa-id.test.ts
+  s_62acf454c51dc3::t_8ac08458dc9bc0 1-3,8-9,11-14,16-19,21-24,26-29,31-34,36-39,41-43
+  s_62acf454c51dc3::t_5d2531e23909c5 4-7,10,15,20,25,30,35,40
+src/proxy.ts
+  s_62acf454c51dc3::t_d0daac0af5f954 32-34
+  s_62acf454c51dc3::t_49fa4212d70dd6 35-40
+src/app/(admin)/admin/jadwal-instruktur/__tests__/actions.test.ts
+  s_62acf454c51dc3::t_f84032ee195f86 1-168
+src/lib/maps-reviews/index.ts
+  s_62acf454c51dc3::t_57fda124e9473b 48-50
+src/app/(app)/app/jadwal/page.tsx
+  s_62acf454c51dc3::t_a0d65ff91d21ff 2,10,18-19,42,58,61-64,69
+src/lib/wa-router/index.ts
+  s_62acf454c51dc3::t_160ebb14d1b920 36
+  s_62acf454c51dc3::t_5d190975128a44 27-30,32
+src/lib/wa-router/__tests__/index.test.ts
+  s_62acf454c51dc3::t_542418d5ffb9f4 2
+  s_62acf454c51dc3::t_365f18016fa099 128-148
+src/lib/maps-reviews/__tests__/empty-snapshot.test.ts
+  s_62acf454c51dc3::t_e9035970c478d6 1-47
+src/lib/format/index.ts
+  s_62acf454c51dc3::t_476f46db1756ef 45-52,59-62,72,81-90
+  s_62acf454c51dc3::t_26f9e179de91b1 44
+  s_62acf454c51dc3::t_0495cda0d0917f 91
+src/app/(app)/app/page.tsx
+  s_62acf454c51dc3::t_502ab1fc7afdd4 44-47,49-50
+  s_62acf454c51dc3::t_0a9e15eea8555c 3,12,16,22-23
+src/app/(app)/app/kartu/unduh/route.ts
+  s_62acf454c51dc3::t_40093cff06b7be 6,15-17,29,31-32,36-37,46
+src/app/(admin)/admin/pembayaran-actions.ts
+  s_62acf454c51dc3::t_ab554c04defbef 104
+  s_62acf454c51dc3::t_88776c70afd840 10
+  s_62acf454c51dc3::t_e29e668795290d 60
+src/app/(app)/app/kartu/page.tsx
+  s_62acf454c51dc3::t_babdeb1d77cad4 3,7,16-17,41-44
+tsconfig.tsbuildinfo
+  s_62acf454c51dc3::t_795c0008871be0 1
+src/app/(admin)/admin/jadwal-siswa/actions.ts
+  s_62acf454c51dc3::t_2ee7b9e5cf84e4 82-83
+  s_62acf454c51dc3::t_13a05a5adbdce2 6
+  s_62acf454c51dc3::t_0188db7e362108 80-81
+src/app/(admin)/admin/jadwal-siswa/page.tsx
+  s_62acf454c51dc3::t_a120c0a469d996 52
+src/lib/domain/__tests__/mutations.test.ts
+  s_62acf454c51dc3::t_98f7ee34a24cfe 265-268,272-306
+  s_62acf454c51dc3::t_b2850907b7edcd 307
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "65837773162ac79c45a2b76e001873201d110084",
+  "prompts": {},
+  "sessions": {
+    "s_62acf454c51dc3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_03c6a1469ffebxHwQxV5lOKm07",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
