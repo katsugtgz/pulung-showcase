@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { auth } from "@clerk/nextjs/server";
 import { UserMenu } from "@/components/user-menu";
 import {
   getPembayaranBySiswa,
@@ -8,17 +9,18 @@ import {
 } from "@/lib/domain";
 import { getPackageById } from "@/lib/catalog-data";
 import { formatIDR, formatDate } from "@/lib/format";
+import { getMySiswaId } from "@/lib/auth/siswa-id";
 
 /*
  * Dasbor Siswa — halaman Beranda area siswa (/app). Menampilkan jadwal sesi
- * dan status pembayaran siswa contoh dari modul domain (siswa-001).
+ * dan status pembayaran siswa dari modul domain.
  *
  * Shell <AppShell/> di layout menyediakan: <main> kontainer, header desktop
  * (wordmark + nav + UserButton), dan bottom nav mobile. Halaman ini hanya
  * bertanggung jawab atas kontennya.
  *
- * Catatan: slice ini menampilkan data mock siswa-001 sebagai perwakilan demo.
- * Pengikatan ke Clerk user id sesungguhnya adalah epik sesudahnya.
+ * Demo: in development the signed-in user is mapped to seed siswa "siswa-001";
+ * in production the siswa id is derived from the Clerk userId.
  */
 
 export const metadata: Metadata = {
@@ -39,13 +41,13 @@ const PAYMENT_LABEL: Record<string, string> = {
   ditolak: "Ditolak",
 };
 
-const DEMO_SISWA_ID = "siswa-001";
-
-export default function SiswaDashboardPage() {
-  const siswa = getSiswaById(DEMO_SISWA_ID);
+export default async function SiswaDashboardPage() {
+  const { userId } = await auth();
+  const siswaId = getMySiswaId(userId);
+  const siswa = getSiswaById(siswaId);
   const pkg = getPackageById(siswa.packageId);
-  const sessions = getSesiBySiswa(DEMO_SISWA_ID);
-  const payments = getPembayaranBySiswa(DEMO_SISWA_ID);
+  const sessions = getSesiBySiswa(siswaId);
+  const payments = getPembayaranBySiswa(siswaId);
   const latestPayment = payments[payments.length - 1];
 
   // Tampilkan tautan bayar jika belum ada pembayaran atau pembayaran terakhir

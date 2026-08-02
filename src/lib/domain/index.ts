@@ -340,9 +340,24 @@ export interface UpdateSesiPatch {
  * any supplied values; the effective start/end time pair (merged with existing)
  * is re-validated. Pass `siswaId: undefined` to clear a booking reference.
  *
- * @throws TypeError — unknown id, invalid date/time format, or unknown siswaId.
+ * Invariants enforced:
+ * - `patch.status` must be a member of `SesiStatus` (runtime guard against
+ *   untyped callers — the TS type already rules out compile-time mistakes).
+ * - The resulting sesi must not be `dipesan` without a `siswaId` (set either
+ *   in this patch or pre-existing on the row). Violation throws TypeError.
+ *
+ * @throws TypeError — unknown id, invalid date/time format, unknown siswaId,
+ *   invalid SesiStatus, or `dipesan` resulting state without a siswaId.
  */
 export function updateSesi(id: string, patch: UpdateSesiPatch): Sesi {
+  if (
+    patch.status !== undefined &&
+    patch.status !== "tersedia" &&
+    patch.status !== "dipesan" &&
+    patch.status !== "selesai"
+  ) {
+    throw new TypeError(`Invalid SesiStatus: ${String(patch.status)}`);
+  }
   const st = getStore();
   const idx = st.sesi.findIndex((s) => s.id === id);
   if (idx === -1) throw new TypeError(`Unknown sesi id: ${id}`);
@@ -361,6 +376,17 @@ export function updateSesi(id: string, patch: UpdateSesiPatch): Sesi {
     if (!st.siswa.some((s) => s.id === patch.siswaId)) {
       throw new TypeError(`Unknown siswa id: ${patch.siswaId}`);
     }
+  }
+  // Resulting-state invariant: dipesan requires a siswaId. Evaluate against
+  // the merged row so a patch that sets status without re-stating siswaId
+  // still benefits from the existing value on the row.
+  const effectiveStatus = patch.status ?? existing.status;
+  const effectiveSiswaId =
+    "siswaId" in patch ? patch.siswaId : existing.siswaId;
+  if (effectiveStatus === "dipesan" && !effectiveSiswaId) {
+    throw new TypeError(
+      "Sesi dengan status dipesan harus memiliki siswaId.",
+    );
   }
   st.sesi[idx] = { ...existing, ...patch };
   return { ...st.sesi[idx] };

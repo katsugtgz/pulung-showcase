@@ -323,14 +323,28 @@ describe("pindahkanSesi: menolak pemindahan tidak valid", () => {
 
 describe("batalkanSesi", () => {
   it("membebaskan slot yang dipesan kembali ke tersedia", () => {
-    batalkanSesi("sesi-001");
+    batalkanSesi("sesi-001", "siswa-001");
     const freed = getSesiById("sesi-001");
     expect(freed.status).toBe("tersedia");
     expect(freed.siswaId).toBeUndefined();
   });
 
   it("melempar TypeError jika slot tidak sedang dipesan", () => {
-    expect(() => batalkanSesi("sesi-002")).toThrow(TypeError); // tersedia
-    expect(() => batalkanSesi("sesi-005")).toThrow(TypeError); // selesai
+    expect(() => batalkanSesi("sesi-002", "siswa-001")).toThrow(TypeError); // tersedia
+    expect(() => batalkanSesi("sesi-005", "siswa-004")).toThrow(TypeError); // selesai
+  });
+
+  it("melempar TypeError jika pemanggil bukan pemilik booking (H14)", () => {
+    // sesi-001 dipesan oleh siswa-001; siswa-002 tidak boleh membatalkannya.
+    expect(() => batalkanSesi("sesi-001", "siswa-002")).toThrow(TypeError);
+    expect(() => batalkanSesi("sesi-001", "siswa-002")).toThrow(
+      /bukan milik Anda/,
+    );
+  });
+
+  it("melempar TypeError jika pemanggil adalah pemilik asli sesi-001", () => {
+    // Sanity: pemilik yang benar tetap bisa membatalkan (sudah diuji di atas,
+    // tetapi eksplisit untuk kontras dengan test H14).
+    expect(() => batalkanSesi("sesi-001", "siswa-001")).not.toThrow();
   });
 });

@@ -235,13 +235,24 @@ export function pindahkanSesi(fromSesiId: string, toSesiId: string): Sesi {
 /**
  * Batalkan booking sebuah sesi — bebaskan slot kembali ke "tersedia".
  *
- * @throws TypeError — sesi tidak dalam status "dipesan".
+ * Ownership guard (H14): the caller must supply the siswaId whose booking is
+ * being cancelled. If the sesi's stored siswaId does not match, the call is
+ * rejected with a TypeError — siswa A can no longer cancel siswa B's booking
+ * by guessing the sesi id.
+ *
+ * @throws TypeError — sesi tidak dikenal, tidak sedang dipesan, atau bukan
+ *   milik `siswaId` yang diberikan.
  */
-export function batalkanSesi(sesiId: string): Sesi {
+export function batalkanSesi(sesiId: string, siswaId: string): Sesi {
   const sesi = getSesiById(sesiId);
   if (sesi.status !== "dipesan") {
     throw new TypeError(
       `Sesi ${sesiId} tidak sedang dipesan (status: ${sesi.status}) — tidak ada booking untuk dibatalkan.`,
+    );
+  }
+  if (sesi.siswaId !== siswaId) {
+    throw new TypeError(
+      `Sesi ini tidak dapat dibatalkan: bukan milik Anda.`,
     );
   }
   return updateSesi(sesiId, { siswaId: undefined, status: "tersedia" });

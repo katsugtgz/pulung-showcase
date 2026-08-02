@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import { getPembayaranById } from "@/lib/domain";
 import { generateInvoicePdf, invoiceNumber } from "@/lib/pdf/invoice";
+import { getMySiswaId } from "@/lib/auth/siswa-id";
 
 /*
  * GET /app/invoice/[pembayaranId]/unduh — serves the invoice as a downloadable PDF.
@@ -11,29 +12,30 @@ import { generateInvoicePdf, invoiceNumber } from "@/lib/pdf/invoice";
  * absent (local dev / build pre-render), the auth check is skipped so the
  * build succeeds. Live role verification is done by the layout + proxy.
  *
- * Demo convention: the signed-in user is always mapped to siswa-001 for the
- * prototype. A real implementation would resolve clerkUserId → siswaId via DB.
+ * Demo: in development the signed-in user is mapped to seed siswa "siswa-001";
+ * in production the siswa id is derived from the Clerk userId. A real
+ * implementation would resolve clerkUserId → siswaId via DB.
  *
  * Guards:
  *   1. 404 via notFound() if pembayaranId is unknown.
- *   2. 403 if the pembayaran does not belong to the demo siswa OR is not
+ *   2. 403 if the pembayaran does not belong to the calling siswa OR is not
  *      terverifikasi — no invoice for pending/rejected payments.
  */
 
 const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
-// Demo mapping — same convention as /app/page.tsx and /app/kartu/unduh/route.ts.
-const DEMO_SISWA_ID = "siswa-001";
-
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ pembayaranId: string }> },
 ): Promise<NextResponse> {
+  let userId: string | null = null;
   if (clerkEnabled) {
-    const { userId } = await auth();
+    const clerkAuth = await auth();
+    userId = clerkAuth.userId;
     if (!userId) redirect("/sign-in");
   }
 
+  const siswaId = getMySiswaId(userId);
   const { pembayaranId } = await params;
 
   // 404 on unknown id — getPembayaranById throws TypeError; map to notFound().
@@ -44,8 +46,8 @@ export async function GET(
     notFound();
   }
 
-  // 403 if not the demo siswa's payment.
-  if (pembayaran.siswaId !== DEMO_SISWA_ID) {
+  // 403 if not the calling siswa's payment.
+  if (pembayaran.siswaId !== siswaId) {
     return new NextResponse("Akses ditolak: pembayaran tidak ditemukan", {
       status: 403,
     });

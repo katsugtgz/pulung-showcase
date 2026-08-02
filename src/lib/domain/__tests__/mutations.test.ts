@@ -262,10 +262,47 @@ describe("updateSesi", () => {
     expect(updated.status).toBe("selesai");
   });
 
-  it("clears siswaId when passed as undefined", () => {
-    // sesi-001 has a siswaId set
-    const updated = updateSesi("sesi-001", { siswaId: undefined });
+  it("clears siswaId when passed as undefined (on a tersedia sesi)", () => {
+    // sesi-002 is "tersedia"; clearing siswaId there is a legal no-op-ish
+    // patch that does not violate the dipesan-requires-siswaId invariant.
+    const updated = updateSesi("sesi-002", { siswaId: undefined });
     expect(updated.siswaId).toBeUndefined();
+  });
+
+  it("throws TypeError when clearing siswaId on a dipesan sesi without freeing it", () => {
+    // sesi-001 is "dipesan" — clearing siswaId without changing status would
+    // leave a dipesan row with no owner; the new invariant forbids that.
+    expect(() => updateSesi("sesi-001", { siswaId: undefined })).toThrow(
+      TypeError,
+    );
+  });
+
+  it("allows clearing siswaId on a dipesan sesi when status also moves to tersedia", () => {
+    // batalkan-style patch: free the slot AND clear the owner atomically.
+    const updated = updateSesi("sesi-001", {
+      siswaId: undefined,
+      status: "tersedia",
+    });
+    expect(updated.siswaId).toBeUndefined();
+    expect(updated.status).toBe("tersedia");
+  });
+
+  it("throws TypeError when setting status dipesan on a sesi without a siswaId", () => {
+    // sesi-002 is "tersedia" with no siswaId — promoting it to dipesan in the
+    // same patch without supplying siswaId violates the invariant.
+    expect(() => updateSesi("sesi-002", { status: "dipesan" })).toThrow(
+      TypeError,
+    );
+  });
+
+  it("rejects an invalid SesiStatus value at runtime (C1)", () => {
+    // The TS type already rules this out at compile time, but server-action
+    // callers pass untyped form input — guard the runtime boundary too.
+    expect(() =>
+      updateSesi("sesi-002", {
+        status: "bogus" as unknown as "tersedia",
+      }),
+    ).toThrow(TypeError);
   });
 
   it("throws TypeError for an unknown sesi id", () => {

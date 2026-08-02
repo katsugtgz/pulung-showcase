@@ -3,6 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { bookSesi, batalkanSesi } from "@/lib/jadwal-booking";
+import { getMySiswaId } from "@/lib/auth/siswa-id";
 
 /*
  * Server actions untuk pemilihan jadwal siswa (Slice 20).
@@ -12,16 +13,13 @@ import { bookSesi, batalkanSesi } from "@/lib/jadwal-booking";
  * Pola: { ok: true } | { ok: false; error: string } — sama dengan seluruh
  * actions di codebase ini.
  *
- * Catatan: DEMO_SISWA_ID dipetakan dari userId yang login. Pada demo ini
- * kita hardcode ke "siswa-001" sebagai representasi demo — sama dengan
- * konvensi di app/page.tsx.
+ * Demo: in development the signed-in user is mapped to seed siswa "siswa-001";
+ * in production the siswa id is derived from the Clerk userId.
  */
 
 export type JadwalActionResult =
   | { ok: true }
   | { ok: false; error: string };
-
-const DEMO_SISWA_ID = "siswa-001";
 
 async function requireAuth(): Promise<string | null> {
   const { userId } = await auth();
@@ -43,7 +41,7 @@ function mapBentrokMessage(msg: string): string {
 }
 
 /**
- * Pesan slot sesi untuk demo siswa (siswa-001).
+ * Pesan slot sesi untuk siswa yang sedang login.
  * Validasi anti-bentrok dilakukan oleh engine jadwal-booking.
  */
 export async function bookSesiAction(
@@ -54,8 +52,9 @@ export async function bookSesiAction(
     return { ok: false, error: "Anda harus login untuk memilih jadwal." };
   }
 
+  const siswaId = getMySiswaId(userId);
   try {
-    bookSesi(sesiId, DEMO_SISWA_ID);
+    bookSesi(sesiId, siswaId);
     revalidatePath("/app/jadwal");
     revalidatePath("/app");
     return { ok: true };
@@ -68,7 +67,8 @@ export async function bookSesiAction(
 }
 
 /**
- * Batalkan booking sesi siswa.
+ * Batalkan booking sesi siswa yang sedang login. Engine jadwal-booking
+ * memverifikasi kepemilikan (sesi.siswaId === siswaId) sebelum membebaskan.
  */
 export async function batalkanSesiAction(
   sesiId: string,
@@ -78,8 +78,9 @@ export async function batalkanSesiAction(
     return { ok: false, error: "Anda harus login." };
   }
 
+  const siswaId = getMySiswaId(userId);
   try {
-    batalkanSesi(sesiId);
+    batalkanSesi(sesiId, siswaId);
     revalidatePath("/app/jadwal");
     revalidatePath("/app");
     return { ok: true };
@@ -87,7 +88,9 @@ export async function batalkanSesiAction(
     if (err instanceof TypeError) {
       return {
         ok: false,
-        error: "Gagal membatalkan jadwal — sesi mungkin sudah tidak aktif.",
+        error: err.message.includes("bukan milik Anda")
+          ? err.message
+          : "Gagal membatalkan jadwal — sesi mungkin sudah tidak aktif.",
       };
     }
     return { ok: false, error: "Gagal membatalkan jadwal. Coba lagi." };

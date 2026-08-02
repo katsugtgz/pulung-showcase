@@ -29,6 +29,15 @@ const clerkEnabled = Boolean(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
 );
 
+// Production safety gate (C6): without this, a prod deploy missing the
+// Clerk key falls through to `passthrough` and every /admin + /app route is
+// wide open. Fail fast at module load instead.
+if (process.env.NODE_ENV === "production" && !clerkEnabled) {
+  throw new Error(
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY must be set in production",
+  );
+}
+
 const ADMIN_PATTERN = /^\/admin(\/|$)/;
 const APP_PATTERN = /^\/app(\/|$)/;
 

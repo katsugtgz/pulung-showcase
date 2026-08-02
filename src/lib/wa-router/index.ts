@@ -24,13 +24,16 @@ export interface WhatsAppLinkOptions {
 
 /**
  * Convert a display-form phone number (e.g. "+62 851-0087-0957" or
- * "0851-0087-0957") to digits-only with an Indonesian country code prefix.
+ * "0851-0087-0957") to digits-only. Indonesian domestic numbers (leading 0)
+ * are converted to the 62-prefixed international form; numbers already in
+ * international format (leading 62 or any other country code) are returned
+ * as-is so a foreign cluster-admin number is not silently rerouted to +62.
  */
-function toInternationalDigits(phone: string): string {
+export function toInternationalDigits(phone: string): string {
   const digits = phone.replace(/\D+/g, "");
   if (digits.startsWith("62")) return digits;
   if (digits.startsWith("0")) return `62${digits.slice(1)}`;
-  return `62${digits}`;
+  return digits;
 }
 
 function buildMessage(

@@ -45,6 +45,9 @@ export function getMapsRating(): MapsRatingSummary {
     }),
   );
   const reviewCount = branches.reduce((sum, b) => sum + b.reviewCount, 0);
+  if (reviewCount === 0) {
+    return { rating: 0, reviewCount: 0, branches };
+  }
   const weighted = branches.reduce(
     (sum, b) => sum + b.rating * b.reviewCount,
     0,

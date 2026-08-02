@@ -3,6 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { pindahkanSesi, batalkanSesi } from "@/lib/jadwal-booking";
+import { getSesiById } from "@/lib/domain";
 
 /*
  * Server actions untuk manajemen jadwal siswa oleh admin (Slice 20).
@@ -76,7 +77,10 @@ export async function batalkanSesiAdminAction(
     return { ok: false, error: "Tidak diizinkan: hanya admin." };
   }
   try {
-    batalkanSesi(sesiId);
+    // Admin bertindak atas nama pemilik: ambil siswaId dari sesi itu sendiri
+    // agar ownership check di batalkanSesi selalu lolos untuk admin cancel.
+    const sesi = getSesiById(sesiId);
+    batalkanSesi(sesiId, sesi.siswaId ?? "");
     revalidateAll();
     return { ok: true };
   } catch (err) {
