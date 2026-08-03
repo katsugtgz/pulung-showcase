@@ -345,7 +345,12 @@ export function addSesi(input: AddSesiInput): Sesi {
     startTime: input.startTime,
     endTime: input.endTime,
     status,
-    ...(input.siswaId ? { siswaId: input.siswaId } : {}),
+    // C2 follow-up: siswaId is only meaningful when status === "dipesan".
+    // Persisting it for tersedia/selesai would violate the input contract and
+    // pollute per-student queries with non-owned sessions.
+    ...(status === "dipesan" && input.siswaId
+      ? { siswaId: input.siswaId }
+      : {}),
   };
   st.sesi.push(newSesi);
   return { ...newSesi };

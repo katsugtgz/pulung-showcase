@@ -289,6 +289,22 @@ describe("addSesi", () => {
     expect(sesi.status).toBe("dipesan");
     expect(sesi.siswaId).toBe("siswa-001");
   });
+
+  it("drops siswaId when status is not dipesan (C2 follow-up)", () => {
+    // siswaId is documented as ignored outside dipesan; persisting it would
+    // pollute per-student schedule queries with non-owned sessions.
+    const sesi = addSesi({
+      instrukturId: "instruktur-001",
+      branchId: "gunung-anyar",
+      date: "2026-08-01",
+      startTime: "09:00",
+      endTime: "10:00",
+      status: "tersedia",
+      siswaId: "siswa-001",
+    });
+    expect(sesi.status).toBe("tersedia");
+    expect(sesi.siswaId).toBeUndefined();
+  });
 });
 
 /* ========================= updateSesi ========================= */
