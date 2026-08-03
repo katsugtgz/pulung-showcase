@@ -10,6 +10,7 @@ import {
   getSesiByInstruktur,
   getSesiBySiswa,
 } from "@/lib/domain";
+import { timeRangesOverlap } from "@/lib/jadwal-booking";
 import type { AddSesiInput, Sesi, SesiStatus } from "@/lib/domain";
 
 /*
@@ -32,6 +33,12 @@ export function mapDomainError(msg: string): string {
   // reschedule guard (C4): they are already user-facing Indonesian.
   if (msg.includes("Jadwal bentrok:")) {
     return msg;
+  }
+  // Missing-owner invariant from updateSesi: distinguish from the generic
+  // "dipesan" branch below so admins promoting tersedia → dipesan without
+  // an assigned siswa get the correct recovery hint.
+  if (msg.includes("harus memiliki siswaId")) {
+    return "Sesi berstatus dipesan harus memiliki siswa. Tetapkan siswa terlebih dahulu.";
   }
   if (msg.includes("dipesan")) {
     return "Sesi sudah dipesan siswa — pindahkan dulu jadwalnya.";
@@ -86,17 +93,6 @@ export interface UpdateSesiInput {
   status?: SesiStatus;
 }
 
-// Half-open overlap (boundary-touching slots do NOT conflict); mirrors the
-// rule in jadwal-booking's timeRangesOverlap.
-function rangesOverlap(
-  startA: string,
-  endA: string,
-  startB: string,
-  endB: string,
-): boolean {
-  return startA < endB && startB < endA;
-}
-
 /**
  * Reschedule conflict check for a `dipesan` sesi (C4). cekBentrok assumes a
  * fresh booking on a `tersedia` slot; here the slot is already booked and we
@@ -117,7 +113,7 @@ function assertRescheduleNoBentrok(
       other.id !== sesi.id &&
       other.status === "dipesan" &&
       other.date === proposedDate &&
-      rangesOverlap(proposedStart, proposedEnd, other.startTime, other.endTime)
+      timeRangesOverlap(proposedStart, proposedEnd, other.startTime, other.endTime)
     ) {
       throw new TypeError(
         `Jadwal bentrok: instruktur sudah terisi di jam ${other.startTime}–${other.endTime}.`,
@@ -130,7 +126,7 @@ function assertRescheduleNoBentrok(
         other.id !== sesi.id &&
         other.status === "dipesan" &&
         other.date === proposedDate &&
-        rangesOverlap(proposedStart, proposedEnd, other.startTime, other.endTime)
+        timeRangesOverlap(proposedStart, proposedEnd, other.startTime, other.endTime)
       ) {
         throw new TypeError(
           `Jadwal bentrok: siswa sudah memiliki sesi di jam ${other.startTime}–${other.endTime} pada tanggal yang sama.`,
@@ -149,14 +145,18 @@ export async function updateSesiAction(
   }
   try {
     // C4: a booked sesi may not be silently moved onto a conflicting slot.
-    // updateSesi below still validates start<end; only run the overlap scan
-    // when the proposed window is well-formed.
+    // The guard must evaluate the *resulting* status (patch ?? existing) so
+    // an admin cannot bypass the overlap scan by changing time together with
+    // status — e.g. promoting tersedia → dipesan, or moving a dipesan slot
+    // while flipping it back to tersedia (the latter has no overlap concern,
+    // the former must be conflict-checked).
     const existing = getSesiById(id);
+    const resultingStatus = patch.status ?? existing.status;
     const timeChanged =
       patch.date !== undefined ||
       patch.startTime !== undefined ||
       patch.endTime !== undefined;
-    if (timeChanged && existing.status === "dipesan") {
+    if (timeChanged && resultingStatus === "dipesan") {
       const proposedDate = patch.date ?? existing.date;
       const proposedStart = patch.startTime ?? existing.startTime;
       const proposedEnd = patch.endTime ?? existing.endTime;

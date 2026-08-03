@@ -48,8 +48,12 @@ export type CekBentrokResult =
  *
  * Aturan: boundary menyentuh (endA === startB) TIDAK dianggap overlap.
  * Overlap ⟺ startA < endB AND startB < endA  (strict, bukan ≤).
+ *
+ * Exported so admin reschedule guards (and any future caller) reuse the
+ * single source of truth for the half-open overlap rule instead of
+ * reimplementing it.
  */
-function timeRangesOverlap(
+export function timeRangesOverlap(
   startA: string,
   endA: string,
   startB: string,
