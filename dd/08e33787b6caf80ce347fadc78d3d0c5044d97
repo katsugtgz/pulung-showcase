@@ -1,0 +1,29 @@
+src/lib/jadwal-booking/index.ts
+  s_8c3e5ac6d8d37e::t_1a60537fc0fb39 51-54,56
+src/app/(admin)/admin/jadwal-instruktur/actions.ts
+  s_8c3e5ac6d8d37e::t_f90204289509f2 13
+  s_8c3e5ac6d8d37e::t_6148e18c630dd5 116,129
+  s_8c3e5ac6d8d37e::t_2e572769ad6d75 37-42
+  s_8c3e5ac6d8d37e::t_e0cd544577fc4e 148-152,154,159
+src/app/(admin)/admin/jadwal-instruktur/__tests__/actions.test.ts
+  s_8c3e5ac6d8d37e::t_154025ff3f39ef 30
+  s_8c3e5ac6d8d37e::t_56bae58d900d22 163-164
+  s_8c3e5ac6d8d37e::t_73ebdc4cf4f378 96-99,106,122,129
+  s_8c3e5ac6d8d37e::t_ab7a17dbebb745 159-162,165-213
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "dd08e33787b6caf80ce347fadc78d3d0c5044d97",
+  "prompts": {},
+  "sessions": {
+    "s_8c3e5ac6d8d37e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_039b1351bffeyqMCP0H8byQBYf",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
