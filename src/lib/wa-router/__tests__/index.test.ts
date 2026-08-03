@@ -142,6 +142,15 @@ describe("toInternationalDigits (D4)", () => {
     expect(toInternationalDigits("+65 6123 4567")).toBe("6561234567");
   });
 
+  it("strips the 00 IDD prefix and returns the international number (D4 regression)", () => {
+    // 00 is the international direct-dialling prefix (E.164 without the +).
+    // Before the fix, '0044 20 7946 0958' matched the domestic '0…' rule and
+    // became '6200442079460958' — wrong country, with the IDD prefix retained.
+    expect(toInternationalDigits("0044 20 7946 0958")).toBe("442079460958");
+    expect(toInternationalDigits("001 415 555 2671")).toBe("14155552671");
+    expect(toInternationalDigits("0065 6123 4567")).toBe("6561234567");
+  });
+
   it("strips non-digit characters but preserves the leading-zero rule", () => {
     expect(toInternationalDigits("(0812) 3253-1989")).toBe("6281232531989");
   });

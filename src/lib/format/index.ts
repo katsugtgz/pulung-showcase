@@ -81,7 +81,11 @@ export function formatDate(iso: string): string {
   // Round-trip through Date to reject impossible calendar dates (Feb 30,
   // Apr 31, Feb 29 on non-leap years). JS Date normalizes overflow, so a
   // mismatch on month/day proves the input is not a real calendar date.
-  const probe = new Date(year, month - 1, day);
+  // Use setFullYear (not the Date(y, m, d) constructor) so years 0-99 are
+  // interpreted literally — the multi-arg constructor remaps them to
+  // 1900-1999 and would reject valid ISO dates like "0099-02-28".
+  const probe = new Date(0);
+  probe.setFullYear(year, month - 1, day);
   if (
     probe.getFullYear() !== year ||
     probe.getMonth() !== month - 1 ||
