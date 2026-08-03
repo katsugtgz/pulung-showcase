@@ -1,0 +1,25 @@
+src/lib/wa-router/index.ts
+  s_8c3e5ac6d8d37e::t_44b98055dcc2df 29-31,36-39
+src/lib/format/__tests__/index.test.ts
+  s_8c3e5ac6d8d37e::t_0579bd54da7441 91-99
+src/lib/format/index.ts
+  s_8c3e5ac6d8d37e::t_fd0828e33ff3a7 84-88
+src/lib/wa-router/__tests__/index.test.ts
+  s_8c3e5ac6d8d37e::t_b757eb30fd83bd 145-153
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "01a207496746d75570f2c96a61421b4b56b031fd",
+  "prompts": {},
+  "sessions": {
+    "s_8c3e5ac6d8d37e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_039b1351bffeyqMCP0H8byQBYf",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
