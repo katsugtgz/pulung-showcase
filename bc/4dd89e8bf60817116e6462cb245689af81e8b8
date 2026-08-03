@@ -1,0 +1,19 @@
+src/lib/jadwal-booking/__tests__/index.test.ts
+  s_8c3e5ac6d8d37e::t_694e3460ddf5db 345
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "bc4dd89e8bf60817116e6462cb245689af81e8b8",
+  "prompts": {},
+  "sessions": {
+    "s_8c3e5ac6d8d37e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_039b1351bffeyqMCP0H8byQBYf",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
