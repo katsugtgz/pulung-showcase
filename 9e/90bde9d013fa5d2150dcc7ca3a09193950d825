@@ -1,0 +1,21 @@
+src/lib/domain/index.ts
+  s_7a539cbcb6be3b::t_76c3783f04577b 348-353
+src/lib/domain/__tests__/mutations.test.ts
+  s_7a539cbcb6be3b::t_962760afd88409 292-307
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "9e90bde9d013fa5d2150dcc7ca3a09193950d825",
+  "prompts": {},
+  "sessions": {
+    "s_7a539cbcb6be3b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_039843920ffelrUawQRFP03m0w",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
