@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { getSiswaById } from "@/lib/domain";
+import type { Siswa } from "@/lib/domain";
 import { getBranchById, getBranchCluster, getPackageById } from "@/lib/catalog-data";
 import { formatDate } from "@/lib/format";
 import { getMySiswaId } from "@/lib/auth/siswa-id";
@@ -15,7 +17,13 @@ import { getMySiswaId } from "@/lib/auth/siswa-id";
  *
  * Demo: in development the signed-in user is mapped to seed siswa "siswa-001";
  * in production the siswa id is derived from the Clerk userId.
+ *
+ * Auth: gate the auth() call on NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY (same
+ * pattern as /app/kartu/unduh/route.ts) so local dev / build pre-render
+ * works without Clerk keys.
  */
+
+const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 export const metadata: Metadata = {
   title: "Kartu Siswa — Kursus Mengemudi Pulung",
@@ -39,9 +47,19 @@ const TRANSMISSION_LABEL: Record<string, string> = {
 };
 
 export default async function KartuSiswaPage() {
-  const { userId } = await auth();
+  let userId: string | null = null;
+  if (clerkEnabled) {
+    const clerkAuth = await auth();
+    userId = clerkAuth.userId;
+  }
   const siswaId = getMySiswaId(userId);
-  const siswa = getSiswaById(siswaId);
+  // Fail-closed 404 if siswa lookup misses (see siswa-id.ts TODO(prodmigration)).
+  let siswa: Siswa;
+  try {
+    siswa = getSiswaById(siswaId);
+  } catch {
+    notFound();
+  }
   const pkg = getPackageById(siswa.packageId);
   const branch = getBranchById(siswa.branchId);
   const cluster = getBranchCluster(siswa.branchId);

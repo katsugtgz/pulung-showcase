@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { UserMenu } from "@/components/user-menu";
 import {
@@ -7,6 +8,7 @@ import {
   getSesiBySiswa,
   getSiswaById,
 } from "@/lib/domain";
+import type { Siswa } from "@/lib/domain";
 import { getPackageById } from "@/lib/catalog-data";
 import { formatIDR, formatDate } from "@/lib/format";
 import { getMySiswaId } from "@/lib/auth/siswa-id";
@@ -21,7 +23,13 @@ import { getMySiswaId } from "@/lib/auth/siswa-id";
  *
  * Demo: in development the signed-in user is mapped to seed siswa "siswa-001";
  * in production the siswa id is derived from the Clerk userId.
+ *
+ * Auth: gate the auth() call on NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY so local
+ * dev and `next build` pre-render work without Clerk keys, mirroring the
+ * pattern in /app/kartu/unduh/route.ts.
  */
+
+const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 export const metadata: Metadata = {
   title: "Dasbor Siswa — Kursus Mengemudi Pulung",
@@ -42,9 +50,21 @@ const PAYMENT_LABEL: Record<string, string> = {
 };
 
 export default async function SiswaDashboardPage() {
-  const { userId } = await auth();
+  let userId: string | null = null;
+  if (clerkEnabled) {
+    const clerkAuth = await auth();
+    userId = clerkAuth.userId;
+  }
   const siswaId = getMySiswaId(userId);
-  const siswa = getSiswaById(siswaId);
+  // Production-only fail-closed: getMySiswaId returns a clerk-derived id that
+  // has no row in the siswa table until the prodmigration epic ships. Map the
+  // domain TypeError to a clean 404 so users see not-found instead of a 500.
+  let siswa: Siswa;
+  try {
+    siswa = getSiswaById(siswaId);
+  } catch {
+    notFound();
+  }
   const pkg = getPackageById(siswa.packageId);
   const sessions = getSesiBySiswa(siswaId);
   const payments = getPembayaranBySiswa(siswaId);

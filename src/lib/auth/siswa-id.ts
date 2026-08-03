@@ -11,9 +11,15 @@
  *   Clerk userId: `siswa-clerk-${userId}`. Two different Clerk users no
  *   longer collide on the same siswa row.
  *
- * This is still a placeholder: a real production deployment must look the
- * siswa up in the siswa table (by `clerkUserId`) and 404 when the binding
- * does not exist. That lookup is a later epic — see DECISIONS.md.
+ * TODO(prodmigration): this is still a placeholder. The derived
+ * `siswa-clerk-${userId}` id does NOT exist in the domain siswa table, so
+ * every call site that does `getSiswaById(getMySiswaId(userId))` will throw
+ * `Unknown siswa id` and surface a 500 in production today. Page/route
+ * callers wrap that lookup with `notFound()` so production fails closed
+ * (404) until a real Clerk-user → siswa-row binding ships. A real production
+ * deployment must look the siswa up in the siswa table (by `clerkUserId`)
+ * and 404 when the binding does not exist. Track this in the migration
+ * epic referenced by DECISIONS.md.
  *
  * @param userId  Clerk user id of the signed-in user (`null` only in pre-auth
  *                contexts where a siswa id is not yet meaningful).

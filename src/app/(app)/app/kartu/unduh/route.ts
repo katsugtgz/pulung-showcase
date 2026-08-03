@@ -34,7 +34,13 @@ export async function GET(): Promise<NextResponse> {
   }
 
   const siswaId = getMySiswaId(userId);
-  const siswa = getSiswaById(siswaId);
+  // Fail-closed 404 if siswa lookup misses (see siswa-id.ts TODO(prodmigration)).
+  let siswa;
+  try {
+    siswa = getSiswaById(siswaId);
+  } catch {
+    return new NextResponse("Data siswa tidak ditemukan", { status: 404 });
+  }
 
   if (BLOCKED_STATUSES.has(siswa.enrollmentStatus)) {
     return new NextResponse(

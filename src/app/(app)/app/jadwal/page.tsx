@@ -20,7 +20,14 @@ import type { SesiDisplay } from "./components";
  *
  * Auth dijaga oleh layout (app) dan proxy.ts — pengguna yang mencapai halaman
  * ini pasti sudah login.
+ *
+ * Auth: gate the auth() call on NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY (same
+ * pattern as /app/kartu/unduh/route.ts) so local dev / build pre-render
+ * works without Clerk keys. getSesiBySiswa returns [] for an unknown siswa
+ * id, so no notFound() gate is needed here (the page simply renders empty).
  */
+
+const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 export const metadata: Metadata = {
   title: "Pilih Jadwal — Kursus Mengemudi Pulung",
@@ -59,7 +66,11 @@ function groupByDate(sesiList: SesiDisplay[]) {
 }
 
 export default async function JadwalSiswaPage() {
-  const { userId } = await auth();
+  let userId: string | null = null;
+  if (clerkEnabled) {
+    const clerkAuth = await auth();
+    userId = clerkAuth.userId;
+  }
   const siswaId = getMySiswaId(userId);
 
   const bookable = getBookableSesi().map(toSesiDisplay);
