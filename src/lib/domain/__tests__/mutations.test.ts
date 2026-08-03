@@ -246,6 +246,49 @@ describe("addSesi", () => {
       }),
     ).toThrow(TypeError);
   });
+
+  it("throws TypeError when status is dipesan but siswaId is missing (C2)", () => {
+    // addSesi must mirror updateSesi's invariant: an ownerless booked session
+    // can never be persisted.
+    expect(() =>
+      addSesi({
+        instrukturId: "instruktur-001",
+        branchId: "gunung-anyar",
+        date: "2026-08-01",
+        startTime: "09:00",
+        endTime: "10:00",
+        status: "dipesan",
+      }),
+    ).toThrow(/harus memiliki siswaId/);
+  });
+
+  it("throws TypeError when status is dipesan and siswaId is unknown (C2)", () => {
+    expect(() =>
+      addSesi({
+        instrukturId: "instruktur-001",
+        branchId: "gunung-anyar",
+        date: "2026-08-01",
+        startTime: "09:00",
+        endTime: "10:00",
+        status: "dipesan",
+        siswaId: "siswa-999",
+      }),
+    ).toThrow(/Unknown siswa id/);
+  });
+
+  it("creates a dipesan sesi with siswaId when both are supplied (C2)", () => {
+    const sesi = addSesi({
+      instrukturId: "instruktur-001",
+      branchId: "gunung-anyar",
+      date: "2026-08-01",
+      startTime: "09:00",
+      endTime: "10:00",
+      status: "dipesan",
+      siswaId: "siswa-001",
+    });
+    expect(sesi.status).toBe("dipesan");
+    expect(sesi.siswaId).toBe("siswa-001");
+  });
 });
 
 /* ========================= updateSesi ========================= */

@@ -290,14 +290,25 @@ export interface AddSesiInput {
   endTime: string;
   /** Defaults to "tersedia". */
   status?: SesiStatus;
+  /**
+   * Required when `status === "dipesan"` (C2 invariant: a booked slot must
+   * reference an owning siswa). Ignored otherwise.
+   */
+  siswaId?: string;
 }
 
 /**
  * Create a new session slot. Generates a sequential `sesi-XXX` id continuing
  * the seed numbering. Anti-bentrok/conflict checking is out of scope (issue #21).
  *
+ * Invariant enforced (mirrors `updateSesi`): a `dipesan` slot must carry a
+ * valid `siswaId`. Supplying `status: "dipesan"` without `siswaId` (or with an
+ * unknown one) throws TypeError so an ownerless booked session can never be
+ * persisted.
+ *
  * @throws TypeError — unknown instrukturId/branchId, invalid date/time formats,
- *   or startTime not before endTime.
+ *   startTime not before endTime, `dipesan` status without a valid siswaId,
+ *   or an unknown siswaId.
  */
 export function addSesi(input: AddSesiInput): Sesi {
   const st = getStore();
@@ -313,6 +324,19 @@ export function addSesi(input: AddSesiInput): Sesi {
       `startTime must be before endTime: ${input.startTime} >= ${input.endTime}`,
     );
   }
+  // C2 invariant: a dipesan slot must reference an owning siswa. Validate the
+  // id against the store so callers cannot persist an ownerless booking.
+  const status = input.status ?? "tersedia";
+  if (status === "dipesan") {
+    if (!input.siswaId) {
+      throw new TypeError(
+        "Sesi dengan status dipesan harus memiliki siswaId.",
+      );
+    }
+    if (!st.siswa.some((s) => s.id === input.siswaId)) {
+      throw new TypeError(`Unknown siswa id: ${input.siswaId}`);
+    }
+  }
   const newSesi: Sesi = {
     id: nextId(st.sesi, "sesi"),
     instrukturId: input.instrukturId,
@@ -320,7 +344,8 @@ export function addSesi(input: AddSesiInput): Sesi {
     date: input.date,
     startTime: input.startTime,
     endTime: input.endTime,
-    status: input.status ?? "tersedia",
+    status,
+    ...(input.siswaId ? { siswaId: input.siswaId } : {}),
   };
   st.sesi.push(newSesi);
   return { ...newSesi };

@@ -57,13 +57,20 @@ export default async function SiswaDashboardPage() {
   }
   const siswaId = getMySiswaId(userId);
   // Production-only fail-closed: getMySiswaId returns a clerk-derived id that
-  // has no row in the siswa table until the prodmigration epic ships. Map the
-  // domain TypeError to a clean 404 so users see not-found instead of a 500.
+  // has no row in the siswa table until the prodmigration epic ships. Map only
+  // the expected unknown-siswa TypeError to a clean 404; rethrow anything else
+  // so operational failures surface as 500s instead of being masked.
   let siswa: Siswa;
   try {
     siswa = getSiswaById(siswaId);
-  } catch {
-    notFound();
+  } catch (err) {
+    if (
+      err instanceof TypeError &&
+      /^Unknown siswa id:/.test(err.message)
+    ) {
+      notFound();
+    }
+    throw err;
   }
   const pkg = getPackageById(siswa.packageId);
   const sessions = getSesiBySiswa(siswaId);
