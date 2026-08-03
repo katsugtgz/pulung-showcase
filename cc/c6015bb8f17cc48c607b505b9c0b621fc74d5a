@@ -1,0 +1,39 @@
+src/app/(app)/app/page.tsx
+  s_8c3e5ac6d8d37e::t_c03a0818c902d6 3,11,26-29,32
+  s_8c3e5ac6d8d37e::t_ad281c181bcc0a 53-57,59-67
+  s_8c3e5ac6d8d37e::t_8f08241e259c7a 33
+src/app/(app)/app/kartu/unduh/route.ts
+  s_8c3e5ac6d8d37e::t_43fd3cba32c3f2 37-43
+src/app/(app)/app/jadwal/page.tsx
+  s_8c3e5ac6d8d37e::t_43206eefb11379 23-27,30
+  s_8c3e5ac6d8d37e::t_ae1dcfd35e0d10 69-73
+  s_8c3e5ac6d8d37e::t_65e30f591cc401 31
+src/app/(app)/app/invoice/page.tsx
+  s_8c3e5ac6d8d37e::t_3f08ae304c6848 3,6,20-23,26
+  s_8c3e5ac6d8d37e::t_2bab187ff297e7 44-48,50-56
+  s_8c3e5ac6d8d37e::t_315261c740263c 27
+src/app/(protected)/catalog/[packageId]/payment/actions.ts
+  s_8c3e5ac6d8d37e::t_c65f9b086d57b9 15-19,22-23,37-43,63-75
+src/lib/auth/siswa-id.ts
+  s_8c3e5ac6d8d37e::t_babb4ede903e30 14-22
+src/app/(app)/app/kartu/page.tsx
+  s_8c3e5ac6d8d37e::t_004100cf03dc3c 3,6,20-23,26
+  s_8c3e5ac6d8d37e::t_7e7714914f8475 50-54,56-62
+  s_8c3e5ac6d8d37e::t_f53db22a75c0be 27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "ccc6015bb8f17cc48c607b505b9c0b621fc74d5a",
+  "prompts": {},
+  "sessions": {
+    "s_8c3e5ac6d8d37e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_039b1351bffeyqMCP0H8byQBYf",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
