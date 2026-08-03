@@ -342,7 +342,7 @@ describe("batalkanSesi", () => {
     );
   });
 
-  it("melempar TypeError jika pemanggil adalah pemilik asli sesi-001", () => {
+  it("tidak melempar TypeError jika pemanggil adalah pemilik asli sesi-001", () => {
     // Sanity: pemilik yang benar tetap bisa membatalkan (sudah diuji di atas,
     // tetapi eksplisit untuk kontras dengan test H14).
     expect(() => batalkanSesi("sesi-001", "siswa-001")).not.toThrow();
