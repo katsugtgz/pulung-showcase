@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { auth } from "@clerk/nextjs/server";
 import {
   getSesiBySiswa,
   getInstrukturById,
@@ -6,6 +7,7 @@ import {
 import { getBookableSesi } from "@/lib/jadwal-booking";
 import { getBranchById } from "@/lib/catalog-data";
 import { formatDate } from "@/lib/format";
+import { getMySiswaId } from "@/lib/auth/siswa-id";
 import { BookableSlotList, MyBookingList } from "./components";
 import type { SesiDisplay } from "./components";
 
@@ -13,20 +15,23 @@ import type { SesiDisplay } from "./components";
  * Halaman pilih jadwal siswa (Slice 20).
  * Server Component — mengambil data dan meneruskannya ke Client Component.
  *
- * Catatan: siswa ditampilkan berdasarkan DEMO_SISWA_ID = "siswa-001" sebagai
- * representasi demo — konvensi sama dengan app/page.tsx. Pengikatan ke Clerk
- * user id sesungguhnya adalah epik sesudahnya.
+ * Demo: in development the signed-in user is mapped to seed siswa "siswa-001";
+ * in production the siswa id is derived from the Clerk userId.
  *
  * Auth dijaga oleh layout (app) dan proxy.ts — pengguna yang mencapai halaman
  * ini pasti sudah login.
+ *
+ * Auth: gate the auth() call on NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY (same
+ * pattern as /app/kartu/unduh/route.ts) so local dev / build pre-render
+ * works without Clerk keys. getSesiBySiswa returns [] for an unknown siswa
+ * id, so no notFound() gate is needed here (the page simply renders empty).
  */
+
+const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 export const metadata: Metadata = {
   title: "Pilih Jadwal — Kursus Mengemudi Pulung",
 };
-
-// Demo mapping: setiap pengguna login diperlakukan sebagai siswa-001.
-const DEMO_SISWA_ID = "siswa-001";
 
 function toSesiDisplay(
   s: ReturnType<typeof getBookableSesi>[number],
@@ -41,7 +46,7 @@ function toSesiDisplay(
   };
 }
 
-/** Kelompokkan sesi per tanggal (ascending). */
+/** Kelompokkan sesi per tanggal (ascending, lexicographic on YYYY-MM-DD). */
 function groupByDate(sesiList: SesiDisplay[]) {
   const map = new Map<
     string,
@@ -57,16 +62,22 @@ function groupByDate(sesiList: SesiDisplay[]) {
     }
     map.get(s.date)!.sesi.push(s);
   }
-  // Urutkan per tanggal ascending
-  return [...map.values()].sort((a, b) => (a.date < b.date ? -1 : 1));
+  return [...map.values()].sort((a, b) => a.date.localeCompare(b.date));
 }
 
-export default function JadwalSiswaPage() {
+export default async function JadwalSiswaPage() {
+  let userId: string | null = null;
+  if (clerkEnabled) {
+    const clerkAuth = await auth();
+    userId = clerkAuth.userId;
+  }
+  const siswaId = getMySiswaId(userId);
+
   const bookable = getBookableSesi().map(toSesiDisplay);
   const groups = groupByDate(bookable);
 
   const myBookings: SesiDisplay[] = [];
-  for (const s of getSesiBySiswa(DEMO_SISWA_ID)) {
+  for (const s of getSesiBySiswa(siswaId)) {
     if (s.status === "dipesan") myBookings.push(toSesiDisplay(s));
   }
 

@@ -1,5 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { formatDate, formatIDR } from "../index";
+import { formatDate, formatIDR, todayYmd } from "../index";
+
+describe("todayYmd", () => {
+  it("returns a YYYY-MM-DD string", () => {
+    expect(todayYmd()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
+  it("matches the current UTC calendar date (toISOString slicing)", () => {
+    const iso = new Date().toISOString();
+    const expected = iso.slice(0, 10);
+    expect(todayYmd()).toBe(expected);
+  });
+});
 
 describe("formatIDR", () => {
   it("formats the example value", () => {
@@ -64,5 +76,25 @@ describe("formatDate", () => {
     expect(() => formatDate("2026-00-10")).toThrow(TypeError);
     expect(() => formatDate("2026-07-32")).toThrow(TypeError);
     expect(() => formatDate("2026-07-00")).toThrow(TypeError);
+  });
+
+  it("throws TypeError for impossible calendar dates (Feb 30, Apr 31, Feb 29 non-leap)", () => {
+    expect(() => formatDate("2026-02-30")).toThrow(TypeError);
+    expect(() => formatDate("2026-04-31")).toThrow(TypeError);
+    expect(() => formatDate("2025-02-29")).toThrow(TypeError); // 2025 is not a leap year
+  });
+
+  it("accepts Feb 29 on leap years", () => {
+    expect(() => formatDate("2024-02-29")).not.toThrow();
+    expect(formatDate("2024-02-29")).toBe("29 Februari 2024");
+  });
+
+  it("accepts ISO dates with years 0000-0099 without remapping to 1900s", () => {
+    // Regression: the multi-arg Date constructor treats years 0-99 as
+    // 1900-1999, which previously rejected valid ISO dates in that range.
+    expect(() => formatDate("0099-02-28")).not.toThrow();
+    expect(formatDate("0099-02-28")).toBe("28 Februari 99");
+    expect(() => formatDate("0001-01-01")).not.toThrow();
+    expect(formatDate("0001-01-01")).toBe("1 Januari 1");
   });
 });

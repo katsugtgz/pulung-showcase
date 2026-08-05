@@ -1,25 +1,35 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { UserMenu } from "@/components/user-menu";
 import {
   getPembayaranBySiswa,
   getSesiBySiswa,
   getSiswaById,
 } from "@/lib/domain";
+import type { Siswa } from "@/lib/domain";
 import { getPackageById } from "@/lib/catalog-data";
 import { formatIDR, formatDate } from "@/lib/format";
+import { getMySiswaId } from "@/lib/auth/siswa-id";
 
 /*
  * Dasbor Siswa — halaman Beranda area siswa (/app). Menampilkan jadwal sesi
- * dan status pembayaran siswa contoh dari modul domain (siswa-001).
+ * dan status pembayaran siswa dari modul domain.
  *
  * Shell <AppShell/> di layout menyediakan: <main> kontainer, header desktop
  * (wordmark + nav + UserButton), dan bottom nav mobile. Halaman ini hanya
  * bertanggung jawab atas kontennya.
  *
- * Catatan: slice ini menampilkan data mock siswa-001 sebagai perwakilan demo.
- * Pengikatan ke Clerk user id sesungguhnya adalah epik sesudahnya.
+ * Demo: in development the signed-in user is mapped to seed siswa "siswa-001";
+ * in production the siswa id is derived from the Clerk userId.
+ *
+ * Auth: gate the auth() call on NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY so local
+ * dev and `next build` pre-render work without Clerk keys, mirroring the
+ * pattern in /app/kartu/unduh/route.ts.
  */
+
+const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 export const metadata: Metadata = {
   title: "Dasbor Siswa — Kursus Mengemudi Pulung",
@@ -39,13 +49,32 @@ const PAYMENT_LABEL: Record<string, string> = {
   ditolak: "Ditolak",
 };
 
-const DEMO_SISWA_ID = "siswa-001";
-
-export default function SiswaDashboardPage() {
-  const siswa = getSiswaById(DEMO_SISWA_ID);
+export default async function SiswaDashboardPage() {
+  let userId: string | null = null;
+  if (clerkEnabled) {
+    const clerkAuth = await auth();
+    userId = clerkAuth.userId;
+  }
+  const siswaId = getMySiswaId(userId);
+  // Production-only fail-closed: getMySiswaId returns a clerk-derived id that
+  // has no row in the siswa table until the prodmigration epic ships. Map only
+  // the expected unknown-siswa TypeError to a clean 404; rethrow anything else
+  // so operational failures surface as 500s instead of being masked.
+  let siswa: Siswa;
+  try {
+    siswa = getSiswaById(siswaId);
+  } catch (err) {
+    if (
+      err instanceof TypeError &&
+      /^Unknown siswa id:/.test(err.message)
+    ) {
+      notFound();
+    }
+    throw err;
+  }
   const pkg = getPackageById(siswa.packageId);
-  const sessions = getSesiBySiswa(DEMO_SISWA_ID);
-  const payments = getPembayaranBySiswa(DEMO_SISWA_ID);
+  const sessions = getSesiBySiswa(siswaId);
+  const payments = getPembayaranBySiswa(siswaId);
   const latestPayment = payments[payments.length - 1];
 
   // Tampilkan tautan bayar jika belum ada pembayaran atau pembayaran terakhir

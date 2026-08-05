@@ -7,6 +7,7 @@ import {
   tolakPembayaranFlow,
 } from "@/lib/pembayaran-flow";
 import { getPembayaranById } from "@/lib/domain";
+import { todayYmd } from "@/lib/format";
 
 /*
  * Server actions untuk konfirmasi / penolakan pembayaran di panel admin.
@@ -56,7 +57,7 @@ export async function konfirmasiPembayaranAction(
   const adminId = sessionClaims?.sub ?? "admin";
 
   try {
-    konfirmasiPembayaran(pembayaranId, adminId, new Date().toISOString());
+    konfirmasiPembayaran(pembayaranId, adminId, todayYmd());
   } catch (err) {
     return {
       ok: false,
@@ -100,7 +101,7 @@ export async function tolakPembayaranAction(
   const adminId = sessionClaims?.sub ?? "admin";
 
   try {
-    tolakPembayaranFlow(pembayaranId, adminId, new Date().toISOString());
+    tolakPembayaranFlow(pembayaranId, adminId, todayYmd());
   } catch (err) {
     return {
       ok: false,

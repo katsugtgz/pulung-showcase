@@ -1,25 +1,33 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { getPembayaranBySiswa, getSiswaById } from "@/lib/domain";
+import type { Siswa } from "@/lib/domain";
 import { getPackageById } from "@/lib/catalog-data";
 import { formatDate, formatIDR } from "@/lib/format";
 import { invoiceNumber } from "@/lib/pdf/invoice";
 import { PretextText } from "@/components/pretext-text";
+import { getMySiswaId } from "@/lib/auth/siswa-id";
 
 /*
- * Halaman Daftar Invoice (/app/invoice). Menampilkan seluruh pembayaran demo
- * siswa (siswa-001): baris terverifikasi mendapat tautan unduh PDF beserta
- * nomor invoice; baris pending/ditolak hanya menampilkan status.
+ * Halaman Daftar Invoice (/app/invoice). Menampilkan seluruh pembayaran
+ * siswa yang sedang login: baris terverifikasi mendapat tautan unduh PDF
+ * beserta nomor invoice; baris pending/ditolak hanya menampilkan status.
  *
- * Demo convention: selalu menampilkan siswa-001 (sama seperti /app/page.tsx).
+ * Demo: in development the signed-in user is mapped to seed siswa "siswa-001";
+ * in production the siswa id is derived from the Clerk userId.
+ *
+ * Auth: gate the auth() call on NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY (same
+ * pattern as /app/kartu/unduh/route.ts) so local dev / build pre-render
+ * works without Clerk keys.
  */
+
+const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 export const metadata: Metadata = {
   title: "Invoice — Kursus Mengemudi Pulung",
 };
-
-// Demo mapping — same convention as /app/page.tsx and /app/kartu/page.tsx.
-const DEMO_SISWA_ID = "siswa-001";
 
 const PAYMENT_STATUS_LABEL: Record<string, string> = {
   pending: "Menunggu Verifikasi",
@@ -32,9 +40,21 @@ const METHOD_LABEL: Record<string, string> = {
   manual: "Manual",
 };
 
-export default function InvoicePage() {
-  const siswa = getSiswaById(DEMO_SISWA_ID);
-  const payments = getPembayaranBySiswa(DEMO_SISWA_ID);
+export default async function InvoicePage() {
+  let userId: string | null = null;
+  if (clerkEnabled) {
+    const clerkAuth = await auth();
+    userId = clerkAuth.userId;
+  }
+  const siswaId = getMySiswaId(userId);
+  // Fail-closed 404 if siswa lookup misses (see siswa-id.ts TODO(prodmigration)).
+  let siswa: Siswa;
+  try {
+    siswa = getSiswaById(siswaId);
+  } catch {
+    notFound();
+  }
+  const payments = getPembayaranBySiswa(siswaId);
 
   return (
     <div className="flex flex-col gap-8">

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildWhatsAppLink } from "../index";
+import { buildWhatsAppLink, toInternationalDigits } from "../index";
 import { getBranches } from "../../catalog-data";
 
 const CLUSTER_A_DIGITS = "6285100870957";
@@ -123,5 +123,35 @@ describe("buildWhatsAppLink — error handling", () => {
     expect(() =>
       buildWhatsAppLink({ branchId: "gunung-anyar", packageId: "nope" }),
     ).toThrow(TypeError);
+  });
+});
+
+describe("toInternationalDigits (D4)", () => {
+  it("keeps an Indonesian international number (62…) as-is", () => {
+    expect(toInternationalDigits("+62 851-0087-0957")).toBe("6285100870957");
+  });
+
+  it("converts a domestic 0… number to 62…", () => {
+    expect(toInternationalDigits("0851-0087-0957")).toBe("6285100870957");
+  });
+
+  it("returns foreign numbers as-is instead of prepending 62 (regression for D4)", () => {
+    // Before the fix, '+1 415 555 2671' became '621415552671' — wrong country.
+    expect(toInternationalDigits("+1 415 555 2671")).toBe("14155552671");
+    expect(toInternationalDigits("+44 20 7946 0958")).toBe("442079460958");
+    expect(toInternationalDigits("+65 6123 4567")).toBe("6561234567");
+  });
+
+  it("strips the 00 IDD prefix and returns the international number (D4 regression)", () => {
+    // 00 is the international direct-dialling prefix (E.164 without the +).
+    // Before the fix, '0044 20 7946 0958' matched the domestic '0…' rule and
+    // became '6200442079460958' — wrong country, with the IDD prefix retained.
+    expect(toInternationalDigits("0044 20 7946 0958")).toBe("442079460958");
+    expect(toInternationalDigits("001 415 555 2671")).toBe("14155552671");
+    expect(toInternationalDigits("0065 6123 4567")).toBe("6561234567");
+  });
+
+  it("strips non-digit characters but preserves the leading-zero rule", () => {
+    expect(toInternationalDigits("(0812) 3253-1989")).toBe("6281232531989");
   });
 });

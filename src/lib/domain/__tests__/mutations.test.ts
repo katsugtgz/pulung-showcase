@@ -246,6 +246,65 @@ describe("addSesi", () => {
       }),
     ).toThrow(TypeError);
   });
+
+  it("throws TypeError when status is dipesan but siswaId is missing (C2)", () => {
+    // addSesi must mirror updateSesi's invariant: an ownerless booked session
+    // can never be persisted.
+    expect(() =>
+      addSesi({
+        instrukturId: "instruktur-001",
+        branchId: "gunung-anyar",
+        date: "2026-08-01",
+        startTime: "09:00",
+        endTime: "10:00",
+        status: "dipesan",
+      }),
+    ).toThrow(/harus memiliki siswaId/);
+  });
+
+  it("throws TypeError when status is dipesan and siswaId is unknown (C2)", () => {
+    expect(() =>
+      addSesi({
+        instrukturId: "instruktur-001",
+        branchId: "gunung-anyar",
+        date: "2026-08-01",
+        startTime: "09:00",
+        endTime: "10:00",
+        status: "dipesan",
+        siswaId: "siswa-999",
+      }),
+    ).toThrow(/Unknown siswa id/);
+  });
+
+  it("creates a dipesan sesi with siswaId when both are supplied (C2)", () => {
+    const sesi = addSesi({
+      instrukturId: "instruktur-001",
+      branchId: "gunung-anyar",
+      date: "2026-08-01",
+      startTime: "09:00",
+      endTime: "10:00",
+      status: "dipesan",
+      siswaId: "siswa-001",
+    });
+    expect(sesi.status).toBe("dipesan");
+    expect(sesi.siswaId).toBe("siswa-001");
+  });
+
+  it("drops siswaId when status is not dipesan (C2 follow-up)", () => {
+    // siswaId is documented as ignored outside dipesan; persisting it would
+    // pollute per-student schedule queries with non-owned sessions.
+    const sesi = addSesi({
+      instrukturId: "instruktur-001",
+      branchId: "gunung-anyar",
+      date: "2026-08-01",
+      startTime: "09:00",
+      endTime: "10:00",
+      status: "tersedia",
+      siswaId: "siswa-001",
+    });
+    expect(sesi.status).toBe("tersedia");
+    expect(sesi.siswaId).toBeUndefined();
+  });
 });
 
 /* ========================= updateSesi ========================= */
@@ -262,10 +321,47 @@ describe("updateSesi", () => {
     expect(updated.status).toBe("selesai");
   });
 
-  it("clears siswaId when passed as undefined", () => {
-    // sesi-001 has a siswaId set
-    const updated = updateSesi("sesi-001", { siswaId: undefined });
+  it("clears siswaId when passed as undefined (on a tersedia sesi)", () => {
+    // sesi-002 is "tersedia"; clearing siswaId there is a legal no-op-ish
+    // patch that does not violate the dipesan-requires-siswaId invariant.
+    const updated = updateSesi("sesi-002", { siswaId: undefined });
     expect(updated.siswaId).toBeUndefined();
+  });
+
+  it("throws TypeError when clearing siswaId on a dipesan sesi without freeing it", () => {
+    // sesi-001 is "dipesan" — clearing siswaId without changing status would
+    // leave a dipesan row with no owner; the new invariant forbids that.
+    expect(() => updateSesi("sesi-001", { siswaId: undefined })).toThrow(
+      TypeError,
+    );
+  });
+
+  it("allows clearing siswaId on a dipesan sesi when status also moves to tersedia", () => {
+    // batalkan-style patch: free the slot AND clear the owner atomically.
+    const updated = updateSesi("sesi-001", {
+      siswaId: undefined,
+      status: "tersedia",
+    });
+    expect(updated.siswaId).toBeUndefined();
+    expect(updated.status).toBe("tersedia");
+  });
+
+  it("throws TypeError when setting status dipesan on a sesi without a siswaId", () => {
+    // sesi-002 is "tersedia" with no siswaId — promoting it to dipesan in the
+    // same patch without supplying siswaId violates the invariant.
+    expect(() => updateSesi("sesi-002", { status: "dipesan" })).toThrow(
+      TypeError,
+    );
+  });
+
+  it("rejects an invalid SesiStatus value at runtime (C1)", () => {
+    // The TS type already rules this out at compile time, but server-action
+    // callers pass untyped form input — guard the runtime boundary too.
+    expect(() =>
+      updateSesi("sesi-002", {
+        status: "bogus" as unknown as "tersedia",
+      }),
+    ).toThrow(TypeError);
   });
 
   it("throws TypeError for an unknown sesi id", () => {

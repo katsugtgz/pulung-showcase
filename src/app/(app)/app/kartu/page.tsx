@@ -1,8 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { getSiswaById } from "@/lib/domain";
+import type { Siswa } from "@/lib/domain";
 import { getBranchById, getBranchCluster, getPackageById } from "@/lib/catalog-data";
 import { formatDate } from "@/lib/format";
+import { getMySiswaId } from "@/lib/auth/siswa-id";
 
 /*
  * Halaman pratinjau Kartu Siswa (/app/kartu). Menampilkan versi HTML kartu
@@ -11,8 +15,15 @@ import { formatDate } from "@/lib/format";
  * Jika status pendaftaran belum terkonfirmasi, tombol unduh diganti dengan
  * pemberitahuan — sinkron dengan gate di route handler.
  *
- * Demo convention: selalu menampilkan siswa-001 (sama seperti /app/page.tsx).
+ * Demo: in development the signed-in user is mapped to seed siswa "siswa-001";
+ * in production the siswa id is derived from the Clerk userId.
+ *
+ * Auth: gate the auth() call on NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY (same
+ * pattern as /app/kartu/unduh/route.ts) so local dev / build pre-render
+ * works without Clerk keys.
  */
+
+const clerkEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 export const metadata: Metadata = {
   title: "Kartu Siswa — Kursus Mengemudi Pulung",
@@ -20,9 +31,6 @@ export const metadata: Metadata = {
 
 // Statuses that block PDF download (mirrors route.ts gate).
 const BLOCKED_STATUSES = new Set(["menunggu_bayar", "menunggu_konfirmasi"]);
-
-// Demo mapping — same convention as /app/page.tsx.
-const DEMO_SISWA_ID = "siswa-001";
 
 const ENROLLMENT_LABEL: Record<string, string> = {
   menunggu_bayar: "Menunggu Pembayaran",
@@ -38,8 +46,20 @@ const TRANSMISSION_LABEL: Record<string, string> = {
   mixed: "Manual + Matic",
 };
 
-export default function KartuSiswaPage() {
-  const siswa = getSiswaById(DEMO_SISWA_ID);
+export default async function KartuSiswaPage() {
+  let userId: string | null = null;
+  if (clerkEnabled) {
+    const clerkAuth = await auth();
+    userId = clerkAuth.userId;
+  }
+  const siswaId = getMySiswaId(userId);
+  // Fail-closed 404 if siswa lookup misses (see siswa-id.ts TODO(prodmigration)).
+  let siswa: Siswa;
+  try {
+    siswa = getSiswaById(siswaId);
+  } catch {
+    notFound();
+  }
   const pkg = getPackageById(siswa.packageId);
   const branch = getBranchById(siswa.branchId);
   const cluster = getBranchCluster(siswa.branchId);

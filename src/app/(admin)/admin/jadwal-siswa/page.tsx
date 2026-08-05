@@ -49,7 +49,7 @@ export default function JadwalSiswaPage() {
       endTime: s.endTime,
     });
   }
-  bookedSesi.sort((a, b) => (a.date < b.date ? -1 : 1));
+  bookedSesi.sort((a, b) => a.date.localeCompare(b.date));
 
   // Slot tersedia sebagai opsi pemindahan
   const bookableOptions: BookableSesiOption[] = getBookableSesi().map((s) => {
