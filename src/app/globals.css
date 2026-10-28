@@ -2,9 +2,16 @@
 
 /*
  * Brand theme tokens (CSS-first @theme, Tailwind v4).
- * Brand palette: primary blue #1E6FB8, accent red #D22B3A (CTAs only),
- * neutral white/gray scale. Old mockup purple #5e4399 is forbidden.
- * These tokens generate utilities: bg-primary, text-accent, border-neutral-200, etc.
+ * Brand palette: primary blue #1E6FB8, accent red #D22B3A (CTAs + road
+ * marking accents only), neutral white/gray scale. Old mockup purple
+ * #5e4399 is forbidden. Tokens generate utilities: bg-primary, text-accent,
+ * font-display, etc.
+ *
+ * Redesign system "rambu": the landing borrows the visual grammar of
+ * Indonesian road signage + license plates — condensed signage lettering
+ * (font-display), white plate chips, dashed road-marking lines, blue
+ * direction-sign cards. Blue field = road sign, red = the marking accent
+ * and the single conversion color.
  */
 @theme {
   /* Brand */
@@ -30,6 +37,8 @@
 
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-barlow), "Arial Narrow", ui-sans-serif, system-ui,
+    sans-serif;
 }
 
 :root {
@@ -67,6 +76,40 @@ body {
 
 .landing-page {
   overflow-x: clip;
+}
+
+/*
+ * Below-fold render savings: sections marked .cv-auto skip rendering cost
+ * until near the viewport. contain-intrinsic-size reserves approximate
+ * height so scrollbar + anchor jumps stay stable; browsers render the
+ * section immediately when an in-page anchor targets it.
+ */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
+}
+
+/*
+ * Road-marking motifs (aria-hidden decorative rules in JSX).
+ * .road-line-x  — dashed center line, horizontal.
+ * .road-line-y  — dashed center line, vertical (timeline rails).
+ */
+.road-line-x {
+  block-size: 3px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--road-color, var(--color-accent)) 0 26px,
+    transparent 26px 48px
+  );
+}
+
+.road-line-y {
+  inline-size: 3px;
+  background-image: repeating-linear-gradient(
+    180deg,
+    var(--road-color, var(--color-primary)) 0 22px,
+    transparent 22px 40px
+  );
 }
 
 /*

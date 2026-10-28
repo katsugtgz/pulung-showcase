@@ -85,7 +85,7 @@ export function LocationPicker() {
 
         <h2
           id="lokasi-heading"
-          className="text-center text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900"
+          className="text-center font-display text-3xl font-semibold uppercase leading-none tracking-tight text-neutral-900 lg:text-4xl"
         >
           Pilih Lokasi
         </h2>
@@ -103,7 +103,7 @@ export function LocationPicker() {
           Selectors preserved: every role="group", aria-label, and wa.me link
           stays inside #lokasi for the wa-link-correctness QA flow.
         */}
-        <div className="relative mt-6 overflow-hidden rounded-2xl bg-neutral-50 ring-1 ring-neutral-200 lg:mt-8">
+        <div className="relative mt-6 overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm lg:mt-8">
             {/*
               Step 1 — transmission. role="group" + aria-label are read by
               wa-link-correctness.mjs; do NOT change. State visual
@@ -113,11 +113,11 @@ export function LocationPicker() {
               <div className="mb-3 flex items-center gap-2">
                 <span
                   aria-hidden="true"
-                  className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white"
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-primary font-display text-sm font-bold text-white"
                 >
                   1
                 </span>
-                <h3 className="text-sm font-bold uppercase tracking-wide text-neutral-700">
+                <h3 className="font-display text-base font-bold uppercase tracking-wide text-neutral-700">
                   Pilih Transmisi
                 </h3>
               </div>
@@ -140,8 +140,8 @@ export function LocationPicker() {
                       }
                       className={
                         selected
-                          ? "flex-1 rounded-lg bg-primary py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.98]"
-                          : "flex-1 rounded-lg border border-neutral-300 bg-white py-2.5 text-sm font-semibold text-neutral-700 transition hover:border-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.98]"
+                          ? "flex-1 rounded-md bg-primary py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.98]"
+                          : "flex-1 rounded-md border border-neutral-300 bg-white py-2.5 text-sm font-semibold text-neutral-700 transition hover:border-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.98]"
                       }
                     >
                       {label}
@@ -162,11 +162,11 @@ export function LocationPicker() {
               <div className="mb-3 flex items-center gap-2">
                 <span
                   aria-hidden="true"
-                  className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white"
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-primary font-display text-sm font-bold text-white"
                 >
                   2
                 </span>
-                <h3 className="text-sm font-bold uppercase tracking-wide text-neutral-700">
+                <h3 className="font-display text-base font-bold uppercase tracking-wide text-neutral-700">
                   Pilih Klaster Area
                 </h3>
               </div>
@@ -190,8 +190,8 @@ export function LocationPicker() {
                       }
                       className={
                         selected
-                          ? "flex flex-col items-start gap-1 rounded-xl border-2 border-primary bg-white p-4 text-left shadow-sm transition hover:bg-primary/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                          : "flex flex-col items-start gap-1 rounded-xl border border-neutral-300 bg-white p-4 text-left transition hover:border-primary hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                          ? "flex flex-col items-start gap-1 rounded-md border-2 border-primary bg-white p-4 text-left shadow-sm transition hover:bg-primary/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                          : "flex flex-col items-start gap-1 rounded-md border border-neutral-300 bg-white p-4 text-left transition hover:border-primary hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                       }
                     >
                       <span className="text-sm font-bold leading-snug text-neutral-900">
@@ -216,11 +216,11 @@ export function LocationPicker() {
               <div className="mb-3 flex items-center gap-2">
                 <span
                   aria-hidden="true"
-                  className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white"
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-primary font-display text-sm font-bold text-white"
                 >
                   3
                 </span>
-                <h3 className="text-sm font-bold uppercase tracking-wide text-neutral-700">
+                <h3 className="font-display text-base font-bold uppercase tracking-wide text-neutral-700">
                   Pilih Cabang &amp; Chat Admin
                 </h3>
               </div>
@@ -228,7 +228,7 @@ export function LocationPicker() {
               {!selectedClusterId && (
                 <p
                   aria-live="polite"
-                  className="rounded-xl border border-dashed border-neutral-300 bg-white px-4 py-6 text-center text-sm text-neutral-500"
+                  className="rounded-md border border-dashed border-neutral-300 bg-white px-4 py-6 text-center text-sm text-neutral-500"
                 >
                   Pilih klaster area di atas untuk melihat cabang yang tersedia.
                 </p>
@@ -251,7 +251,7 @@ export function LocationPicker() {
                         bg-white so the card lifts against the unified neutral-50
                         task surface (visual hierarchy: card-on-tone).
                       */}
-                      <article className="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">
+                      <article className="rounded-md border border-neutral-200 bg-white p-4 shadow-sm">
                         <div className="mb-2 flex flex-wrap items-center gap-2">
                           <h4 className="font-bold text-neutral-900">
                             {branch.name}
@@ -294,7 +294,7 @@ export function LocationPicker() {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`${waCtaLabel} — cabang ${branch.name}`}
-                          className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#075E54] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#064a43] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#075E54] focus-visible:ring-offset-2 active:scale-[0.98]"
+                          className="flex w-full items-center justify-center gap-2 rounded-md bg-[#075E54] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#064a43] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#075E54] focus-visible:ring-offset-2 active:scale-[0.98]"
                         >
                           <WhatsappIcon className="h-4 w-4" />
                           {waCtaLabel}

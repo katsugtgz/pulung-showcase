@@ -59,8 +59,9 @@ export function StickyCta() {
       className={[
         "lg:hidden",
         "fixed bottom-0 left-0 right-0 z-20",
-        "flex items-center justify-center gap-2",
-        "bg-primary-dark px-4 pt-3 text-sm font-bold text-white",
+        "relative flex items-center justify-center gap-2",
+        "bg-primary-dark px-4 pt-3.5 font-display text-sm font-bold uppercase tracking-wide text-white",
+        "before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:bg-[repeating-linear-gradient(90deg,var(--color-accent)_0_22px,transparent_22px_40px)]",
         "shadow-[0_-2px_12px_rgba(15,23,42,0.12)]",
         "motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out",
         hidden ? "translate-y-full" : "translate-y-0",

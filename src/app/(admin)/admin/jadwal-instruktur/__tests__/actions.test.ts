@@ -28,11 +28,8 @@ vi.mock("next/cache", () => ({
 }));
 
 import { resetDomainStore, addSesi, updateSesi, getSesiById } from "@/lib/domain";
-import {
-  mapDomainError,
-  tambahSesiAction,
-  updateSesiAction,
-} from "../actions";
+import { tambahSesiAction, updateSesiAction } from "../actions";
+import { mapDomainError } from "../labels";
 
 beforeEach(() => {
   resetDomainStore();

@@ -11,6 +11,7 @@ import {
   getSesiBySiswa,
 } from "@/lib/domain";
 import { timeRangesOverlap } from "@/lib/jadwal-booking";
+import { mapDomainError } from "./labels";
 import type { AddSesiInput, Sesi, SesiStatus } from "@/lib/domain";
 
 /*
@@ -25,44 +26,6 @@ export type SesiActionResult = { ok: true } | { ok: false; error: string };
 async function requireAdmin(): Promise<boolean> {
   const { sessionClaims } = await auth();
   return sessionClaims?.metadata?.role === "admin";
-}
-
-/** Petakan pesan domain (English dev) ke pesan Indonesia untuk UI. */
-export function mapDomainError(msg: string): string {
-  // Pass-through bentrok messages produced by jadwal-booking and the
-  // reschedule guard (C4): they are already user-facing Indonesian.
-  if (msg.includes("Jadwal bentrok:")) {
-    return msg;
-  }
-  // Missing-owner invariant from updateSesi: distinguish from the generic
-  // "dipesan" branch below so admins promoting tersedia → dipesan without
-  // an assigned siswa get the correct recovery hint.
-  if (msg.includes("harus memiliki siswaId")) {
-    return "Sesi berstatus dipesan harus memiliki siswa. Tetapkan siswa terlebih dahulu.";
-  }
-  if (msg.includes("dipesan")) {
-    return "Sesi sudah dipesan siswa — pindahkan dulu jadwalnya.";
-  }
-  if (msg.includes("startTime must be before endTime")) {
-    return "Waktu mulai harus sebelum waktu selesai.";
-  }
-  if (
-    msg.includes("Invalid date") ||
-    msg.includes("Invalid startTime") ||
-    msg.includes("Invalid endTime")
-  ) {
-    return "Format tanggal/waktu tidak valid.";
-  }
-  if (msg.includes("Unknown instruktur")) {
-    return "Instruktur tidak ditemukan.";
-  }
-  if (msg.includes("Unknown branch")) {
-    return "Cabang tidak ditemukan.";
-  }
-  if (msg.includes("Unknown package")) {
-    return "Paket tidak ditemukan.";
-  }
-  return "Terjadi kesalahan. Coba lagi.";
 }
 
 /** Buat slot sesi baru. Branch diambil dari instruktur yang dipilih. */

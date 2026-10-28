@@ -1,15 +1,15 @@
 /*
- * "Cara Kerja" — penjelasan tiga langkah alur Pulung (issue #50 story #9):
+ * "Cara Kerja" — tiga langkah alur Pulung (issue #50 story #9):
  *   1. Pilih Paket (Manual / Matic / Campuran)
  *   2. Pilih Cabang (5 cabang, 2 klaster)
- *   3. Chat Admin via WhatsApp (ter-rouging ke klaster yang benar)
+ *   3. Chat Admin via WhatsApp (ter-routing ke klaster yang benar)
  *
- * Server Component — tidak ada state/effect. Header + body + tiga langkah
- * semuanya dari `@/lib/copy` (`getSectionHeader`, `getSectionBody`,
- * `getCaraKerja`). NumberBadge dari kosakata ikon bersama di
- * `@/components/landing/icons`. Pada mobile kartu menumpuk vertikal; pada
- * `lg` ketiga langkah berjajar dengan garis penghubung horizontal yang
- * menegaskan urutan 1 → 2 → 3.
+ * Redesign "rambu": langkah disusun sebagai *rute* — rail putus-putus
+ * (marka jalan) menghubungkan badge nomor rute 1→2→3 (urutan asli, jadi
+ * penomoran sah), judul langkah memakai huruf display kondensasi, dan
+ * stiker tetap sebagai chip kecil dekoratif. Semua teks dari
+ * `@/lib/copy`; sticker + divider dari `@/lib/illustrations` (kontrak
+ * dekoratif: alt="" di dalam aria-hidden — lihat __tests__).
  */
 import { getCaraKerja, getSectionBody, getSectionHeader } from "@/lib/copy";
 import { NumberBadge } from "@/components/landing/icons";
@@ -33,25 +33,31 @@ export function CaraKerja() {
     <section
       id="cara-kerja"
       aria-labelledby="cara-kerja-heading"
-      className="scroll-mt-24 bg-white px-6 py-10 lg:px-8 lg:py-16"
+      className="scroll-mt-24 bg-neutral-50 px-6 py-12 lg:px-8 lg:py-20"
     >
-      <div className="mx-auto max-w-md lg:max-w-7xl">
-        <h2
-          id="cara-kerja-heading"
-          className="text-center text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900"
-        >
-          {header}
-        </h2>
-        <p className="mt-3 text-center text-sm leading-relaxed text-neutral-600 lg:mx-auto lg:max-w-2xl lg:text-base">
-          {body}
-        </p>
-        {/* Road divider sticker */}
+      <div className="mx-auto max-w-md lg:max-w-6xl">
+        <div className="max-w-2xl">
+          <h2
+            id="cara-kerja-heading"
+            className="font-display text-3xl font-semibold uppercase leading-none tracking-tight text-neutral-900 lg:text-4xl"
+          >
+            {header}
+          </h2>
+          <div
+            aria-hidden="true"
+            className="road-line-x mt-4 max-w-40"
+          />
+          <p className="mt-4 text-sm leading-relaxed text-neutral-600 lg:text-base">
+            {body}
+          </p>
+        </div>
 
+        {/* Road divider sticker (decorative) */}
         <div
           aria-hidden="true"
-          className="mx-auto mt-6 hidden select-none justify-center lg:flex"
+          className="mx-auto mt-8 hidden select-none justify-center lg:flex"
         >
-          <div className="relative h-16 w-64 overflow-hidden rounded-2xl border border-neutral-200 bg-white p-1 shadow-sm">
+          <div className="relative h-16 w-64 overflow-hidden rounded-md border border-neutral-200 bg-white p-1 shadow-sm">
             <Image
               src={windingRoad.src}
               alt=""
@@ -62,27 +68,37 @@ export function CaraKerja() {
           </div>
         </div>
 
-        <ol className="relative mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-4 lg:mt-10 lg:gap-8">
-          {/* Horizontal connector — visible only at lg, sits behind the badges */}
+        {/*
+          Rute 1→2→3: rail marka putus-putus horizontal di belakang badge
+          (lg); di mobile rail vertikal di kiri. Nomor rute = urutan asli.
+        */}
+        <ol className="relative mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8">
+          {/* Horizontal rail — desktop only, sits behind the route badges */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-0 right-0 top-7 hidden h-px bg-neutral-200 lg:block"
+            className="road-line-x pointer-events-none absolute left-16 right-16 top-7 hidden opacity-40 [--road-color:var(--color-primary)] sm:block"
           />
+          {/* Vertical rail — mobile only */}
+          <div
+            aria-hidden="true"
+            className="road-line-y pointer-events-none absolute bottom-10 left-7 top-2 sm:hidden opacity-40"
+          />
+
           {steps.map((step, i) => (
-            <li
-              key={step.id}
-              className="relative flex flex-col items-start gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 p-5 sm:items-center sm:text-center lg:p-6"
-            >
-              <div className="flex w-full items-center justify-between sm:justify-center sm:gap-4">
-                <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-sm">
+            <li key={step.id} className="relative">
+              <div className="flex items-center gap-4 sm:flex-col sm:items-start">
+                {/* Route badge — blue sign square with white border ring */}
+                <span className="relative z-10 flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-md bg-primary text-white shadow-md ring-4 ring-neutral-50">
                   <NumberBadge
                     number={STEP_NUMBERS[i]}
                     className="h-8 w-8"
                   />
                 </span>
+
+                {/* Stiker langkah — dekoratif (alt="", aria-hidden) */}
                 <div
                   aria-hidden="true"
-                  className="relative h-14 w-14 select-none overflow-hidden rounded-2xl border border-neutral-200 bg-white p-1 shadow-sm"
+                  className="relative h-14 w-14 select-none overflow-hidden rounded-md border border-neutral-200 bg-white p-1 shadow-sm sm:hidden lg:block"
                 >
                   <Image
                     src={getSticker(STEP_STICKER_SLUGS[i]!).src}
@@ -93,11 +109,12 @@ export function CaraKerja() {
                   />
                 </div>
               </div>
-              <div className="sm:mt-1">
-                <h3 className="text-base font-semibold leading-tight text-neutral-900 lg:text-lg">
+
+              <div className="mt-4">
+                <h3 className="font-display text-xl font-bold uppercase leading-none tracking-wide text-neutral-900 lg:text-2xl">
                   {step.title}
                 </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-neutral-600 lg:text-base">
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600 lg:text-base">
                   {step.description}
                 </p>
               </div>
